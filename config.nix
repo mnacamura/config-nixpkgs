@@ -10,6 +10,12 @@
       latexmk;
     };
 
+    hsEnv = super.haskellPackages.ghcWithPackages (ps: with ps; [
+      pandoc
+      pandoc-citeproc
+      pandoc-crossref
+    ]);
+
     pyEnv = super.python36.withPackages (ps: with ps; [
       pip
       # jupyter
