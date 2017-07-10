@@ -39,9 +39,21 @@
 
         ## Misc
         GGally
-        devtools
+        # devtools  # does not work for some reason
         foreach
         rstan
+
+        ## devtools dependency
+        curl
+        git2r
+        httr
+        jsonlite
+        memoise
+        mime
+        openssl
+        rstudioapi
+        whisker
+        withr
       ];
     };
   };
