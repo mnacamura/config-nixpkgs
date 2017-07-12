@@ -39,21 +39,19 @@
 
         ## Misc
         GGally
-        # devtools  # does not work for some reason
+        devtools
         foreach
         rstan
 
-        ## devtools dependency
-        curl
-        git2r
-        httr
+        ## Jupyter IRkernel dependencies
+        repr
+        evaluate
+        IRdisplay
+        pbdZMQ
+        crayon
         jsonlite
-        memoise
-        mime
-        openssl
-        rstudioapi
-        whisker
-        withr
+        uuid
+        digest
       ];
     };
 
