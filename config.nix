@@ -56,5 +56,12 @@
         withr
       ];
     };
+
+    julia_05 = super.julia_05.overrideAttrs (as: with as; {
+      ## Required to use ZMQ on NixOS
+      LD_LIBRARY_PATH = if !super.stdenv.isDarwin
+        then "${super.zlib}/lib:${LD_LIBRARY_PATH}"
+        else LD_LIBRARY_PATH;
+    });
   };
 }
