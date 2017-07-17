@@ -7,7 +7,7 @@
     "$HOME/.nix-defexpr/channels"
   ];
   nix.maxJobs = 4;
-  # nix.useSandbox = true;
+  nix.useSandbox = "relaxed";
 
 
   # List packages installed in system profile. To search by name, run:
