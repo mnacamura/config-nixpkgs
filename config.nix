@@ -70,6 +70,9 @@
       LD_LIBRARY_PATH = if !stdenv.isDarwin
         then "${zlib}/lib:${LD_LIBRARY_PATH}"
         else LD_LIBRARY_PATH;
+
+      ## FIXME: Running test says "UDP send failed: network is unreachable"
+      doCheck = false;
     });
 
     rustEnv = with self; buildEnv {
