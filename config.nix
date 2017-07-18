@@ -2,27 +2,30 @@
   allowUnfree = true;
 
   packageOverrides = super: let self = super.pkgs; in {
-    tlEnv = super.texlive.combine {
-      inherit (super.texlive)
+    texliveEnv = with self; texlive.combine {
+      inherit (texlive)
       scheme-small
       collection-latexrecommended
       collection-latexextra
       latexmk;
     };
 
-    hsEnv = super.haskellPackages.ghcWithPackages (ps: with ps; [
-      pandoc
-      pandoc-citeproc
-      pandoc-crossref
-    ]);
+    pandocEnv = with self; buildEnv (with haskellPackages; {
+      name = "pandoc-${pandoc.version}-env";
+      paths = [
+        pandoc
+        pandoc-citeproc
+        pandoc-crossref
+      ];
+    });
 
-    pyEnv = super.python36.withPackages (ps: with ps; [
+    pythonEnv = self.python36.withPackages (ps: with ps; [
       pip
       # jupyter
     ]);
 
-    rEnv = super.rWrapper.override {
-      packages = with self.rPackages; [
+    rEnv = with self; rWrapper.override {
+      packages = with rPackages; [
         ## The tidyverse packages
         dplyr
         forcats
@@ -55,14 +58,31 @@
       ];
     };
 
-    julia_05 = super.julia_05.overrideAttrs (as: with as; {
+    juliaEnv = with self; buildEnv {
+      name = "julia-${julia_05.version}-env";
+      paths = [
+        julia_05
+      ];
+    };
+
+    julia_05 = with super; julia_05.overrideAttrs (as: with as; {
       ## Required to use ZMQ on NixOS
-      LD_LIBRARY_PATH = if !super.stdenv.isDarwin
-        then "${super.zlib}/lib:${LD_LIBRARY_PATH}"
+      LD_LIBRARY_PATH = if !stdenv.isDarwin
+        then "${zlib}/lib:${LD_LIBRARY_PATH}"
         else LD_LIBRARY_PATH;
 
       ## FIXME: Running test says "UDP send failed: network is unreachable"
       doCheck = false;
     });
+
+    rustEnv = with self; buildEnv {
+      name = "rust-${rustc.version}-env";
+      paths = [
+        cargo
+        rustc
+        rustfmt
+        rustracer
+      ];
+    };
   };
 }

@@ -7,13 +7,13 @@
     "$HOME/.nix-defexpr/channels"
   ];
   nix.maxJobs = 4;
-  nix.buildCores = 0;
-  nix.useSandbox = false;
+  nix.useSandbox = "relaxed";
 
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    nix-repl
   ];
 
   # Create /etc/bashrc that loads the nix-darwin environment.
