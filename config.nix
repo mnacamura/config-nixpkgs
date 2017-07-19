@@ -19,9 +19,10 @@
       ];
     });
 
-    pythonEnv = self.python36.withPackages (ps: with ps; [
+    pythonEnv = with self; python36.withPackages (ps: with ps;
+      builtins.filter (p: p != null) [
       pip
-      # jupyter
+      (if !stdenv.isDarwin then jupyter else null)
     ]);
 
     rEnv = with self; rWrapper.override {
