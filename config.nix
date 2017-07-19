@@ -58,20 +58,20 @@
       ];
     };
 
-    juliaEnv = with self; buildEnv {
-      name = "julia-${julia_05.version}-env";
+    juliaEnv = with self; let julia = julia_06; in buildEnv {
+      name = "julia-${julia.version}-env";
       paths = [
-        julia_05
+        julia
       ];
     };
 
-    julia_05 = with super; julia_05.overrideAttrs (as: with as; {
+    julia_06 = with super; julia_06.overrideAttrs (as: with as; {
       ## Required to use ZMQ on NixOS
       LD_LIBRARY_PATH = if !stdenv.isDarwin
         then "${zlib}/lib:${LD_LIBRARY_PATH}"
         else LD_LIBRARY_PATH;
 
-      ## FIXME: Running test says "UDP send failed: network is unreachable"
+      ## FIXME: Running socket test says "UDP send failed: network is unreachable"
       doCheck = false;
     });
 
