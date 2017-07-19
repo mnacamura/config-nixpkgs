@@ -44,6 +44,7 @@
         ## Misc
         GGally
         devtools
+        doParallel
         foreach
         rstan
 
