@@ -2,6 +2,8 @@
   allowUnfree = true;
 
   packageOverrides = super: let self = super.pkgs; in {
+    aspellEnv = with self; aspellWithDicts (ps: with ps; [ en ]);
+
     texliveEnv = with self; texlive.combine {
       inherit (texlive)
       scheme-small
