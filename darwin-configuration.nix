@@ -4,6 +4,7 @@
     "nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
     "darwin=$HOME/.nix-defexpr/channels/darwin"
     "darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
+    "/nix/var/nix/profiles/per-user/root/channels"
     "$HOME/.nix-defexpr/channels"
   ];
   nix.maxJobs = 4;
