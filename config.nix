@@ -6,7 +6,7 @@
     myUtils = with self; buildEnv {
       name = "my-utils";
       paths = [
-        aspellEnv
+        (aspellWithDicts (ps: with ps; [ en ]))
         coreutils
         fortune
         gettext  # rstan uses it
@@ -27,8 +27,6 @@
         reattach-to-user-namespace
       ];
     };
-
-    aspellEnv = with self; aspellWithDicts (ps: with ps; [ en ]);
 
     texliveEnv = with self; texlive.combine {
       inherit (texlive)
