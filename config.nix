@@ -54,36 +54,36 @@
 
     rEnv = with self; rWrapper.override {
       packages = with rPackages; [
-        ## The tidyverse packages
-        dplyr
-        forcats
-        ggplot2
-        # haven
-        lubridate
-        magrittr
-        purrr
-        readr
-        # readxl
-        stringr
-        tibble
-        tidyr
-
-        ## Misc
-        GGally
+        ## Development
         devtools
+
+        ## tidyverse and related packages
+        tidyverse
+        readxl
+        stringr
+        lubridate
+        forcats
+        hms
+        rlang
+        magrittr
+        GGally
+
+        ## Parallel computing
         doParallel
         foreach
+
+        ## Bayesian inference
         rstan
 
         ## Jupyter IRkernel dependencies
-        repr
-        evaluate
         IRdisplay
-        pbdZMQ
         crayon
-        jsonlite
-        uuid
         digest
+        evaluate
+        jsonlite
+        pbdZMQ
+        repr
+        uuid
       ];
     };
 
