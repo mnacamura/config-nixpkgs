@@ -10,6 +10,7 @@
       scheme-small
       collection-latexrecommended
       collection-latexextra
+      collection-fontutils
       latexmk;
     };
 
