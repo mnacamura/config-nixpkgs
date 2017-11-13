@@ -1,5 +1,6 @@
 {
   allowUnfree = true;
+  # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
     aspellEnv = with self; aspellWithDicts (ps: with ps; [ en ]);
