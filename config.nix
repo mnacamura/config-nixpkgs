@@ -3,6 +3,31 @@
   # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
+    myUtils = with self; buildEnv {
+      name = "my-utils";
+      paths = [
+        aspellEnv
+        coreutils
+        fortune
+        gettext  # rstan uses it
+        git
+        gnumake
+        neovim
+        nkf
+        omake
+        openssl
+        p7zip
+        ripgrep
+        sl
+        tmux
+        tree
+        unrar
+      ] ++ lib.optionals stdenv.isDarwin [
+        gnome-breeze  # used for GNU Cash theme
+        reattach-to-user-namespace
+      ];
+    };
+
     aspellEnv = with self; aspellWithDicts (ps: with ps; [ en ]);
 
     texliveEnv = with self; texlive.combine {
