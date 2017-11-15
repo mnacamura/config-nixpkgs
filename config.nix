@@ -9,8 +9,8 @@
         (aspellWithDicts (ps: with ps; [ en ]))
         coreutils
         fortune
-        gettext  # rstan uses it
-        ghostscript  # required by LaTeXiT
+        gettext             # required by rstan
+        ghostscript         # required by LaTeXiT
         git
         gnumake
         imagemagick
@@ -25,7 +25,7 @@
         tree
         unrar
       ] ++ lib.optionals stdenv.isDarwin [
-        gnome-breeze  # used for GNU Cash theme
+        gnome-breeze        # used by GNU Cash
         reattach-to-user-namespace
       ];
     };
