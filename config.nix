@@ -10,8 +10,10 @@
         coreutils
         fortune
         gettext  # rstan uses it
+        ghostscript  # required by LaTeXiT
         git
         gnumake
+        imagemagick
         neovim
         nkf
         omake
