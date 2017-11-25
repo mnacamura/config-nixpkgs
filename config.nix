@@ -10,7 +10,6 @@
         coreutils
         fortune
         gettext             # required by rstan
-        ghostscript         # required by LaTeXiT
         git
         gnumake
         imagemagick
@@ -30,7 +29,19 @@
       ];
     };
 
-    texliveEnv = with self; texlive.combine {
+    publishEnv = with self; buildEnv ({
+      name = "publish-env";
+      paths = [
+        ghostscript                      # required by LaTeXiT
+        haskellPackages.pandoc
+        haskellPackages.pandoc-citeproc
+        haskellPackages.pandoc-crossref
+        texliveCustomized
+      ];
+
+    });
+
+    texliveCustomized = with self; texlive.combine {
       inherit (texlive)
       scheme-small
       collection-latexrecommended
