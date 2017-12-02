@@ -18,6 +18,7 @@
         omake
         openssl
         p7zip
+        # patdiff
         ripgrep
         sl
         tmux
@@ -49,15 +50,6 @@
       collection-fontutils
       latexmk;
     };
-
-    pandocEnv = with self; buildEnv (with haskellPackages; {
-      name = "pandoc-${pandoc.version}-env";
-      paths = [
-        pandoc
-        pandoc-citeproc
-        pandoc-crossref
-      ];
-    });
 
     pythonEnv = with self; python36.withPackages (ps: with ps;
       builtins.filter (p: p != null) [
@@ -122,8 +114,8 @@
       paths = [
         cargo
         rustc
-        rustfmt
-        rustracer
+        # rustfmt
+        # rustracer
       ];
     };
   };
