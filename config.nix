@@ -51,11 +51,24 @@
       latexmk;
     };
 
-    pythonEnv = with self; python36.withPackages (ps: with ps;
-      builtins.filter (p: p != null) [
-      pip
-      (if !stdenv.isDarwin then jupyter else null)
-    ]);
+    jupyterEnv = with self; stdenv.mkDerivation {
+      name = "jupyter-env";
+      buildInputs = [
+        python36
+        python36Packages.pip
+        python36Packages.virtualenv
+      ];
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p $out/venv/jupyter
+        cd $out
+        # set SOURCE_DATE_EPOCH so that we can use python wheels
+        SOURCE_DATE_EPOCH=$(date +%s)
+        virtualenv --no-setuptools venv/jupyter
+        export PATH=venv/jupyter/bin:$PATH
+        pip --no-cache-dir install jupyter jupyter_contrib_nbextensions
+      '';
+    };
 
     rEnv = with self; rWrapper.override {
       packages = with rPackages; [
