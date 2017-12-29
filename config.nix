@@ -54,8 +54,10 @@
 
     jupyterEnv = with self; stdenv.mkDerivation {
       name = "jupyter-env";
-      buildInputs = [
+      nativeBuildInputs = [
         makeWrapper
+      ];
+      buildInputs = [
         python36
         python36Packages.pip
         python36Packages.virtualenv
@@ -67,8 +69,9 @@
         # set SOURCE_DATE_EPOCH so that we can use python wheels
         SOURCE_DATE_EPOCH=$(date +%s)
         virtualenv --no-setuptools $venv
-        export PATH=$venv/bin:$PATH
+        source $venv/bin/activate
         pip --no-cache-dir install jupyter jupyter_contrib_nbextensions
+        jupyter contrib nbextension install --sys-prefix
         makeWrapper $venv/bin/jupyter $out/bin/jupyter \
           --run "source $venv/bin/activate"
       '';
