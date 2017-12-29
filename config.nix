@@ -35,13 +35,12 @@
     publishEnv = with self; buildEnv ({
       name = "publish-env";
       paths = [
-        ghostscript                      # required by LaTeXiT
+        ghostscript         # required by LaTeXiT
         haskellPackages.pandoc
         haskellPackages.pandoc-citeproc
         haskellPackages.pandoc-crossref
         texliveCustomized
       ];
-
     });
 
     texliveCustomized = with self; texlive.combine {
