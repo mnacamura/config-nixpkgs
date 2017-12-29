@@ -8,6 +8,7 @@
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
         coreutils
+        fd
         fortune
         gettext             # required by rstan
         git
@@ -20,6 +21,7 @@
         p7zip
         # patdiff
         ripgrep
+        rust-parallel
         sl
         tmux
         tree
