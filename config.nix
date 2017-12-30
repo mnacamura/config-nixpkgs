@@ -32,36 +32,29 @@
       ];
     };
 
-    publishEnv = with self; buildEnv ({
+    publishEnv = with self; buildEnv {
       name = "publish-env";
       paths = [
         ghostscript         # required by LaTeXiT
-        haskellPackages.pandoc
-        haskellPackages.pandoc-citeproc
-        haskellPackages.pandoc-crossref
-        texliveCustomized
-      ];
-    });
-
-    texliveCustomized = with self; texlive.combine {
-      inherit (texlive)
-      scheme-small
-      collection-latexrecommended
-      collection-latexextra
-      collection-fontutils
-      latexmk;
+        (texlive.combine {
+          inherit (texlive)
+          scheme-small
+          collection-latexrecommended
+          collection-latexextra
+          collection-fontutils
+          latexmk;
+        })
+      ] ++ (with haskellPackages; [
+        pandoc
+        pandoc-citeproc
+        pandoc-crossref
+      ]);
     };
 
     jupyterEnv = with self; stdenv.mkDerivation {
       name = "jupyter-env";
-      nativeBuildInputs = [
-        makeWrapper
-      ];
-      buildInputs = [
-        python36
-        python36Packages.pip
-        python36Packages.virtualenv
-      ];
+      nativeBuildInputs = [ makeWrapper ];
+      buildInputs = with python36Packages; [ python36 pip virtualenv ];
       phases = [ "installPhase" ];
       installPhase = ''
         venv=$out/var/venvs/jupyter
