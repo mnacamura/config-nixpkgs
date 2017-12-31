@@ -6,7 +6,7 @@
     nix-repl
   ];
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
+  # Create /etc/fish that loads the nix-darwin environment.
   programs.fish.enable = true;
 
   # Recreate /run/current-system symlink after boot.
