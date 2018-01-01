@@ -93,15 +93,8 @@
         ## Bayesian inference
         rstan
 
-        ## Jupyter IRkernel dependencies
-        IRdisplay
-        crayon
-        digest
-        evaluate
-        jsonlite
-        pbdZMQ
-        repr
-        uuid
+        ## Jupyter kernel
+        JuniperKernel
       ];
     }; in buildEnv {
       name = "${R.name}-env";
