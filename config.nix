@@ -3,8 +3,9 @@
   # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
-    myUtils = with self; buildEnv {
+    myUtils = with self; lib.lowPrio (buildEnv {
       name = "my-utils";
+      ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
         coreutils
@@ -30,7 +31,7 @@
         gnome-breeze        # used by GNU Cash
         reattach-to-user-namespace
       ];
-    };
+    });
 
     publishEnv = with self; buildEnv {
       name = "publish-env";
