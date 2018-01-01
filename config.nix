@@ -32,18 +32,18 @@
       ];
     });
 
-    publishEnv = with self; buildEnv {
+    publishEnv = with self; let myTexlive = texlive.combine {
+      inherit (texlive)
+      scheme-small
+      collection-latexrecommended
+      collection-latexextra
+      collection-fontutils
+      latexmk;
+    }; in buildEnv {
       name = "publish-env";
       paths = [
-        ghostscript         # required by LaTeXiT
-        (texlive.combine {
-          inherit (texlive)
-          scheme-small
-          collection-latexrecommended
-          collection-latexextra
-          collection-fontutils
-          latexmk;
-        })
+        ghostscript  # required by LaTeXiT
+        myTexlive
       ] ++ (with haskellPackages; [
         pandoc
         pandoc-citeproc
