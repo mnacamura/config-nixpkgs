@@ -11,7 +11,6 @@
         coreutils
         fd
         fortune
-        gettext             # required by rstan
         git
         gnumake
         imagemagick
@@ -71,7 +70,7 @@
       '';
     };
 
-    rEnv = with self; rWrapper.override {
+    rEnv = with self; let myR = rWrapper.override {
       packages = with rPackages; [
         ## Development
         devtools
@@ -103,6 +102,12 @@
         pbdZMQ
         repr
         uuid
+      ];
+    }; in buildEnv {
+      name = "${R.name}-env";
+      paths = [
+        gettext  # required by rstan
+        myR
       ];
     };
 
