@@ -131,5 +131,13 @@
         # rustracer
       ];
     };
+
+    nodejsEnv = with self; buildEnv {
+      name = "nodejs-${nodejs.version}-env";
+      paths = [
+        nodejs
+        yarn
+      ];
+    };
   };
 }
