@@ -32,6 +32,10 @@
       ];
     });
 
+    neovim = with super; neovim.override {
+      withRuby = false;
+    };
+
     publishEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
       scheme-small
