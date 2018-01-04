@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs; [
     nix-repl
   ];
+  environment.variables.EDITOR = "vim";  # Available by default on macOS
 
   # Create /etc/fish that loads the nix-darwin environment.
   programs.fish.enable = true;
