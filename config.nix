@@ -22,6 +22,7 @@
         # patdiff
         ripgrep
         parallel-rust
+        skim
         sl
         tmux
         tree
@@ -34,6 +35,16 @@
 
     neovim = with super; neovim.override {
       withRuby = false;
+      configure = {
+        customRC = ''
+          let $MYVIMRC = '~/.config/nvim/init.vim'
+          source $MYVIMRC
+        '';
+        packages.default = with vimPlugins; {
+          start = [ skim ];
+          opt = [];
+        };
+      };
     };
 
     publishEnv = with self; let myTexlive = texlive.combine {
