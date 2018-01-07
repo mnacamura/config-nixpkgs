@@ -21,7 +21,7 @@
         p7zip
         # patdiff
         ripgrep
-        rust-parallel
+        parallel-rust
         sl
         tmux
         tree
