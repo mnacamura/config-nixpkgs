@@ -10,7 +10,6 @@
   # Create /etc/fish that loads the nix-darwin environment.
   programs.fish.enable = true;
   environment.shells = with pkgs; [ fish ];
-  environment.variables.SHELL = "/run/current-system/sw/bin/fish";
 
   # Recreate /run/current-system symlink after boot.
   services.activate-system.enable = true;
