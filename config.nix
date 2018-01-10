@@ -30,6 +30,16 @@
       ] ++ lib.optionals stdenv.isDarwin [
         gnome-breeze        # used by GNU Cash
         reattach-to-user-namespace
+      ] ++ lib.optionals stdenv.isLinux [
+        dropbox-cli
+        firefox-devedition-bin
+        # gimp
+        # inkscape
+        # mathematica11_ja
+        patdiff
+        okular
+        trash-cli
+        xsel
       ];
     });
 
