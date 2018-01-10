@@ -70,7 +70,11 @@
       name = "jupyter-env";
       version = "2018-01-01";  # Just for convenience to upgrade packages
       nativeBuildInputs = [ makeWrapper ];
-      buildInputs = with python36Packages; [ python36 pip virtualenv ];
+      buildInputs = [
+        libxml2 libxslt  # dependencies for lxml
+      ] ++ (with python36Packages; [
+        python36 pip virtualenv
+      ]);
       phases = [ "installPhase" ];
       installPhase = ''
         venv=$out/var/venvs/jupyter
