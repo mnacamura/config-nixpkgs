@@ -47,8 +47,12 @@
       withRuby = false;
       configure = {
         customRC = ''
-          let $MYVIMRC = '~/.config/nvim/init.vim'
-          source $MYVIMRC
+          let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
+          if filereadable($MYVIMRC)
+            source $MYVIMRC
+          else
+            echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
+          endif
         '';
         packages.default = with vimPlugins; {
           start = [ skim ];
