@@ -11,13 +11,14 @@
   services.nix-daemon.enable = true;
 
   nix.trustedUsers = [ "@admin" ];
-  # nix.useSandbox = true;  # still does not work 2018-01-20
-  nix.package = pkgs.nix;
+  # nix.useSandbox = true;  # still does not work for most cases
+  nix.package = pkgs.nixUnstable;
   nix.maxJobs = 4;
+  nix.buildCores = 4;
   nix.nixPath = [
     "darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
-    "darwin=$HOME/.nix-defexpr/channels/darwin"
-    "nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs"
+    "/nix/var/nix/profiles/per-user/root/channels"
+    "/Users/mnacamura/.nix-defexpr/channels"
   ];
 
   # Used for backwards compatibility, please read the changelog before changing.
