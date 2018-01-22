@@ -5,6 +5,7 @@
   ];
   environment.variables.EDITOR = "vim";  # Available by default on macOS
 
+  programs.nix-index.enable = true;
   programs.fish.enable = true;
   environment.shells = with pkgs; [ fish ];
 
