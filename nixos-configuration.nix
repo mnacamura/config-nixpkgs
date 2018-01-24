@@ -14,8 +14,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use kernel 4.14.
-  boot.kernelPackages = pkgs.linuxPackages_4_14;
+  # Use the latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "sagnier"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
