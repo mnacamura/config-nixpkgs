@@ -110,29 +110,26 @@
 
     rEnv = with self; let myR = rWrapper.override {
       packages = with rPackages; [
-        ## Development
-        devtools
-
-        ## tidyverse and related packages
-        tidyverse
-        readxl
-        stringr
-        lubridate
-        forcats
-        hms
-        rlang
-        magrittr
         GGally
-
-        ## Parallel computing
-        doParallel
-        foreach
-
-        ## Bayesian inference
-        rstan
-
-        ## Jupyter kernel
         JuniperKernel
+        doMC
+        dplyr
+        forcats
+        foreach
+        ggplot2
+        glue
+        hms
+        jsonlite
+        lubridate
+        magrittr
+        purrr
+        readr
+        readxl
+        rlang
+        rstan
+        stringr
+        tibble
+        tidyr
       ];
     }; in buildEnv {
       name = "${R.name}-env";
