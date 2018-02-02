@@ -140,7 +140,7 @@
     };
 
     juliaEnv = with self; let julia = julia_06; in buildEnv {
-      name = "julia-${julia.version}-env";
+      name = "${julia.name}-env";
       paths = [
         julia
       ];
@@ -167,7 +167,7 @@
     };
 
     nodejsEnv = with self; buildEnv {
-      name = "nodejs-${nodejs.version}-env";
+      name = "${nodejs.name}-env";
       paths = [
         nodejs
         yarn
