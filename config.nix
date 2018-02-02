@@ -85,7 +85,7 @@
 
     jupyterEnv = with self; stdenv.mkDerivation {
       name = "jupyter-env";
-      version = "2018-01-01";  # Just for convenience to upgrade packages
+      version = "2018-02-02";  # Just for convenience to upgrade packages
       nativeBuildInputs = [ makeWrapper ];
       buildInputs = [
         libxml2 libxslt  # dependencies for lxml
@@ -104,6 +104,7 @@
         jupyter contrib nbextension install --sys-prefix
         makeWrapper $venv/bin/jupyter $out/bin/jupyter \
           --run "source $venv/bin/activate"
+        pip --no-cache-dir install jupyterthemes
       '';
     };
 
