@@ -63,11 +63,18 @@
 
     publishEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
-      scheme-small
+      scheme-basic  # installs collection-{basic,latex}
+      collection-luatex
       collection-latexrecommended
       collection-latexextra
+      collection-bibtexextra
+      collection-fontsrecommended
+      collection-fontsextra
       collection-fontutils
-      latexmk;
+      collection-langjapanese
+      latexmk
+      latexdiff
+      revtex;
     }; in buildEnv {
       name = "publish-env";
       paths = [
