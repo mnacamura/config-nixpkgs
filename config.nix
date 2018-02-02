@@ -8,25 +8,22 @@
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
-        coreutils
         fd
         fortune
         git
         gnumake
-        imagemagick
         neovim
-        nkf
-        omake
-        openssl
-        p7zip
+        # p7zip
+        parallel-rust
         # patdiff
         ripgrep
-        parallel-rust
         skim
         sl
         tmux
         tree
-        unrar
+        universal-ctags
+        # unrar
+        vim-vint
       ] ++ lib.optionals stdenv.isDarwin [
         gnome-breeze        # used by GNU Cash
         reattach-to-user-namespace
@@ -35,9 +32,8 @@
         firefox-devedition-bin
         # gimp
         # inkscape
-        # mathematica11_ja
         patdiff
-        okular
+        # okular
         trash-cli
         xsel
       ];
