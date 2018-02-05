@@ -112,7 +112,7 @@
       packages = with rPackages; [
         GGally
         JuniperKernel
-        doMC
+        doParallel
         dplyr
         forcats
         foreach
@@ -134,7 +134,8 @@
     }; in buildEnv {
       name = "${R.name}-env";
       paths = [
-        gettext  # required by rstan
+        libcxx           # required by rstan
+        (lib.lowPrio R)  # installs man pages etc.
         myR
       ];
     };
