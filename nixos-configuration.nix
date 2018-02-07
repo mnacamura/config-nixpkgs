@@ -5,6 +5,8 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -14,12 +16,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use the latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use kernel 4.15.
+  boot.kernelPackages = pkgs.linuxPackages_4_15;
 
   networking.hostName = "sagnier"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
-  # networking.enableIPv6 = false;
+  networking.enableIPv6 = true;
   networking.networkmanager.enable = true;
 
   # Select internationalisation properties.
@@ -62,8 +64,8 @@
   nix.trustedUsers = [ "@wheel" ];
   # nix.useSandbox = "true";
   nix.package = pkgs.nixUnstable;
-  nix.maxJobs = 8;
-  nix.buildCores = 8;
+  nix.maxJobs = 4;
+  nix.buildCores = 6;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -91,6 +93,7 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
+  services.xserver.videoDrivers = [ "amdgpu" ];
   # services.xserver.resolutions = [ { x = 1920; y = 1080; } ];
   # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.serverFlagsSection =
@@ -112,7 +115,7 @@
     createHome = true;
     extraGroups = [ "wheel" "networkmanager" ];
     uid = 1000;
-    # shell = "/run/current-system/sw/bin/fish";
+    shell = "/run/current-system/sw/bin/fish";
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwsh6tCcIYa86dD6m2hy4n1bSttp+zqwn2ptvUtHbuVbymNvOcD449lSwDXV4ATfAyowC9cTfUXFicPtpNfq5BUS1ln3XN8L5KcJdGXM8JiD7J/kdzVZf6yyLhBZDUzcfoXNpsxaB2Cln1fB6ym3a1Npa9rw0k40KpA7vqp26eo+r7iJCcO8BOxlUYie6fCOD5jSE0DHNBe8NLQ2v6M1seq9FSNSbeijh5yu/bT+gjkqQYboN5pkVvb8xncsXUuanKP8R+fvTAPx9CwHMPPrZtG2iEoMoKsK0Eiiq9wDl/UyueMXlwNl/ei7qnV3zxNzxWGsmBI2f091l0AFXeerEj mnacamura@suzon.local" ];
   };
 
