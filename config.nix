@@ -33,6 +33,24 @@
       ];
     });
 
+    neovim = with super; neovim.override {
+      withRuby = false;
+      configure = {
+        customRC = ''
+          let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
+          if filereadable($MYVIMRC)
+            source $MYVIMRC
+          else
+            echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
+          endif
+        '';
+        packages.default = with vimPlugins; {
+          start = [ skim ];
+          opt = [];
+        };
+      };
+    };
+
     myDesktopEnv = with self; buildEnv {
       name = "my-desktop-env";
       ignoreCollisions = true;
@@ -51,24 +69,6 @@
     };
 
     mathematica = super.mathematica.override { lang = "ja"; };
-
-    neovim = with super; neovim.override {
-      withRuby = false;
-      configure = {
-        customRC = ''
-          let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
-          if filereadable($MYVIMRC)
-            source $MYVIMRC
-          else
-            echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
-          endif
-        '';
-        packages.default = with vimPlugins; {
-          start = [ skim ];
-          opt = [];
-        };
-      };
-    };
 
     publishEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
