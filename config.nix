@@ -98,10 +98,11 @@
 
     jupyterEnv = with self; stdenv.mkDerivation {
       name = "jupyter-env";
-      version = "2018-02-02";  # Just for convenience to upgrade packages
-      nativeBuildInputs = [ makeWrapper ];
+      version = "2018-02-08";  # Just for convenience to upgrade packages
+      nativeBuildInputs = [ makeWrapper pkgconfig ];
       buildInputs = [
         libxml2 libxslt  # dependencies for lxml
+        libpng freetype  # dependencies for matplotlib
       ] ++ (with python36Packages; [
         python36 pip virtualenv
       ]);
