@@ -13,7 +13,7 @@
         git
         gnumake
         neovim
-        # p7zip
+        p7zip
         parallel-rust
         # patdiff
         ripgrep
@@ -22,22 +22,35 @@
         tmux
         tree
         universal-ctags
-        # unrar
+        unrar
         vim-vint
       ] ++ lib.optionals stdenv.isDarwin [
-        gnome-breeze        # used by GNU Cash
         reattach-to-user-namespace
       ] ++ lib.optionals stdenv.isLinux [
-        dropbox-cli
-        firefox-devedition-bin
-        # gimp
-        # inkscape
         patdiff
-        # okular
         trash-cli
         xsel
       ];
     });
+
+    myDesktopEnv = with self; buildEnv {
+      name = "my-desktop-env";
+      ignoreCollisions = true;
+      paths = lib.optionals stdenv.isDarwin [
+        gnome-breeze  # used by GNU Cash
+      ] ++ lib.optionals stdenv.isLinux ([
+        dropbox-cli
+        firefox-devedition-bin
+        gimp
+        inkscape
+        mathematica
+      ] ++ (with kdeApplications; [
+        okular
+        spectacle
+      ]));
+    };
+
+    mathematica = super.mathematica.override { lang = "ja"; };
 
     neovim = with super; neovim.override {
       withRuby = false;
