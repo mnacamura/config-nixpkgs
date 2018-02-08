@@ -34,24 +34,6 @@
       ];
     });
 
-    desktopEnv = with self; buildEnv {
-      name = "desktop-env";
-      ignoreCollisions = true;
-      paths = lib.optionals stdenv.isDarwin [
-        gnome-breeze  # used by GNU Cash
-      ] ++ lib.optionals stdenv.isLinux [
-        dropbox-cli
-        firefox-devedition-bin
-        gimp
-        inkscape
-        kdeApplications.okular
-        kdeApplications.spectacle
-        mathematica
-      ];
-    };
-
-    mathematica = super.mathematica.override { lang = "ja"; };
-
     neovim = with super; neovim.override {
       withRuby = false;
       configure = {
@@ -69,6 +51,24 @@
         };
       };
     };
+
+    desktopEnv = with self; buildEnv {
+      name = "desktop-env";
+      ignoreCollisions = true;
+      paths = lib.optionals stdenv.isDarwin [
+        gnome-breeze  # used by GNU Cash
+      ] ++ lib.optionals stdenv.isLinux [
+        dropbox-cli
+        firefox-devedition-bin
+        gimp
+        inkscape
+        kdeApplications.okular
+        kdeApplications.spectacle
+        mathematica
+      ];
+    };
+
+    mathematica = super.mathematica.override { lang = "ja"; };
 
     texliveEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
