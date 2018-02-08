@@ -84,8 +84,9 @@
       latexmk
       latexdiff
       revtex;
-    }; in buildEnv {
-      name = "texlive-env";
+    };
+    version = lib.getVersion myTexlive; in buildEnv {
+      name = "texlive-${version}-env";
       paths = [
         ghostscript  # required by LaTeXiT
         myTexlive
@@ -144,8 +145,9 @@
         tibble
         tidyr
       ];
-    }; in buildEnv {
-      name = "r-env";
+    };
+    version = lib.getVersion R; in buildEnv {
+      name = "R-${version}-env";
       paths = [
         (lib.lowPrio R)  # installs man pages etc.
         myR
@@ -169,8 +171,9 @@
       doCheck = false;
     });
 
-    rustEnv = with self; buildEnv {
-      name = "rust-env";
+    rustEnv = with self;
+    let version = rustc.version; in buildEnv {
+      name = "rust-${version}-env";
       paths = [
         cargo
         rustc
@@ -179,8 +182,9 @@
       ];
     };
 
-    nodeEnv = with self; buildEnv {
-      name = "node-env";
+    nodejsEnv = with self;
+    let version = nodejs.version; in buildEnv {
+      name = "nodejs-${version}-env";
       paths = [
         nodejs
         yarn
