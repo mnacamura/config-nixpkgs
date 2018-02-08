@@ -18,7 +18,6 @@
   nix.buildCores = 4;
   nix.nixPath = [
     "darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
-    "/nix/var/nix/profiles/per-user/root/channels"
     "/Users/mnacamura/.nix-defexpr/channels"
   ];
 
