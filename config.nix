@@ -3,8 +3,9 @@
   # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
-    myUtils = with self; lib.lowPrio (buildEnv {
-      name = "my-utils";
+
+    consoleEnv = with self; lib.lowPrio (buildEnv {
+      name = "console-env";
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
@@ -33,21 +34,20 @@
       ];
     });
 
-    myDesktopEnv = with self; buildEnv {
-      name = "my-desktop-env";
+    desktopEnv = with self; buildEnv {
+      name = "desktop-env";
       ignoreCollisions = true;
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
-      ] ++ lib.optionals stdenv.isLinux ([
+      ] ++ lib.optionals stdenv.isLinux [
         dropbox-cli
         firefox-devedition-bin
         gimp
         inkscape
+        kdeApplications.okular
+        kdeApplications.spectacle
         mathematica
-      ] ++ (with kdeApplications; [
-        okular
-        spectacle
-      ]));
+      ];
     };
 
     mathematica = super.mathematica.override { lang = "ja"; };
@@ -70,7 +70,7 @@
       };
     };
 
-    publishEnv = with self; let myTexlive = texlive.combine {
+    texliveEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
       scheme-basic  # installs collection-{basic,latex}
       collection-luatex
@@ -85,7 +85,7 @@
       latexdiff
       revtex;
     }; in buildEnv {
-      name = "publish-env";
+      name = "texlive-env";
       paths = [
         ghostscript  # required by LaTeXiT
         myTexlive
@@ -145,7 +145,7 @@
         tidyr
       ];
     }; in buildEnv {
-      name = "${R.name}-env";
+      name = "r-env";
       paths = [
         (lib.lowPrio R)  # installs man pages etc.
         myR
@@ -170,7 +170,7 @@
     });
 
     rustEnv = with self; buildEnv {
-      name = "rust-${rustc.version}-env";
+      name = "rust-env";
       paths = [
         cargo
         rustc
@@ -179,8 +179,8 @@
       ];
     };
 
-    nodejsEnv = with self; buildEnv {
-      name = "${nodejs.name}-env";
+    nodeEnv = with self; buildEnv {
+      name = "node-env";
       paths = [
         nodejs
         yarn
