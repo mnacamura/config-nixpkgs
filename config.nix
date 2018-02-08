@@ -147,7 +147,6 @@
     }; in buildEnv {
       name = "${R.name}-env";
       paths = [
-        libcxx           # required by rstan
         (lib.lowPrio R)  # installs man pages etc.
         myR
       ];
