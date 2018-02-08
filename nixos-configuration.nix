@@ -12,6 +12,11 @@
       ./hardware-configuration.nix
     ];
 
+  # Sounds
+  boot.extraModprobeConfig = ''
+    options snd-hda-intel model=generic
+  '';
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
