@@ -97,28 +97,50 @@
       ]);
     };
 
-    jupyterEnv = with self; stdenv.mkDerivation {
-      name = "jupyter-env";
-      version = "2018-02-02";  # Just for convenience to upgrade packages
-      nativeBuildInputs = [ makeWrapper ];
+    jupyterEnv = with self; stdenv.mkDerivation rec {
+      name = "jupyter-${version}-env";
+      version = "2018-02-11";
+      nativeBuildInputs = [
+        makeWrapper
+        pkgconfig
+      ];
       buildInputs = [
         libxml2 libxslt  # dependencies for lxml
+        libpng freetype  # dependencies for matplotlib
+        rEnv
+        rPackages.JuniperKernel  # required to install the logo image
       ] ++ (with python36Packages; [
         python36 pip virtualenv
       ]);
-      phases = [ "installPhase" ];
+      unpackPhase = ":";
       installPhase = ''
         venv=$out/var/venvs/jupyter
         mkdir -p $venv
-        # set SOURCE_DATE_EPOCH so that we can use python wheels
+        # Set SOURCE_DATE_EPOCH so that we can use python wheels
         SOURCE_DATE_EPOCH=$(date +%s)
         virtualenv --no-setuptools $venv
         source $venv/bin/activate
         pip --no-cache-dir install jupyter jupyter_contrib_nbextensions
         jupyter contrib nbextension install --sys-prefix
-        makeWrapper $venv/bin/jupyter $out/bin/jupyter \
-          --run "source $venv/bin/activate"
         pip --no-cache-dir install jupyterthemes
+
+        # Install JuniperKernerl
+        # `jupyter kernelspec install` does not work somehow, so we have to
+        # install the kernel manually
+        kspec=$venv/share/jupyter/kernels/juniper
+        mkdir -p $kspec
+        cat << JSON > $kspec/kernel.json
+        {
+          "argv": ["${rEnv}/bin/R", "--slave", "-e", "JuniperKernel::bootKernel()", "--args", "{connection_file}"],
+          "display_name": "${rEnv.name} (Juniper)",
+          "language": "R"
+        }
+        JSON
+        chmod 444 $kspec/kernel.json
+        ln -s ${rPackages.JuniperKernel}/library/JuniperKernel/extdata/logo-64x64.png $kspec/
+
+        makeWrapper $venv/bin/jupyter $out/bin/jupyter \
+            --run "source $venv/bin/activate"
       '';
     };
 
