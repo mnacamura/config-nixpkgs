@@ -9,13 +9,25 @@
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
+        binutils.bintools
+        bzip2
+        ccache
+        coreutils
+        diffutils
         fd
+        findutils
         fortune
+        gawk
         git
+        gnugrep
         gnumake
+        gnused
+        gnutar
+        gzip
         neovim
         p7zip
         parallel-rust
+        patch
         # patdiff
         ripgrep
         skim
@@ -25,6 +37,7 @@
         universal-ctags
         unrar
         vim-vint
+        xz
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
       ] ++ lib.optionals stdenv.isLinux [
@@ -33,6 +46,14 @@
         xsel
       ];
     });
+
+    ccacheWrapper = with super; ccacheWrapper.override {
+      extraConfig = ''
+        export CCACHE_COMPRESS=1
+        export CCACHE_DIR=/var/cache/ccache
+        export CCACHE_UMASK=007
+      '';
+    };
 
     neovim = with super; neovim.override {
       withRuby = false;
