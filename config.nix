@@ -115,14 +115,15 @@
       unpackPhase = ":";
       installPhase = ''
         venv=$out/var/venvs/jupyter
+        pip="pip --cache-dir=/var/cache/wheel"
         mkdir -p $venv
         # Set SOURCE_DATE_EPOCH so that we can use python wheels
         SOURCE_DATE_EPOCH=$(date +%s)
         virtualenv --no-setuptools $venv
         source $venv/bin/activate
-        pip --no-cache-dir install jupyter jupyter_contrib_nbextensions
+        $pip install jupyter jupyter_contrib_nbextensions
         jupyter contrib nbextension install --sys-prefix
-        pip --no-cache-dir install jupyterthemes
+        $pip install jupyterthemes
 
         # Install JuniperKernerl
         # `jupyter kernelspec install` does not work somehow, so we have to
@@ -139,8 +140,9 @@
         chmod 444 $kspec/kernel.json
         ln -s ${rPackages.JuniperKernel}/library/JuniperKernel/extdata/logo-64x64.png $kspec/
 
-        makeWrapper $venv/bin/jupyter $out/bin/jupyter \
-            --run "source $venv/bin/activate"
+        for bin in $venv/bin/{jupyter,jt}; do
+            makeWrapper $bin $out/bin/$(basename $bin) --run "source $venv/bin/activate"
+        done
       '';
     };
 
