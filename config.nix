@@ -118,103 +118,20 @@
       ]);
     };
 
-    jupyterEnv = with self; stdenv.mkDerivation rec {
-      name = "jupyter-${version}-env";
-      version = "2018-02-11";
-      nativeBuildInputs = [
-        makeWrapper
-        pkgconfig
-      ];
-      buildInputs = [
-        libxml2 libxslt  # dependencies for lxml
-        libpng freetype  # dependencies for matplotlib
-        rEnv
-        rPackages.JuniperKernel  # required to install the logo image
-      ] ++ (with python36Packages; [
-        python36 pip virtualenv
-      ]);
-      unpackPhase = ":";
-      installPhase = ''
-        venv=$out/var/venvs/jupyter
-        pip="pip --cache-dir=/var/cache/wheel"
-        mkdir -p $venv
-        # Set SOURCE_DATE_EPOCH so that we can use python wheels
-        SOURCE_DATE_EPOCH=$(date +%s)
-        virtualenv --no-setuptools $venv
-        source $venv/bin/activate
-        $pip install jupyter jupyter_contrib_nbextensions
-        jupyter contrib nbextension install --sys-prefix
-        $pip install jupyterthemes
-
-        # Install JuniperKernerl
-        # `jupyter kernelspec install` does not work somehow, so we have to
-        # install the kernel manually
-        kspec=$venv/share/jupyter/kernels/juniper
-        mkdir -p $kspec
-        cat << JSON > $kspec/kernel.json
-        {
-          "argv": ["${rEnv}/bin/R", "--slave", "-e", "JuniperKernel::bootKernel()", "--args", "{connection_file}"],
-          "display_name": "${rEnv.name} (Juniper)",
-          "language": "R"
-        }
-        JSON
-        chmod 444 $kspec/kernel.json
-        ln -s ${rPackages.JuniperKernel}/library/JuniperKernel/extdata/logo-64x64.png $kspec/
-
-        for bin in $venv/bin/{jupyter,jt}; do
-            makeWrapper $bin $out/bin/$(basename $bin) --run "source $venv/bin/activate"
-        done
+    statsEnv = with self; buildEnv {
+      name = "stats-env";
+      buildInputs = [ makeWrapper ];
+      paths = [ jupyterEnv rEnv juliaEnv ];
+      postBuild = ''
+        wrapProgram $out/bin/jupyter --set JUPYTER_PATH $out/share/jupyter
       '';
     };
 
-    rEnv = with self; let myR = rWrapper.override {
-      packages = with rPackages; [
-        GGally
-        JuniperKernel
-        doParallel
-        dplyr
-        forcats
-        foreach
-        ggplot2
-        glue
-        hms
-        jsonlite
-        lubridate
-        magrittr
-        purrr
-        readr
-        readxl
-        rlang
-        rstan
-        stringr
-        tibble
-        tidyr
-      ];
-    };
-    version = lib.getVersion R; in buildEnv {
-      name = "R-${version}-env";
-      paths = [
-        (lib.lowPrio R)  # installs man pages etc.
-        myR
-      ];
-    };
+    jupyterEnv = with self; callPackage ./pkgs/jupyter {};
 
-    juliaEnv = with self; let julia = julia_06; in buildEnv {
-      name = "${julia.name}-env";
-      paths = [
-        julia
-      ];
-    };
+    rEnv = with self; callPackages ./pkgs/R {};
 
-    julia_06 = with super; julia_06.overrideAttrs (as: with as; {
-      ## Required to use ZMQ on NixOS
-      LD_LIBRARY_PATH = if !stdenv.isDarwin
-        then "${zlib}/lib:${LD_LIBRARY_PATH}"
-        else LD_LIBRARY_PATH;
-
-      ## FIXME: Running socket test says "UDP send failed: network is unreachable"
-      doCheck = false;
-    });
+    juliaEnv = with self; callPackages ./pkgs/julia {};
 
     rustEnv = with self;
     let version = rustc.version; in buildEnv {
