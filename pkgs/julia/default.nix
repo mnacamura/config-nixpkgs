@@ -1,8 +1,12 @@
 { stdenv, makeWrapper, writeText,
-cacert, git, mbedtls, zlib, zeromq3, julia, jupyterEnv }:
+cacert, git, mbedtls, zlib, zeromq3, julia, jupyterEnv,
+libpng, pixman, libffi, gettext, glib, freetype, fontconfig, cairo, pango,
+}:
 
 let
-  extraLibs = [ mbedtls zlib zeromq3 ];
+  extraLibs = [ mbedtls zlib zeromq3
+    libpng pixman libffi gettext glib freetype fontconfig cairo pango.out
+  ];
 
   majorMinor = version:
   with stdenv.lib;
@@ -12,6 +16,7 @@ let
     ZMQ = writeText "ZMQ.jl.patch" (readFile ./patches/ZMQ.jl.patch);
     MbedTLS = writeText "MbedTLS.jl.patch" (readFile ./patches/MbedTLS.jl.patch);
     Rmath = writeText "Rmath.jl.patch" (readFile ./patches/Rmath.jl.patch);
+    Cairo = writeText "Cairo.jl.patch" (readFile ./patches/Cairo.jl.patch);
   };
 in
 
@@ -61,6 +66,13 @@ stdenv.mkDerivation rec {
     patch -p1 < ${patches.Rmath}
   '' + ''
     julia -e "Pkg.resolve(); Pkg.build(\"Rmath\")"
+    popd
+
+    # Install Cairo.jl manually to remove dependnecy to Homebrew.jl
+    git clone https://github.com/JuliaGraphics/Cairo.jl.git Cairo
+    pushd Cairo
+    patch -p1 < ${patches.Cairo}
+    julia -e "Pkg.resolve(); Pkg.build(\"Cairo\")"
     popd
 
     export JUPYTER=${jupyterEnv}/bin/jupyter
