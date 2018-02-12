@@ -11,6 +11,7 @@ let
   patches = with stdenv.lib; {
     ZMQ = writeText "ZMQ.jl.patch" (readFile ./patches/ZMQ.jl.patch);
     MbedTLS = writeText "MbedTLS.jl.patch" (readFile ./patches/MbedTLS.jl.patch);
+    Rmath = writeText "Rmath.jl.patch" (readFile ./patches/Rmath.jl.patch);
   };
 in
 
@@ -51,6 +52,15 @@ stdenv.mkDerivation rec {
     pushd MbedTLS
     patch -p1 < ${patches.MbedTLS}
     julia -e "Pkg.resolve(); Pkg.build(\"MbedTLS\")"
+    popd
+
+    # Install Rmath.jl manually to remove dependnecy to xcode-select
+    git clone https://github.com/JuliaStats/Rmath.jl.git Rmath
+    pushd Rmath
+  '' + stdenv.lib.optionalString stdenv.isDarwin ''
+    patch -p1 < ${patches.Rmath}
+  '' + ''
+    julia -e "Pkg.resolve(); Pkg.build(\"Rmath\")"
     popd
 
     export JUPYTER=${jupyterEnv}/bin/jupyter
