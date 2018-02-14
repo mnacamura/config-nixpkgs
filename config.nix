@@ -3,18 +3,31 @@
   # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
-    myUtils = with self; lib.lowPrio (buildEnv {
-      name = "my-utils";
+
+    consoleEnv = with self; lib.lowPrio (buildEnv {
+      name = "console-env";
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
+        binutils.bintools
+        bzip2
+        ccache
+        coreutils
+        diffutils
         fd
+        findutils
         fortune
+        gawk
         git
+        gnugrep
         gnumake
+        gnused
+        gnutar
+        gzip
         neovim
         p7zip
         parallel-rust
+        patch
         # patdiff
         ripgrep
         skim
@@ -24,6 +37,7 @@
         universal-ctags
         unrar
         vim-vint
+        xz
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
       ] ++ lib.optionals stdenv.isLinux [
@@ -32,6 +46,14 @@
         xsel
       ];
     });
+
+    ccacheWrapper = with super; ccacheWrapper.override {
+      extraConfig = ''
+        export CCACHE_COMPRESS=1
+        export CCACHE_DIR=/var/cache/ccache
+        export CCACHE_UMASK=007
+      '';
+    };
 
     neovim = with super; neovim.override {
       withRuby = false;
@@ -51,26 +73,25 @@
       };
     };
 
-    myDesktopEnv = with self; buildEnv {
-      name = "my-desktop-env";
+    desktopEnv = with self; buildEnv {
+      name = "desktop-env";
       ignoreCollisions = true;
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
-      ] ++ lib.optionals stdenv.isLinux ([
+      ] ++ lib.optionals stdenv.isLinux [
         dropbox-cli
         firefox-devedition-bin
         gimp
         inkscape
+        kdeApplications.okular
+        kdeApplications.spectacle
         mathematica
-      ] ++ (with kdeApplications; [
-        okular
-        spectacle
-      ]));
+      ];
     };
 
     mathematica = super.mathematica.override { lang = "ja"; };
 
-    publishEnv = with self; let myTexlive = texlive.combine {
+    texliveEnv = with self; let myTexlive = texlive.combine {
       inherit (texlive)
       scheme-basic  # installs collection-{basic,latex}
       collection-luatex
@@ -84,8 +105,9 @@
       latexmk
       latexdiff
       revtex;
-    }; in buildEnv {
-      name = "publish-env";
+    };
+    version = lib.getVersion myTexlive; in buildEnv {
+      name = "texlive-${version}-env";
       paths = [
         ghostscript  # required by LaTeXiT
         myTexlive
@@ -96,82 +118,24 @@
       ]);
     };
 
-    jupyterEnv = with self; stdenv.mkDerivation {
-      name = "jupyter-env";
-      version = "2018-02-08";  # Just for convenience to upgrade packages
-      nativeBuildInputs = [ makeWrapper pkgconfig ];
-      buildInputs = [
-        libxml2 libxslt  # dependencies for lxml
-        libpng freetype  # dependencies for matplotlib
-      ] ++ (with python36Packages; [
-        python36 pip virtualenv
-      ]);
-      phases = [ "installPhase" ];
-      installPhase = ''
-        venv=$out/var/venvs/jupyter
-        mkdir -p $venv
-        # set SOURCE_DATE_EPOCH so that we can use python wheels
-        SOURCE_DATE_EPOCH=$(date +%s)
-        virtualenv --no-setuptools $venv
-        source $venv/bin/activate
-        pip --no-cache-dir install jupyter jupyter_contrib_nbextensions
-        jupyter contrib nbextension install --sys-prefix
-        makeWrapper $venv/bin/jupyter $out/bin/jupyter \
-          --run "source $venv/bin/activate"
-        pip --no-cache-dir install jupyterthemes
+    statsEnv = with self; buildEnv {
+      name = "stats-env";
+      buildInputs = [ makeWrapper ];
+      paths = [ jupyterEnv rEnv juliaEnv ];
+      postBuild = ''
+        wrapProgram $out/bin/jupyter --set JUPYTER_PATH $out/share/jupyter
       '';
     };
 
-    rEnv = with self; let myR = rWrapper.override {
-      packages = with rPackages; [
-        GGally
-        JuniperKernel
-        doParallel
-        dplyr
-        forcats
-        foreach
-        ggplot2
-        glue
-        hms
-        jsonlite
-        lubridate
-        magrittr
-        purrr
-        readr
-        readxl
-        rlang
-        rstan
-        stringr
-        tibble
-        tidyr
-      ];
-    }; in buildEnv {
-      name = "${R.name}-env";
-      paths = [
-        (lib.lowPrio R)  # installs man pages etc.
-        myR
-      ];
-    };
+    jupyterEnv = with self; callPackage ./pkgs/jupyter {};
 
-    juliaEnv = with self; let julia = julia_06; in buildEnv {
-      name = "${julia.name}-env";
-      paths = [
-        julia
-      ];
-    };
+    rEnv = with self; callPackages ./pkgs/R {};
 
-    julia_06 = with super; julia_06.overrideAttrs (as: with as; {
-      ## Required to use ZMQ on NixOS
-      LD_LIBRARY_PATH = if !stdenv.isDarwin
-        then "${zlib}/lib:${LD_LIBRARY_PATH}"
-        else LD_LIBRARY_PATH;
+    juliaEnv = with self; callPackages ./pkgs/julia {};
 
-      ## FIXME: Running socket test says "UDP send failed: network is unreachable"
-      doCheck = false;
-    });
-
-    rustEnv = with self; buildEnv {
-      name = "rust-${rustc.version}-env";
+    rustEnv = with self;
+    let version = rustc.version; in buildEnv {
+      name = "rust-${version}-env";
       paths = [
         cargo
         rustc
@@ -180,8 +144,9 @@
       ];
     };
 
-    nodejsEnv = with self; buildEnv {
-      name = "${nodejs.name}-env";
+    nodejsEnv = with self;
+    let version = nodejs.version; in buildEnv {
+      name = "nodejs-${version}-env";
       paths = [
         nodejs
         yarn

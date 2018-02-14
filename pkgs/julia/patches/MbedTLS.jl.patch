@@ -1,0 +1,38 @@
+diff --git a/REQUIRE b/REQUIRE
+index a7c2269..597a7cf 100644
+--- a/REQUIRE
++++ b/REQUIRE
+@@ -1,4 +1,3 @@
+ julia 0.6
+ BinDeps
+-@osx Homebrew
+ Compat 0.41.0
+diff --git a/deps/build.jl b/deps/build.jl
+index e710313..713ba2f 100644
+--- a/deps/build.jl
++++ b/deps/build.jl
+@@ -51,9 +51,9 @@ if need_to_build_manually
+     # make sure we delete the old deps.jl
+     isfile("deps.jl") && read("deps.jl", String) == systemlibs && rm("deps.jl")
+ 
+-    mbed = library_dependency("libmbedtls", aliases=["libmbedtls", "libmbedtls.2.1.1"])
+-    mbed_crypto = library_dependency("libmbedcrypto", aliases=["libmbedcrypto", "libmbedcrypto.2.1.1"], validate=validate_mbed)
+-    mbed_x509 = library_dependency("libmbedx509", aliases=["libmbedx509", "libmbedx509.2.1.1"])
++    mbed = library_dependency("libmbedtls", aliases=["libmbedtls", "libmbedtls.so", "libmbedtls.2.1.1"])
++    mbed_crypto = library_dependency("libmbedcrypto", aliases=["libmbedcrypto", "libmbedcrypto.so", "libmbedcrypto.2.1.1"], validate=validate_mbed)
++    mbed_x509 = library_dependency("libmbedx509", aliases=["libmbedx509", "libmbedx509.so", "libmbedx509.2.1.1"])
+ 
+     mbed_all = [mbed, mbed_crypto, mbed_x509]
+ 
+@@ -87,11 +87,6 @@ if need_to_build_manually
+     end
+ 
+     if Compat.Sys.isapple()
+-        if Pkg.installed("Homebrew") === nothing
+-            error("Homebrew package not installed, please run Pkg.add(\"Homebrew\")")
+-        end
+-        using Homebrew
+-        provides(Homebrew.HB, "mbedtls", mbed_all)
+     end
+ 
+     if Compat.Sys.iswindows()
