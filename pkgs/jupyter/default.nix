@@ -1,4 +1,4 @@
-{ stdenv, makeWrapper, cacert, pkgconfig, libxml2, libxslt, libpng, freetype,
+{ stdenv, makeWrapper, cacert, git, pkgconfig, libxml2, libxslt, libpng, freetype,
 python36Packages, python36 }:
 
 stdenv.mkDerivation rec {
@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     makeWrapper
     cacert
+    git
     pkgconfig
     python36Packages.pip
   ];
@@ -34,6 +35,11 @@ stdenv.mkDerivation rec {
     jupyter nbextension install \
         https://raw.githubusercontent.com/lambdalisue/jupyter-vim-binding/master/vim_binding.js \
         --nbextensions=$venv/share/jupyter/nbextensions/vim_binding
+    # Install full MathJax including more fonts
+    pushd $venv/lib/python3.6/site-packages/notebook/static/components
+    rm -r MathJax
+    git clone https://github.com/mathjax/MathJax.git
+    popd
     for bin in $venv/bin/{jupyter,jt}; do
         makeWrapper $bin $out/bin/$(basename $bin) \
             --run "source $venv/bin/activate"
