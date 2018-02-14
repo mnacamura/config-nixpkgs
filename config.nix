@@ -129,9 +129,9 @@
 
     jupyterEnv = with self; callPackage ./pkgs/jupyter {};
 
-    rEnv = with self; callPackages ./pkgs/R {};
+    rEnv = with self; callPackage ./pkgs/R {};
 
-    juliaEnv = with self; callPackages ./pkgs/julia {};
+    juliaEnv = with self; callPackage ./pkgs/julia {};
 
     rustEnv = with self;
     let version = rustc.version; in buildEnv {
