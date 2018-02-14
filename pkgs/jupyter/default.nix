@@ -32,9 +32,9 @@ stdenv.mkDerivation rec {
     $pip install jupyter jupyter_contrib_nbextensions
     jupyter contrib nbextension install --sys-prefix
     $pip install jupyterthemes
-    jupyter nbextension install \
-        https://raw.githubusercontent.com/lambdalisue/jupyter-vim-binding/master/vim_binding.js \
-        --nbextensions=$venv/share/jupyter/nbextensions/vim_binding
+    pushd $venv/share/jupyter/nbextensions
+    git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+    popd
     # Install full MathJax including more fonts
     pushd $venv/lib/python3.6/site-packages/notebook/static/components
     rm -r MathJax
