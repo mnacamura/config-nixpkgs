@@ -13,10 +13,10 @@ let
   concatStringsSep "." (take 2 (splitString "." version));
 
   patches = with stdenv.lib; {
-    ZMQ = writeText "ZMQ.jl.patch" (readFile ./patches/ZMQ.jl.patch);
-    MbedTLS = writeText "MbedTLS.jl.patch" (readFile ./patches/MbedTLS.jl.patch);
-    Rmath = writeText "Rmath.jl.patch" (readFile ./patches/Rmath.jl.patch);
-    Cairo = writeText "Cairo.jl.patch" (readFile ./patches/Cairo.jl.patch);
+    ZMQ = writeText "ZMQ.patch" (readFile ./patches/ZMQ.patch);
+    MbedTLS = writeText "MbedTLS.patch" (readFile ./patches/MbedTLS.patch);
+    Rmath = writeText "Rmath.patch" (readFile ./patches/Rmath.patch);
+    Cairo = writeText "Cairo.patch" (readFile ./patches/Cairo.patch);
   };
 in
 
