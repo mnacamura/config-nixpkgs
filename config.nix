@@ -35,6 +35,7 @@
         tree
         universal-ctags
         unrar
+        unzip
         vim-vint
         xz
       ] ++ lib.optionals stdenv.isDarwin [
