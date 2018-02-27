@@ -9,7 +9,6 @@
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
-        binutils.bintools
         bzip2
         ccache
         coreutils
@@ -40,6 +39,7 @@
         xz
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
+        binutils.bintools
       ] ++ lib.optionals stdenv.isLinux [
         patdiff
         trash-cli
