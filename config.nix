@@ -80,6 +80,7 @@
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
       ] ++ lib.optionals stdenv.isLinux [
+        autorandr
         dropbox-cli
         firefox-devedition-bin
         gimp
