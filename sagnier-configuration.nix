@@ -54,6 +54,9 @@
       # Monospace fonts
       source-code-pro
       fira-code
+
+      # Emoji
+      noto-fonts-emoji
     ];
   };
 
