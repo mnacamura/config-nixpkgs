@@ -16,6 +16,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Use the latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Hibernation using swapfile.
   boot.resumeDevice = "/dev/nvme0n1p2";
   boot.kernelParams = [
@@ -27,9 +30,6 @@
   boot.extraModprobeConfig = ''
     options snd_hda_intel model=generic
   '';
-
-  # Use kernel 4.15.
-  boot.kernelPackages = pkgs.linuxPackages_4_15;
 
   networking.hostName = "louise"; # Define your hostname.
   # networking.enableIPv6 = true;

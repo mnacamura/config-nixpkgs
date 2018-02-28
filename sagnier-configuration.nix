@@ -16,13 +16,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Use the latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Set the sound card driver.
   boot.extraModprobeConfig = ''
     options snd_hda_intel model=generic
   '';
-
-  # Use kernel 4.15.
-  boot.kernelPackages = pkgs.linuxPackages_4_15;
 
   boot.blacklistedKernelModules = [
     # sp5100_tco: I/O address 0x0cd6 already in use
