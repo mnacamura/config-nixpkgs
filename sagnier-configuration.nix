@@ -18,7 +18,7 @@
 
   # Set the sound card driver.
   boot.extraModprobeConfig = ''
-    options snd-hda-intel model=generic
+    options snd_hda_intel model=generic
   '';
 
   # Use kernel 4.15.
