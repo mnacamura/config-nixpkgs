@@ -9,7 +9,6 @@
       ignoreCollisions = true;
       paths = [
         (aspellWithDicts (ps: with ps; [ en ]))
-        binutils.bintools
         bzip2
         ccache
         coreutils
@@ -36,10 +35,12 @@
         tree
         universal-ctags
         unrar
+        unzip
         vim-vint
         xz
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
+        binutils.bintools
       ] ++ lib.optionals stdenv.isLinux [
         patdiff
         trash-cli
@@ -79,12 +80,12 @@
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
       ] ++ lib.optionals stdenv.isLinux [
+        autorandr
         dropbox-cli
         firefox-devedition-bin
         gimp
         inkscape
-        kdeApplications.okular
-        kdeApplications.spectacle
+        slack
         mathematica
       ];
     };
