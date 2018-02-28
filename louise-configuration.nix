@@ -16,6 +16,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Hibernation using swapfile.
+  boot.resumeDevice = "/dev/nvme0n1p2";
+  boot.kernelParams = [
+    "resume_offset=16408576"
+    "acpi_sleep=s4_nohwsig"  # ACPI: Hardware changed while hibernated, success doubtful!
+  ];
+
   # Set the sound card driver.
   boot.extraModprobeConfig = ''
     options snd-hda-intel model=generic
