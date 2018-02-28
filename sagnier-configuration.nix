@@ -24,6 +24,12 @@
   # Use kernel 4.15.
   boot.kernelPackages = pkgs.linuxPackages_4_15;
 
+  boot.blacklistedKernelModules = [
+    # sp5100_tco: I/O address 0x0cd6 already in use
+    # See http://tsueyasu.blogspot.jp/2012/03/amdwatchdog.html
+    "sp5100_tco"
+  ];
+
   networking.hostName = "sagnier"; # Define your hostname.
   # networking.enableIPv6 = true;
   networking.networkmanager.enable = true;
