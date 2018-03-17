@@ -4,6 +4,19 @@
 
   packageOverrides = super: let self = super.pkgs; in {
 
+    adminEnv = with self; buildEnv {
+      name = "admin-env";
+      paths = [
+        gptfdisk
+        htop
+        nvme-cli
+        pciutils
+        # powertop
+        usbutils
+        xorg.xdpyinfo
+      ];
+    };
+
     consoleEnv = with self; lib.lowPrio (buildEnv {
       name = "console-env";
       ignoreCollisions = true;
@@ -85,8 +98,9 @@
         firefox-devedition-bin
         gimp
         inkscape
+        kdeApplications.okular
+        kdeApplications.spectacle
         slack
-        mathematica
       ];
     };
 
