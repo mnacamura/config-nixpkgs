@@ -21,7 +21,7 @@
       name = "console-env";
       ignoreCollisions = true;
       paths = [
-        (aspellWithDicts (ps: with ps; [ en ]))
+        (aspellWithDicts (dicts: with dicts; [ en ]))
         bzip2
         ccache
         coreutils
