@@ -11,7 +11,7 @@
         htop
         nvme-cli
         pciutils
-        # powertop
+        powertop
         usbutils
         xorg.xdpyinfo
       ];
