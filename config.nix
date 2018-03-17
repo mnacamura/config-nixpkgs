@@ -98,8 +98,6 @@
         firefox-devedition-bin
         gimp
         inkscape
-        kdeApplications.okular
-        kdeApplications.spectacle
         slack
       ];
     };
