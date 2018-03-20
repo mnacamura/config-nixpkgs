@@ -44,6 +44,7 @@
         ripgrep
         skim
         sl
+        stow
         tmux
         tree
         universal-ctags
