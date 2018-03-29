@@ -3,7 +3,7 @@ python36Packages, python36 }:
 
 stdenv.mkDerivation rec {
   name = "jupyter-${version}-env";
-  version = "2018-03-09";
+  version = "2018-03-29";
 
   nativeBuildInputs = [
     makeWrapper
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     export SSL_CERT_FILE=${cacert}/etc/ssl/certs/ca-bundle.crt
     venv=$out/var/venvs/jupyter
-    pip="pip --cache-dir=/nix/var/cache/python"
+    pip="pip --cache-dir=/var/cache/python"
     mkdir -p $venv
     # Set SOURCE_DATE_EPOCH so that we can use python wheels
     SOURCE_DATE_EPOCH=$(date +%s)
