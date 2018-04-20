@@ -99,7 +99,9 @@
         firefox-devedition-bin
         gimp
         inkscape
+        libnotify
         slack
+        zathura
       ];
     };
 
