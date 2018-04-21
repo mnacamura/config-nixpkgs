@@ -25,7 +25,7 @@
 
   installPhase = old.installPhase + ''
     # Install info and man pages
-    for path in `find ${R}/share`; do
+    for path in `find ${R}/share/{info,man}`; do
       dest=$out/''${path#${R}}
       if [ -d $path ]; then
         [ -d $dest ] || mkdir -p $dest
