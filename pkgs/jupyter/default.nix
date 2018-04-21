@@ -34,8 +34,8 @@ stdenv.mkDerivation rec {
 
     # Install full MathJax including more fonts
     pushd $venv/lib/python3.6/site-packages/notebook/static/components
-    rm -rf MathJax
-    ln -s ${mathjax}/share/MathJax
+    rm -r MathJax
+    ln -s ${mathjax}/lib/js/mathjax MathJax
     popd
 
     for bin in $venv/bin/jupyter*; do

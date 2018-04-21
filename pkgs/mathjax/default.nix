@@ -12,8 +12,9 @@ stdenv.mkDerivation rec {
   };
 
   installPhase = ''
-    mkdir -p $out/share/MathJax
-    cp -R . $out/share/MathJax/
+    dest=$out/lib/js/mathjax
+    mkdir -p $dest
+    cp -R . $dest/
   '';
 
   meta = with stdenv.lib; {
