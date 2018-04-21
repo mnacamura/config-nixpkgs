@@ -4,22 +4,19 @@
   packages = with rPackages; [
     GGally
     JuniperKernel
+    devtools
     doParallel
     dplyr
     forcats
-    foreach
     ggplot2
     glue
-    hms
     jsonlite
     lubridate
     magrittr
     purrr
     readr
     readxl
-    rlang
     rstan
-    stringr
     tibble
     tidyr
   ];
