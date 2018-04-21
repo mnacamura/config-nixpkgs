@@ -145,6 +145,8 @@
 
     jupyterEnv = with self; callPackage ./pkgs/jupyter {};
 
+    mathjax = with super; callPackage ./pkgs/mathjax {};
+
     rEnv = with self; callPackage ./pkgs/R {};
 
     juliaEnv = with self; callPackage ./pkgs/julia {};
