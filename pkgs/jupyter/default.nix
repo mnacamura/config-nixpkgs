@@ -10,26 +10,23 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    (python36.withPackages (ps: with ps; [
-      pip
-      virtualenv
-    ]))
+    (python36.withPackages (ps: with ps; [ pip virtualenv ]))
     mathjax
   ];
 
   buildCommand = ''
-    pip="pip --cache-dir=/var/cache/python"
+    PIP="pip --cache-dir=/var/cache/python"
 
     # Set SOURCE_DATE_EPOCH so that we can use python wheels
     SOURCE_DATE_EPOCH=$(date +%s)
 
-    venv=$out/var/venvs/jupyter
+    venv=$out/libexec/jupyter-venv
     mkdir -p $venv
     virtualenv $venv
     source $venv/bin/activate
 
     # Install JupyterLab
-    $pip install jupyterlab
+    $PIP install jupyterlab
     jupyter serverextension enable --py jupyterlab --sys-prefix
 
     # Install full MathJax including more fonts
@@ -39,7 +36,7 @@ stdenv.mkDerivation rec {
     popd
 
     for bin in $venv/bin/jupyter*; do
-        makeWrapper $bin $out/bin/$(basename $bin) \
+        makeWrapper $bin $out/''${bin#$venv} \
             --run "source $venv/bin/activate"
     done
   '';
