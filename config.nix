@@ -137,9 +137,11 @@
     statsEnv = with self; buildEnv {
       name = "stats-env";
       buildInputs = [ makeWrapper ];
-      paths = [ jupyterEnv rEnv juliaEnv ];
+      paths = [ jupyterEnv rEnv ];
       postBuild = ''
-        wrapProgram $out/bin/jupyter --set JUPYTER_PATH $out/share/jupyter
+        for bin in $out/bin/jupyter*; do
+            wrapProgram $bin --set JUPYTER_PATH $out/share/jupyter
+        done
       '';
     };
 
