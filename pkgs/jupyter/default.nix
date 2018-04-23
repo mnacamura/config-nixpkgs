@@ -3,7 +3,7 @@ python36, mathjax }:
 
 stdenv.mkDerivation rec {
   name = "jupyter-${version}-env";
-  version = "2018-04-21";
+  version = "2018-04-23";
 
   nativeBuildInputs = [
     makeWrapper
