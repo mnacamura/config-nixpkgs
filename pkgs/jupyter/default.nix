@@ -1,4 +1,5 @@
-{ stdenv, makeWrapper, pkgconfig, python36, mathjax }:
+{ stdenv, makeWrapper, pkgconfig, libxml2, libxslt, libpng, freetype,
+python36, mathjax }:
 
 stdenv.mkDerivation rec {
   name = "jupyter-${version}-env";
@@ -10,6 +11,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libxml2 libxslt  # dependencies for lxml
+    libpng freetype  # dependencies for matplotlib
     (python36.withPackages (ps: with ps; [ pip virtualenv ]))
     mathjax
   ];
@@ -25,7 +28,13 @@ stdenv.mkDerivation rec {
     virtualenv $venv
     source $venv/bin/activate
 
+    # Install Jupyter and extensions
+    $PIP install jupyter jupyter_contrib_nbextensions
+    jupyter contrib nbextension install --sys-prefix
+    $PIP install jupyterthemes
+
     # Install JupyterLab
+    # TODO: Plot does not render in jupyterlab
     $PIP install jupyterlab
     jupyter serverextension enable --py jupyterlab --sys-prefix
 
@@ -35,7 +44,7 @@ stdenv.mkDerivation rec {
     ln -s ${mathjax}/lib/js/mathjax MathJax
     popd
 
-    for bin in $venv/bin/jupyter*; do
+    for bin in $venv/bin/{jupyter*,jt}; do
         makeWrapper $bin $out/''${bin#$venv} \
             --run "source $venv/bin/activate"
     done
