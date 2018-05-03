@@ -149,7 +149,7 @@
 
     mathjax = with super; callPackage ./pkgs/mathjax {};
 
-    rEnv = with self; callPackage ./pkgs/R {};
+    rEnv = with self; callPackage ./pkgs/R/env.nix {};
 
     juliaEnv = with self; callPackage ./pkgs/julia {};
 
