@@ -104,6 +104,7 @@
         dropbox-cli
         firefox-devedition-bin
         gimp
+        gnucash
         inkscape
         libnotify
         slack
