@@ -153,7 +153,7 @@
       '';
     };
 
-    jupyterEnv = with self; callPackage ./pkgs/jupyter/env.nix {};
+    jupyterEnv = self.callPackage ./pkgs/jupyter/env.nix {};
 
     rEnv = self.callPackage ./pkgs/R/env.nix {};
 
