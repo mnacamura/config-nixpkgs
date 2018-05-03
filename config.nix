@@ -45,6 +45,7 @@
         pciutils
         powertop
         usbutils
+        xorg.xev
         xorg.xdpyinfo
       ];
     };
