@@ -1,5 +1,5 @@
 { stdenv, makeWrapper, writeText,
-cacert, git, mbedtls, zlib, zeromq3, julia, jupyterEnv,
+cacert, git, mbedtls, zlib, zeromq3, julia, jupyter,
 libpng, pixman, libffi, gettext, glib, freetype, fontconfig, cairo, pango,
 }:
 
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     git
     # pkgconfig
     # which
-    jupyterEnv
+    jupyter
   ];
 
   buildInputs = [ julia ] ++ extraLibs;
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
     julia -e "Pkg.resolve(); Pkg.build(\"Cairo\")"
     popd
 
-    export JUPYTER=${jupyterEnv}/bin/jupyter
+    export JUPYTER=${jupyter}/bin/jupyter
     export HOME=.
     julia -e "Pkg.add(\"IJulia\")"
 
