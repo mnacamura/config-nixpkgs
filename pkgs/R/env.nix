@@ -35,7 +35,7 @@ in
         if [ -d "$path" ]; then
           [ -d "$dest" ] || mkdir -p "$dest"
         else
-          ln -s "$path" "$dest"
+          ln -s "${R}/$path" "$dest"
         fi
       done
     )
