@@ -28,14 +28,17 @@ in
 
   installPhase = old.installPhase + ''
     # Install info and man pages
-    for path in $(find ${R}/share/{info,man}); do
-      dest=$out/''${path#${R}}
-      if [ -d "$path" ]; then
-        [ -d "$dest" ] || mkdir -p "$dest"
-      else
-        ln -s "$path" "$dest"
-      fi
-    done
+    (
+      cd ${R}
+      for path in $(find share/{info,man}); do
+        dest="$out/$path"
+        if [ -d "$path" ]; then
+          [ -d "$dest" ] || mkdir -p "$dest"
+        else
+          ln -s "$path" "$dest"
+        fi
+      done
+    )
   '';
 
   postBuild = ''
@@ -44,11 +47,11 @@ in
     mkdir -p "$kspec"
     cat << EOF > "$kspec/kernel.json"
     {
-    "argv": ["$out/bin/R", "--slave", "-e", "JuniperKernel::bootKernel()", "--args", "{connection_file}"],
+    "language": "R",
     "display_name": "${R.name} (Juniper)",
-    "language": "R"
+    "argv": ["$out/bin/R", "--slave", "-e", "JuniperKernel::bootKernel()", "--args", "{connection_file}"]
     }
     EOF
-    ln -s ${rPackages.JuniperKernel}/library/JuniperKernel/extdata/logo-64x64.png "$kspec"/
+    ln -s ${rPackages.JuniperKernel}/library/JuniperKernel/extdata/logo-64x64.png "$kspec"
   '';
 })
