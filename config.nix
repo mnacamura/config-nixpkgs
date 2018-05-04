@@ -147,8 +147,8 @@
       buildInputs = [ makeWrapper ];
       paths = [ jupyterEnv rEnv ];
       postBuild = ''
-        for bin in $out/bin/jupyter*; do
-            wrapProgram $bin --set JUPYTER_PATH $out/share/jupyter
+        for script in "$out"/bin/jupyter*; do
+          wrapProgram $script --set JUPYTER_PATH "$out/share/jupyter"
         done
       '';
     };

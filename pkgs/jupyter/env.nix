@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildCommand = ''
-    PIP="pip --cache-dir=/var/cache/python"
+    PIP='pip --cache-dir=/var/cache/python'
 
     # Set SOURCE_DATE_EPOCH so that we can use python wheels
     SOURCE_DATE_EPOCH="$(date +%s)"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     venv="$out/libexec/jupyter-venv"
     mkdir -p "$venv"
     virtualenv "$venv"
-    source "$venv/bin/activate"
+    . "$venv/bin/activate"
 
     # Install Jupyter and extensions
     $PIP install jupyter jupyter_contrib_nbextensions
@@ -42,9 +42,12 @@ stdenv.mkDerivation rec {
       ln -s ${mathjax}/lib/js/mathjax MathJax
     )
 
-    for bin in "$venv"/bin/{jupyter*,jt}; do
-      makeWrapper "$bin" "$out/''${bin#$venv}" \
-        --run "source $venv/bin/activate"
-    done
+    (
+      cd "$venv"
+      for script in bin/{jupyter*,jt}; do
+        makeWrapper "$venv/$script" "$out/$script" \
+          --run ". \"$venv/bin/activate\""
+      done
+    )
   '';
 }
