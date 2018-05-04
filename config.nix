@@ -33,6 +33,8 @@
 
     mathjax = super.callPackage ./pkgs/mathjax {};
 
+    jupyter = super.callPackage ./pkgs/jupyter {};
+
     # }}}
     # Environments {{{
 
@@ -145,15 +147,13 @@
     statsEnv = with self; buildEnv {
       name = "stats-env";
       buildInputs = [ makeWrapper ];
-      paths = [ jupyterEnv rEnv ];
+      paths = [ jupyter rEnv ];
       postBuild = ''
         for script in "$out"/bin/jupyter*; do
           wrapProgram $script --set JUPYTER_PATH "$out/share/jupyter"
         done
       '';
     };
-
-    jupyterEnv = self.callPackage ./pkgs/jupyter/env.nix {};
 
     rEnv = self.callPackage ./pkgs/R/env.nix {};
 

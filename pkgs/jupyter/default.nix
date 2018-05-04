@@ -2,8 +2,8 @@
 python3, mathjax }:
 
 stdenv.mkDerivation rec {
-  name = "jupyter-${version}-env";
-  version = "2018-05-04";
+  name = "jupyter-${version}";
+  version = "2018-05-05";
 
   nativeBuildInputs = [ makeWrapper pkgconfig ];
 
