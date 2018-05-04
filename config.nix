@@ -3,8 +3,7 @@
   # allowBroken = true;
 
   packageOverrides = super: let self = super.pkgs; in {
-
-    ## Custom packages
+    # Custom packages {{{
 
     ccacheWrapper = super.ccacheWrapper.override {
       extraConfig = ''
@@ -34,7 +33,8 @@
 
     mathjax = super.callPackage ./pkgs/mathjax {};
 
-    ## Environments
+    # }}}
+    # Environments {{{
 
     adminEnv = with self; buildEnv {
       name = "admin-env";
@@ -179,4 +179,8 @@
       ];
     };
   };
+
+  #}}}
 }
+
+# vim: fdm=marker
