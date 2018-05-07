@@ -16,9 +16,12 @@ let
     purrr
     readr
     readxl
+    roxygen2
     rstan
+    rstantools
     tibble
     tidyr
+    usethis  # required by rstantools
   ];
 
 in
