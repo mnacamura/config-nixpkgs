@@ -2,26 +2,19 @@
 
 let
   packages = with rPackages; [
-    GGally
-    JuniperKernel
-    devtools
-    doParallel
-    dplyr
-    forcats
-    ggplot2
-    glue
-    jsonlite
-    lubridate
-    magrittr
-    purrr
-    readr
-    readxl
-    roxygen2
-    rstan
-    rstantools
-    tibble
-    tidyr
-    usethis  # required by rstantools
+    # Package development
+    devtools roxygen2
+
+    # Tidyverse
+    dplyr forcats ggplot2 glue jsonlite lubridate magrittr purrr readr readxl
+    tibble tidyr
+
+    # RStan
+    rstan rstantools
+    usethis  # required by rstantools::rstan_package_skeleton
+
+    # Others
+    GGally JuniperKernel doParallel
   ];
 
 in
