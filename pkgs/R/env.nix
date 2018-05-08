@@ -3,7 +3,7 @@
 let
   packages = with rPackages; [
     # Package development
-    devtools roxygen2
+    devtools lintr roxygen2 testthat
 
     # Tidyverse
     dplyr forcats ggplot2 glue jsonlite lubridate magrittr purrr readr readxl
