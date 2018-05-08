@@ -110,6 +110,7 @@
         gnucash
         inkscape
         libnotify
+        rounded-mgenplus
         slack
         zathura
       ];
