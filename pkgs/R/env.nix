@@ -13,6 +13,9 @@ let
     rstan rstantools
     usethis  # required by rstantools::rstan_package_skeleton
 
+    # Publication
+    rmarkdown revealjs
+
     # Others
     GGally JuniperKernel doParallel
   ];
