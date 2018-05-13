@@ -104,6 +104,7 @@
         gnome-breeze  # used by GNU Cash
       ] ++ lib.optionals stdenv.isLinux [
         autorandr
+        btops
         dropbox-cli
         firefox-devedition-bin
         gimp
