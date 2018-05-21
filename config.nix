@@ -173,8 +173,12 @@
     };
 
     nodejsEnv = with self;
-    let version = nodejs.version; in buildEnv {
-      name = "nodejs-${version}-env";
+    let
+      nodejs = super.nodejs-8_x;
+      yarn = super.yarn.override { inherit nodejs; };
+    in
+    buildEnv {
+      name = "${nodejs.name}-env";
       paths = [
         nodejs
         yarn
