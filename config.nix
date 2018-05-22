@@ -77,11 +77,13 @@
         patch
         # patdiff
         ripgrep
+        scim
         skim
         sl
         stow
         tmux
         tree
+        tty-clock
         universal-ctags
         unrar
         unzip
