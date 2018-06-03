@@ -119,6 +119,12 @@
       ];
     };
 
+    pandoc-crossref_0_3_0_2 = with super;
+    haskell.lib.overrideCabal haskellPackages.pandoc-crossref (_: {
+      version = "0.3.0.2";
+      sha256 = "1igxa3pmb66gw5jgpdpx5gb7b4pi1w1r1ny0jpbfz4drbnblh320";
+    });
+
     texliveEnv = with self; let
       myTexlive = texlive.combine {
         inherit (texlive)
@@ -144,7 +150,7 @@
       ] ++ (with haskellPackages; [
         pandoc
         pandoc-citeproc
-        pandoc-crossref
+        pandoc-crossref_0_3_0_2  # compatible with the current pandoc (2.1.2)
       ]);
     };
 
