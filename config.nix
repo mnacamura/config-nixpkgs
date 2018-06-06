@@ -175,8 +175,8 @@
       paths = [
         cargo
         rustc
-        # rustfmt
-        # rustracer
+        rustfmt
+        rustracer
       ];
     };
 
