@@ -13,7 +13,12 @@
       '';
     };
 
-    neovim = with super; neovim.override {
+    jupyter = super.callPackage ./pkgs/jupyter {};
+
+    mathjax = super.callPackage ./pkgs/mathjax {};
+
+    neovim = with super;
+    neovim.override {
       withRuby = false;
       configure = {
         customRC = ''
@@ -31,14 +36,17 @@
       };
     };
 
-    mathjax = super.callPackage ./pkgs/mathjax {};
-
-    jupyter = super.callPackage ./pkgs/jupyter {};
+    pandoc-crossref_0_3_0_2 = with super;
+    haskell.lib.overrideCabal haskellPackages.pandoc-crossref (_: {
+      version = "0.3.0.2";
+      sha256 = "1igxa3pmb66gw5jgpdpx5gb7b4pi1w1r1ny0jpbfz4drbnblh320";
+    });
 
     # }}}
     # Environments {{{
 
-    adminEnv = with self; buildEnv {
+    adminEnv = with self;
+    buildEnv {
       name = "admin-env";
       paths = [
         gptfdisk
@@ -52,9 +60,9 @@
       ];
     };
 
-    consoleEnv = with self; lib.lowPrio (buildEnv {
+    consoleEnv = with self;
+    buildEnv {
       name = "console-env";
-      ignoreCollisions = true;
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
         bzip2
@@ -97,11 +105,11 @@
         trash-cli
         xsel
       ];
-    });
+    };
 
-    desktopEnv = with self; buildEnv {
+    desktopEnv = with self;
+    buildEnv {
       name = "desktop-env";
-      ignoreCollisions = true;
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
       ] ++ lib.optionals stdenv.isLinux [
@@ -119,13 +127,49 @@
       ];
     };
 
-    pandoc-crossref_0_3_0_2 = with super;
-    haskell.lib.overrideCabal haskellPackages.pandoc-crossref (_: {
-      version = "0.3.0.2";
-      sha256 = "1igxa3pmb66gw5jgpdpx5gb7b4pi1w1r1ny0jpbfz4drbnblh320";
-    });
+    juliaEnv = self.callPackage ./pkgs/julia/env.nix {};
 
-    texliveEnv = with self; let
+    nodejsEnv = with self;
+    let
+      nodejs = super.nodejs-8_x;
+      yarn = super.yarn.override { inherit nodejs; };
+    in
+    buildEnv {
+      name = "${nodejs.name}-env";
+      paths = [
+        nodejs
+        yarn
+      ];
+    };
+
+    rEnv = self.callPackage ./pkgs/R/env.nix {};
+
+    rustEnv = with self;
+    let version = rustc.version; in
+    buildEnv {
+      name = "rust-${version}-env";
+      paths = [
+        cargo
+        rustc
+        rustfmt
+        rustracer
+      ];
+    };
+
+    statsEnv = with self;
+    buildEnv {
+      name = "stats-env";
+      buildInputs = [ makeWrapper ];
+      paths = [ jupyter rEnv ];
+      postBuild = ''
+        for script in "$out"/bin/jupyter*; do
+          wrapProgram $script --set JUPYTER_PATH "$out/share/jupyter"
+        done
+      '';
+    };
+
+    texliveEnv = with self;
+    let
       myTexlive = texlive.combine {
         inherit (texlive)
         scheme-basic  # installs collection-{basic,latex}
@@ -142,7 +186,8 @@
         revtex;
       };
       version = lib.getVersion myTexlive;
-    in buildEnv {
+    in
+    buildEnv {
       name = "texlive-${version}-env";
       paths = [
         ghostscript  # required by LaTeXiT
@@ -154,47 +199,8 @@
       ]);
     };
 
-    statsEnv = with self; buildEnv {
-      name = "stats-env";
-      buildInputs = [ makeWrapper ];
-      paths = [ jupyter rEnv ];
-      postBuild = ''
-        for script in "$out"/bin/jupyter*; do
-          wrapProgram $script --set JUPYTER_PATH "$out/share/jupyter"
-        done
-      '';
-    };
-
-    rEnv = self.callPackage ./pkgs/R/env.nix {};
-
-    juliaEnv = with self; callPackage ./pkgs/julia/env.nix {};
-
-    rustEnv = with self;
-    let version = rustc.version; in buildEnv {
-      name = "rust-${version}-env";
-      paths = [
-        cargo
-        rustc
-        rustfmt
-        rustracer
-      ];
-    };
-
-    nodejsEnv = with self;
-    let
-      nodejs = super.nodejs-8_x;
-      yarn = super.yarn.override { inherit nodejs; };
-    in
-    buildEnv {
-      name = "${nodejs.name}-env";
-      paths = [
-        nodejs
-        yarn
-      ];
-    };
-  };
-
   #}}}
+  };
 }
 
 # vim: fdm=marker
