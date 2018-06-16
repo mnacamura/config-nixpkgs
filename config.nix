@@ -65,41 +65,27 @@
       name = "console-env";
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
-        bzip2
-        ccache
-        coreutils
-        diffutils
         fd
-        findutils
         fortune
-        gawk
         git
-        gnugrep
         gnumake
-        gnused
-        gnutar
-        gzip
         neovim
         p7zip
         parallel-rust
-        patch
         # patdiff
         ripgrep
         scim
         skim
         sl
         stow
-        tmux
         tree
         tty-clock
         universal-ctags
         unrar
         unzip
         vim-vint
-        xz
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
-        binutils.bintools
       ] ++ lib.optionals stdenv.isLinux [
         patdiff
         trash-cli
@@ -113,8 +99,6 @@
       paths = lib.optionals stdenv.isDarwin [
         gnome-breeze  # used by GNU Cash
       ] ++ lib.optionals stdenv.isLinux [
-        autorandr
-        btops
         dropbox-cli
         firefox-devedition-bin
         gimp
