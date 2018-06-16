@@ -123,6 +123,7 @@
         libnotify
         rounded-mgenplus
         slack
+        tdesktop
         zathura
       ];
     };
