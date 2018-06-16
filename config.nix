@@ -66,14 +66,18 @@
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
         fd
+        file
         fortune
         git
         gnumake
+        jq
         neovim
         p7zip
         parallel-rust
         # patdiff
+        rclone
         ripgrep
+        rlwrap
         scim
         skim
         sl
@@ -84,6 +88,7 @@
         unrar
         unzip
         vim-vint
+        wget
       ] ++ lib.optionals stdenv.isDarwin [
         reattach-to-user-namespace
       ] ++ lib.optionals stdenv.isLinux [
