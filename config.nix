@@ -51,7 +51,6 @@
       name = "admin-env";
       paths = [
         gptfdisk
-        htop
         nvme-cli
         pciutils
         powertop
@@ -71,6 +70,7 @@
         fortune
         git
         gnumake
+        htop
         jq
         lf
         neovim
