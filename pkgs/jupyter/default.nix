@@ -3,14 +3,14 @@ python3, mathjax }:
 
 stdenv.mkDerivation rec {
   name = "jupyter-${version}";
-  version = "2018-05-05";
+  version = "2018-06-18";
 
   nativeBuildInputs = [ makeWrapper pkgconfig ];
 
   buildInputs = [
     libxml2 libxslt  # dependencies for lxml
     libpng freetype  # dependencies for matplotlib
-    (python3.withPackages (ps: with ps; [ pip virtualenv ]))
+    (python3.withPackages (pkgs: with pkgs; [ pip virtualenv ]))
     mathjax
   ];
 
@@ -30,16 +30,11 @@ stdenv.mkDerivation rec {
     jupyter contrib nbextension install --sys-prefix
     $PIP install jupyterthemes
 
-    # Install JupyterLab
-    # TODO: Plot does not render in jupyterlab
-    $PIP install jupyterlab
-    jupyter serverextension enable --py jupyterlab --sys-prefix
-
     # Install full MathJax including more fonts
     (
       cd "$venv/lib/${python3.libPrefix}/site-packages/notebook/static/components"
       rm -r MathJax
-      ln -s ${mathjax}/lib/js/mathjax MathJax
+      ln -s ${mathjax}/lib/node_modules/mathjax MathJax
     )
 
     (

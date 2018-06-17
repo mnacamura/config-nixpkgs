@@ -13,9 +13,9 @@
       '';
     };
 
-    jupyter = super.callPackage ./pkgs/jupyter {};
-
-    mathjax = super.callPackage ./pkgs/mathjax {};
+    jupyter = super.callPackage ./pkgs/jupyter {
+      inherit (super.nodePackages_8_x) mathjax;
+    };
 
     neovim = with super;
     neovim.override {
