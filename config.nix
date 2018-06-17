@@ -72,6 +72,7 @@
         git
         gnumake
         jq
+        lf
         neovim
         p7zip
         parallel-rust
