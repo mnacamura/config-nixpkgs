@@ -47,8 +47,9 @@
     # Environments {{{
 
     adminEnv = with self;
+    let version = "2018-06-18"; in
     buildEnv {
-      name = "admin-env";
+      name = "admin-${version}-env";
       paths = [
         gptfdisk
         nvme-cli
@@ -61,8 +62,9 @@
     };
 
     consoleEnv = with self;
+    let version = "2018-06-18"; in
     buildEnv {
-      name = "console-env";
+      name = "console-${version}-env";
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
         fd
@@ -101,8 +103,9 @@
     };
 
     desktopEnv = with self;
+    let version = "2018-06-18"; in
     buildEnv {
-      name = "desktop-env";
+      name = "desktop-${version}-env";
       paths = lib.optionals stdenv.isLinux [
         dropbox-cli
         firefox-devedition-bin
@@ -149,8 +152,9 @@
     };
 
     statsEnv = with self;
+    let version = "2018-06-18"; in
     buildEnv {
-      name = "stats-env";
+      name = "stats-${version}-env";
       buildInputs = [ makeWrapper ];
       paths = [ jupyter rEnv ];
       postBuild = ''
