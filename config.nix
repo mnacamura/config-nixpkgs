@@ -91,21 +91,19 @@
         unzip
         vim-vint
         wget
-      ] ++ lib.optionals stdenv.isDarwin [
-        reattach-to-user-namespace
       ] ++ lib.optionals stdenv.isLinux [
         patdiff
         trash-cli
         xsel
+      ] ++ lib.optionals stdenv.isDarwin [
+        reattach-to-user-namespace
       ];
     };
 
     desktopEnv = with self;
     buildEnv {
       name = "desktop-env";
-      paths = lib.optionals stdenv.isDarwin [
-        gnome-breeze  # used by GNU Cash
-      ] ++ lib.optionals stdenv.isLinux [
+      paths = lib.optionals stdenv.isLinux [
         dropbox-cli
         firefox-devedition-bin
         gimp
@@ -116,6 +114,8 @@
         slack
         tdesktop
         zathura
+      ] ++ lib.optionals stdenv.isDarwin [
+        gnome-breeze  # used by GNU Cash
       ];
     };
 
