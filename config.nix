@@ -98,6 +98,7 @@
         trash-cli
         xsel
       ] ++ lib.optionals stdenv.isDarwin [
+        darwin.trash
         reattach-to-user-namespace
       ];
     };
