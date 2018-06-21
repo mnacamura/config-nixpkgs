@@ -146,6 +146,7 @@
       name = "rust-${version}-env";
       paths = [
         cargo
+        carnix
         rustc
         rustfmt
         rustracer
