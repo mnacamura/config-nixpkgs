@@ -141,14 +141,15 @@
     rEnv = self.callPackage ./pkgs/R/env.nix {};
 
     rustEnv = with self;
-    let version = rustc.version; in
+    let
+      inherit (rustChannels.stable) rust;
+      version = lib.getVersion rust;
+    in
     buildEnv {
       name = "rust-${version}-env";
       paths = [
-        cargo
         carnix
-        rustc
-        rustfmt
+        rust
         rustracer
       ];
     };
