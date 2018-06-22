@@ -142,11 +142,13 @@
 
     rustEnv = with self;
     let
-      inherit (rustChannels.stable) rust;
-      version = lib.getVersion rust;
+      inherit (rustChannelOf {
+        date = "2018-06-20";
+        channel = "nightly";
+      }) rust;
     in
     buildEnv {
-      name = "rust-${version}-env";
+      name = "${rust.name}-env";
       paths = [
         carnix
         rust
