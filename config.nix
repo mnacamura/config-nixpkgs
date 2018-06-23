@@ -40,7 +40,6 @@
     haskell.lib.overrideCabal haskellPackages.pandoc-crossref (_: {
       version = "0.3.0.2";
       sha256 = "1igxa3pmb66gw5jgpdpx5gb7b4pi1w1r1ny0jpbfz4drbnblh320";
-      editedCabalFile = "15qr0r5753whzdh92c9kpdpddwqhvaah0yl1i0a29363h5whgk4a";
     });
 
     # }}}
