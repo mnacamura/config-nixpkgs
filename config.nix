@@ -67,11 +67,13 @@
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
         fd
+        feedgnuplot
         file
         fortune
         git
         gnumake
         htop
+        jo
         jq
         lf
         neovim
