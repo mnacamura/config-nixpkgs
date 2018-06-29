@@ -143,7 +143,7 @@
 
     rustEnv = with self;
     let
-      rustChannel = self.rustChannelOf {
+      rustChannel = rustChannelOf {
         date = "2018-06-28";
         channel = "nightly";
       };
