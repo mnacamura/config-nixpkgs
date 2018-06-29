@@ -141,15 +141,19 @@
 
     rustEnv = with self;
     let
-      inherit (rustChannelOf {
-        date = "2018-06-25";
+      rustChannel = self.rustChannelOf {
+        date = "2018-06-28";
         channel = "nightly";
-      }) rust rust-src;
+      };
+
+      inherit (rustChannel) rust rust-src;
     in
     buildEnv {
       name = "${rust.name}-env";
       ignoreCollisions = true;
       paths = [
+        cargo-edit
+        cargo-tree
         carnix
         rust
         rust-src
