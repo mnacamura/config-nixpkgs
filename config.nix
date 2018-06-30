@@ -66,6 +66,7 @@
       name = "console-${version}-env";
       paths = [
         (aspellWithDicts (dicts: with dicts; [ en ]))
+        direnv
         fd
         feedgnuplot
         file
