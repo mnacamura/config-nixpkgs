@@ -143,14 +143,14 @@
 
     rustEnv = with self;
     let
-      rustChannel = rustChannelOf {
+      channel = rustChannelOf {
         date = "2018-06-29";
         channel = "nightly";
       };
 
-      inherit (rustChannel) rust rust-src;
+      inherit (channel) rust rust-src;
 
-      env = writeText "rust-env" ''
+      fishEnv = writeText "rust-env-fish" ''
         if status is-interactive
           set -gx RUST_SRC_PATH "${rust-src}/lib/rustlib/src/rust/src"
           [ -d $HOME/.cargo/bin ]
@@ -163,7 +163,7 @@
       # ignoreCollisions = true;
       paths = [
         (runCommand "install-rust-env" {} ''
-          install -D -m 444 ${env} $out/etc/fish/conf.d/rust-env.fish
+          install -D -m 444 ${fishEnv} $out/etc/fish/conf.d/rust-env.fish
         '')
         # cargo-edit  # collision with carnix
         cargo-tree
