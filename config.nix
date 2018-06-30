@@ -143,32 +143,31 @@
 
     rustEnv = with self;
     let
-      channel = rustChannelOf {
-        date = "2018-06-29";
-        channel = "nightly";
+      rust-src = stdenv.mkDerivation {
+        inherit (rustc.src) name;
+        inherit (rustc) src;
+        phases = [ "unpackPhase" "installPhase" ];
+        installPhase = "cp -r src $out";
       };
-
-      inherit (channel) rust rust-src;
-
-      fishEnv = writeText "rust-env-fish" ''
+      fishConf = writeText "rust-fish-conf" ''
         if status is-interactive
-          set -gx RUST_SRC_PATH "${rust-src}/lib/rustlib/src/rust/src"
           [ -d $HOME/.cargo/bin ]
           and set PATH $HOME/.cargo/bin $PATH
+          [ -z "$RUST_SRC_PATH" ]
+          and set -gx RUST_SRC_PATH "${rust-src}"
         end
       '';
     in
     buildEnv {
-      name = "${rust.name}-env";
-      # ignoreCollisions = true;
+      name = "${rustc.name}-env";
       paths = [
-        (runCommand "install-rust-env" {} ''
-          install -D -m 444 ${fishEnv} $out/etc/fish/conf.d/rust-env.fish
+        (runCommand "install-rust-fish-conf" {} ''
+          install -D -m 444 ${fishConf} $out/etc/fish/conf.d/rust.fish
         '')
-        # cargo-edit  # collision with carnix
+        cargo
+        cargo-edit
         cargo-tree
-        carnix
-        rust
+        rustc
         rustracer
       ];
     };
