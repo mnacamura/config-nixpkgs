@@ -152,15 +152,15 @@
       };
       fishConf = writeText "rust-fish-conf" ''
         if status is-interactive
-          [ -d $HOME/.cargo/bin ]
-          and set PATH $HOME/.cargo/bin $PATH
-          [ -z "$RUST_SRC_PATH" ]
-          and set -gx RUST_SRC_PATH "${rust-src}"
+          [ -d "$HOME/.cargo/bin" ]
+          and set PATH "$HOME/.cargo/bin" $PATH
+          set -q RUST_SRC_PATH
+          or set -gx RUST_SRC_PATH "${rust-src}"
         end
       '';
     in
     buildEnv {
-      name = "${rustc.name}-env";
+      name = "rust-${rustc.version}-env";
       paths = [
         (runCommand "install-rust-fish-conf" {} ''
           install -D -m 444 ${fishConf} $out/etc/fish/conf.d/rust.fish
