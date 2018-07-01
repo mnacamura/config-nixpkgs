@@ -3,7 +3,7 @@ python3, mathjax }:
 
 stdenv.mkDerivation rec {
   name = "jupyter-${version}";
-  version = "2018-06-18";
+  version = "2018-07-01";
 
   nativeBuildInputs = [ makeWrapper pkgconfig ];
 
@@ -44,5 +44,17 @@ stdenv.mkDerivation rec {
           --run ". \"$venv/bin/activate\""
       done
     )
+
+    # Install fish completion
+    mkdir -p $out/share/fish/vendor_completions.d
+    cat << EOF > $out/share/fish/vendor_completions.d/jupyter.fish
+    function __fish_jupyter_subcommands
+      jupyter -h \
+         | string join ' ' \
+         | sed -E 's/^.*Available subcommands: *(.+) *$/\1/' \
+         | string split ' '
+    end
+    complete -x -c jupyter -a "(__fish_jupyter_subcommands)"
+    EOF
   '';
 }
