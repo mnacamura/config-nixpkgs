@@ -30,7 +30,7 @@
           endif
         '';
         packages.default = with vimPlugins; {
-          start = [ skim ];
+          start = [ skim vim-nix ];
           opt = [];
         };
       };
