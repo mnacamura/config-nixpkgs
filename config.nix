@@ -63,7 +63,7 @@
     };
 
     consoleEnv = with self;
-    let version = "2018-06-18"; in
+    let version = "2018-07-08"; in
     buildEnv {
       name = "console-${version}-env";
       paths = [
@@ -80,6 +80,7 @@
         jq
         lf
         neovim
+        nixify
         p7zip
         parallel-rust
         # patdiff
