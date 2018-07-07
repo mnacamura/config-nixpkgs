@@ -36,6 +36,8 @@
       };
     };
 
+    nixify = super.callPackage ./pkgs/nixify {};
+
     pandoc-crossref_0_3_0_2 = with super;
     haskell.lib.overrideCabal haskellPackages.pandoc-crossref (_: {
       version = "0.3.0.2";
