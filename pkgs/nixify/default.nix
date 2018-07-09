@@ -26,6 +26,7 @@ let
 
         src = ./.;
 
+        nativeBuildInputs = [ ];
         buildInputs = [ ];
       };
     }
@@ -39,6 +40,8 @@ let
     let
       inherit (nixpkgs) pkgs;
       inherit (import ./default.nix args) app;
+
+      extraPkgs = with pkgs; [ ];
     in
 
     with pkgs;
@@ -46,6 +49,7 @@ let
     stdenv.mkDerivation {
       name = \"my-app-project-env\";
 
+      nativeBuildInputs = app.nativeBuildInputs ++ extraPkgs;
       inherit (app) buildInputs;
 
       shellHook = '''
