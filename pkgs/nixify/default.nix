@@ -5,7 +5,7 @@ let
     #!${fish}/bin/fish
 
     if [ ! -e ./.envrc ]
-      echo "use_nix" > .envrc
+      echo "use nix" > .envrc
       direnv allow
     end
 
@@ -13,15 +13,11 @@ let
       echo -n "\
     { nixpkgs ? import <nixpkgs> {} }:
 
-    let
-      inherit (nixpkgs) pkgs;
-    in
-
-    with pkgs;
+    with nixpkgs;
 
     {
-      app = stdenv.mkDerivation rec {
-        name = \"my-app\";
+      myPkg = stdenv.mkDerivation rec {
+        name = \"my-pkg-\''${version}\";
         version = \"0.0.1\";
 
         src = ./.;
@@ -35,27 +31,31 @@ let
 
     if [ ! -e shell.nix ]
       echo -n "\
-    { nixpkgs ? import <nixpkgs> {} } @ args:
+    with import <nixpkgs> {};
 
     let
-      inherit (nixpkgs) pkgs;
-      inherit (import ./default.nix args) app;
-
-      extraPkgs = with pkgs; [ ];
+      inherit (import ./default.nix {}) myPkg;
     in
 
-    with pkgs;
-
-    stdenv.mkDerivation {
-      name = \"my-app-project-env\";
-
-      nativeBuildInputs = app.nativeBuildInputs ++ extraPkgs;
-      inherit (app) buildInputs;
+    mkShell {
+      inputsFrom = [ myPkg ];
+      buildInputs = [ ];
 
       shellHook = '''
       ''';
     }
     " > shell.nix
+    end
+
+    set -l ignore "\
+    # Nix direnv related stuff
+    .direnv
+    result
+    "
+    if [ ! -e ./.gitignore ]
+      echo -n "$ignore" > .gitignore
+    else
+      echo -n "$ignore" >> .gitignore
     end
 
     if [ -z "$EDITOR" ]
