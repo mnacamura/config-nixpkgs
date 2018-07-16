@@ -1,2 +1,2 @@
 overlays/*
-darwin-configuration.nix
+!overlays/default-overlay.nix
