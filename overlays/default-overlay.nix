@@ -3,6 +3,25 @@ self: super:
 {
   #{{{ Custom packages
 
+  aspellWith = { lang, dicts }:
+  with super; let
+    conf = writeText "aspell-conf-${lang}" ''
+      dict-dir ${dicts'}/lib/aspell
+      lang ${lang}
+    '';
+    dicts' = buildEnv {
+      name = "aspell-dicts-${lang}";
+      paths = dicts;
+    };
+  in
+  aspell.overrideAttrs (old: {
+    name = "${old.name}-${lang}";
+    nativeBuildInputs = old.nativeBuildInputs ++ [ makeWrapper ];
+    postInstall = ''
+      wrapProgram $out/bin/aspell --add-flags "--per-conf ${conf}"
+    '';
+  });
+
   ccacheWrapper = super.ccacheWrapper.override {
     extraConfig = ''
         export CCACHE_COMPRESS=1
@@ -65,7 +84,10 @@ self: super:
   buildEnv {
     name = "console-${version}-env";
     paths = [
-      (aspellWithDicts (dicts: with dicts; [ en ]))
+      (aspellWith {
+        lang = "en_US";
+        dicts = with aspellDicts; [ en en-computers en-science ];
+      })
       direnv
       fd
       feedgnuplot
