@@ -15,17 +15,15 @@ let
 
     with nixpkgs;
 
-    {
-      myPkg = stdenv.mkDerivation rec {
-        name = \"my-pkg-\''${version}\";
-        version = \"0.0.1\";
+    stdenv.mkDerivation rec {
+      name = \"my-pkg-\''${version}\";
+      version = \"0.0.1\";
 
-        src = ./.;
+      src = ./.;
 
-        nativeBuildInputs = [ ];
-        buildInputs = [ ];
-      };
-    }
+      nativeBuildInputs = [ ];
+      buildInputs = [ ];
+    };
     " > default.nix
     end
 
@@ -33,12 +31,8 @@ let
       echo -n "\
     with import <nixpkgs> {};
 
-    let
-      inherit (import ./default.nix {}) myPkg;
-    in
-
     mkShell {
-      inputsFrom = [ myPkg ];
+      inputsFrom = [ (import ./default.nix {}) ];
       buildInputs = [ ];
 
       shellHook = '''
