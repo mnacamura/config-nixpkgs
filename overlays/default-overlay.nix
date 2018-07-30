@@ -4,19 +4,18 @@ self: super:
   #{{{ Custom packages
 
   aspellWith = { lang, dicts }:
-  with super; let
-    conf = writeText "aspell-conf-${lang}" ''
+  let
+    conf = super.writeText "aspell-conf-${lang}" ''
       dict-dir ${dicts'}/lib/aspell
       lang ${lang}
     '';
-    dicts' = buildEnv {
+    dicts' = super.buildEnv {
       name = "aspell-dicts-${lang}";
       paths = dicts;
     };
-  in
-  aspell.overrideAttrs (old: {
+  in super.aspell.overrideAttrs (old: {
     name = "${old.name}-${lang}";
-    nativeBuildInputs = old.nativeBuildInputs ++ [ makeWrapper ];
+    nativeBuildInputs = old.nativeBuildInputs ++ [ super.makeWrapper ];
     postInstall = ''
       wrapProgram $out/bin/aspell --add-flags "--per-conf ${conf}"
     '';
@@ -24,9 +23,9 @@ self: super:
 
   ccacheWrapper = super.ccacheWrapper.override {
     extraConfig = ''
-        export CCACHE_COMPRESS=1
-        export CCACHE_DIR=/var/cache/ccache
-        export CCACHE_UMASK=007
+      export CCACHE_COMPRESS=1
+      export CCACHE_DIR=/var/cache/ccache
+      export CCACHE_UMASK=007
     '';
   };
 
@@ -34,8 +33,7 @@ self: super:
     inherit (super.nodePackages_8_x) mathjax;
   };
 
-  neovim = with super;
-  super.neovim.override {
+  neovim = super.neovim.override {
     withRuby = false;
     configure = {
       customRC = ''
@@ -46,7 +44,7 @@ self: super:
           echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
           endif
       '';
-      packages.default = with vimPlugins; {
+      packages.default = with super.vimPlugins; {
         start = [ skim vim-nix ];
         opt = [];
       };
@@ -58,9 +56,9 @@ self: super:
   #}}}
   #{{{ Environments
 
-  adminEnv = with self;
-  let version = "2018-06-18"; in
-  buildEnv {
+  adminEnv = with self; let
+    version = "2018-06-18";
+  in buildEnv {
     name = "admin-${version}-env";
     paths = [
       gptfdisk
@@ -68,14 +66,14 @@ self: super:
       pciutils
       powertop
       usbutils
-      xorg.xev
       xorg.xdpyinfo
+      xorg.xev
     ];
   };
 
-  consoleEnv = with self;
-  let version = "2018-07-08"; in
-  buildEnv {
+  consoleEnv = with self; let
+    version = "2018-07-08";
+  in buildEnv {
     name = "console-${version}-env";
     paths = [
       (aspellWith {
@@ -97,7 +95,6 @@ self: super:
       nixify
       p7zip
       parallel-rust
-      # patdiff
       rclone
       ripgrep
       rlwrap
@@ -122,9 +119,9 @@ self: super:
     ];
   };
 
-  desktopEnv = with self;
-  let version = "2018-06-18"; in
-  buildEnv {
+  desktopEnv = with self; let
+    version = "2018-06-18";
+  in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
       dropbox-cli
@@ -144,12 +141,10 @@ self: super:
 
   juliaEnv = self.callPackage ../pkgs/julia/env.nix {};
 
-  nodejsEnv = with self;
-  let
+  nodejsEnv = with self; let
     nodejs = super.nodejs-8_x;
     yarn = super.yarn.override { inherit nodejs; };
-  in
-  buildEnv {
+  in buildEnv {
     name = "${nodejs.name}-env";
     paths = [
       nodejs
@@ -159,8 +154,7 @@ self: super:
 
   rEnv = self.callPackage ../pkgs/R/env.nix {};
 
-  rustEnv = with self;
-  let
+  rustEnv = with self; let
     rust-src = stdenv.mkDerivation {
       inherit (rustc.src) name;
       inherit (rustc) src;
@@ -175,8 +169,7 @@ self: super:
         or set -gx RUST_SRC_PATH "${rust-src}"
       end
     '';
-  in
-  buildEnv {
+  in buildEnv {
     name = "rust-${rustc.version}-env";
     paths = [
       (runCommand "install-rust-fish-conf" {} ''
@@ -190,9 +183,9 @@ self: super:
     ];
   };
 
-  statsEnv = with self;
-  let version = "2018-06-18"; in
-  buildEnv {
+  statsEnv = with self; let
+    version = "2018-06-18";
+  in buildEnv {
     name = "stats-${version}-env";
     buildInputs = [ makeWrapper ];
     paths = [ jupyter rEnv ];
@@ -203,8 +196,7 @@ self: super:
     '';
   };
 
-  texliveEnv = with self;
-  let
+  texliveEnv = with self; let
     myTexlive = texlive.combine {
       inherit (texlive)
       scheme-basic  # installs collection-{basic,latex}
@@ -221,8 +213,7 @@ self: super:
       revtex;
     };
     version = lib.getVersion myTexlive;
-  in
-  buildEnv {
+  in buildEnv {
     name = "texlive-${version}-env";
     paths = [
       ghostscript  # required by LaTeXiT
