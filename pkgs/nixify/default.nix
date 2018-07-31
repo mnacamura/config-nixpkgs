@@ -23,7 +23,7 @@ let
 
       nativeBuildInputs = [ ];
       buildInputs = [ ];
-    };
+    }
     " > default.nix
     end
 
