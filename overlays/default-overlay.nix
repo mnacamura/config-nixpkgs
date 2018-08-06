@@ -4,22 +4,29 @@ self: super:
   #{{{ Custom packages
 
   aspellWith = { lang, dicts }:
-  let
-    conf = super.writeText "aspell-conf-${lang}" ''
+  with super; let
+    conf = writeText "aspell-conf-${lang}" ''
       dict-dir ${dicts'}/lib/aspell
       lang ${lang}
     '';
-    dicts' = super.buildEnv {
+    dicts' = symlinkJoin {
       name = "aspell-dicts-${lang}";
       paths = dicts;
     };
-  in super.aspell.overrideAttrs (old: {
-    name = "${old.name}-${lang}";
-    nativeBuildInputs = old.nativeBuildInputs ++ [ super.makeWrapper ];
-    postInstall = ''
-      wrapProgram $out/bin/aspell --add-flags "--per-conf ${conf}"
+  in buildEnv {
+    name = "${aspell.name}-${lang}";
+    paths = [ aspell ];
+    pathsToLink = [ "/share" ];
+    buildInputs = [ makeWrapper ];
+    postBuild = ''
+      mkdir $out/bin
+      makeWrapper ${aspell}/bin/aspell $out/bin/aspell --add-flags "--per-conf ${conf}"
+      for path in ${aspell}/bin/*; do
+        name="$(basename "$path")"
+        [ "$name" != aspell ] && ln -s "$path" "$out/bin/$name"
+      done
     '';
-  });
+  };
 
   ccacheWrapper = super.ccacheWrapper.override {
     extraConfig = ''
