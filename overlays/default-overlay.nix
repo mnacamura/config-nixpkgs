@@ -141,9 +141,27 @@ self: super:
 
   consoleEnv = with self; let
     version = "2018-07-08";
+    lessConf = writeText "less-conf" ''
+      if status is-login
+        # Set to fit Srcery color scheme
+        set -Ux LESS_TERMCAP_mb (printf "\e[1m")                    # Begin blinking
+        set -Ux LESS_TERMCAP_md (printf "\e[1;31m")                 # Begin bold
+        set -Ux LESS_TERMCAP_me (printf "\e[0m")                    # End mode
+        set -Ux LESS_TERMCAP_so (printf "\e[1;30;48;2;214;93;14m")  # Begin standout mode
+        set -Ux LESS_TERMCAP_se (printf "\e[0m")                    # End standout mode
+        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")                 # Begin underline
+        set -Ux LESS_TERMCAP_ue (printf "\e[0m")                    # End underline
+      end
+      if status is-interactive
+        set -gx LESS '-R -ig -j.5'
+      end
+    '';
   in buildEnv {
     name = "console-${version}-env";
     paths = [
+      (runCommand "install-less-conf" {} ''
+        install -D -m 444 ${lessConf} $out/etc/fish/conf.d/less.fish
+      '')
       (aspellWith {
         lang = "en_US";
         dicts = with aspellDicts; [ en en-computers en-science ];
