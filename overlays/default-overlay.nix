@@ -103,6 +103,8 @@ self: super:
     inherit (super.nodePackages_8_x) mathjax;
   };
 
+  ls-colors = super.callPackage ../pkgs/ls-colors {};
+
   neovim = super.neovim.override {
     withRuby = false;
     configure = {
@@ -158,6 +160,11 @@ self: super:
         set -gx LESS '-R -ig -j.5'
       end
     '';
+    lsColorsConfig = writeText "ls-colors-config" ''
+      if status is-login
+        eval (dircolors -c ${ls-colors}/share/LS_COLORS/LS_COLORS | sed 's|setenv|set -Ux|')
+      end
+    '';
     nixConfig = writeText "nix-config" ''
       set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
       [ (uname) = Darwin ]
@@ -185,6 +192,7 @@ self: super:
       fishConfig
       (runCommand "extra-fish-config" {} ''
         install -D -m 444 ${lessConf} $out/etc/fish/conf.d/less.fish
+        install -D -m 444 ${lsColorsConfig} $out/etc/fish/conf.d/ls-colors.fish
         install -D -m 444 ${nixConf} $out/etc/fish/conf.d/nix.fish
       '')
       (aspellWith {
