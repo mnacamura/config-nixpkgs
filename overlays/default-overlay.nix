@@ -143,7 +143,7 @@ self: super:
 
   consoleEnv = with self; let
     version = "2018-07-08";
-    lessConf = writeText "less-conf" ''
+    lessConfig = writeText "less-config" ''
       if status is-login
         # Set to fit Srcery color scheme
         set -Ux LESS_TERMCAP_mb (printf "\e[1m")                    # Begin blinking
@@ -158,12 +158,11 @@ self: super:
         set -gx LESS '-R -ig -j.5'
       end
     '';
-    nixConf = writeText "nix-conf" ''
+    nixConfig = writeText "nix-config" ''
+      set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+      [ (uname) = Darwin ]
+      and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
       if status is-interactive
-        set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
-        [ (uname) = Darwin ]
-        and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
-
         abbr --add nb  "nix build"
         abbr --add nba "nix build -f '<nixpkgs>'"
         abbr --add ne  "nix-env"
