@@ -97,6 +97,8 @@ self: super:
     '';
   };
 
+  fishConfig = super.callPackage ../pkgs/fish/config.nix {};
+
   jupyter = super.callPackage ../pkgs/jupyter {
     inherit (super.nodePackages_8_x) mathjax;
   };
@@ -181,7 +183,8 @@ self: super:
   in buildEnv {
     name = "console-${version}-env";
     paths = [
-      (runCommand "install-fish-conf" {} ''
+      fishConfig
+      (runCommand "extra-fish-config" {} ''
         install -D -m 444 ${lessConf} $out/etc/fish/conf.d/less.fish
         install -D -m 444 ${nixConf} $out/etc/fish/conf.d/nix.fish
       '')
