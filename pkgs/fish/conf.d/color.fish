@@ -1,4 +1,5 @@
-if status is-login
+set -q __fish_config_color_sourced
+or if status is-login
   set -U fish_color_normal normal
   set -U fish_color_command --bold
   set -U fish_color_param cyan
@@ -31,3 +32,5 @@ if status is-login
   set -U fish_status_color_bad red
   set -U fish_status_color_warn yellow
 end
+
+set -g __fish_config_color_sourced

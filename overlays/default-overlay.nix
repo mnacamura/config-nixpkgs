@@ -102,7 +102,8 @@ self: super:
   fishExtraConfig = with self; let
     name = "fish-extra-config";
     git = writeText "${name}-git" ''
-      if status is-interactive
+      set -q __fish_config_git_sourced
+      or if status is-interactive
         set __fish_git_prompt_showdirtystate y
         set __fish_git_prompt_showcolorhints y
         set __fish_git_prompt_showstashstate y
@@ -129,9 +130,11 @@ self: super:
         abbr --add gs  'git status'
         abbr --add gss 'git show --ext-diff'
       end
+      set -g __fish_config_git_sourced 1
     '';
     less = writeText "${name}-less" ''
-      if status is-login
+      set -q __fish_config_less_sourced
+      or if status is-login
         # Set to fit Srcery color scheme
         set -Ux LESS_TERMCAP_mb (printf "\e[1m")                    # Begin blinking
         set -Ux LESS_TERMCAP_md (printf "\e[1;31m")                 # Begin bold
@@ -144,32 +147,39 @@ self: super:
       if status is-interactive
         set -gx LESS '-R -ig -j.5'
       end
+      set -g __fish_config_less_sourced 1
     '';
     lsColors = writeText "${name}-ls-colors" ''
-      if status is-login
+      set -q __fish_config_ls_colors_sourced
+      or if status is-login
         eval (dircolors -c ${ls-colors}/share/LS_COLORS/LS_COLORS | sed 's|setenv|set -Ux|')
       end
+      set -g __fish_config_ls_colors_sourced 1
     '';
     nix = writeText "${name}-nix" ''
-      set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
-      [ (uname) = Darwin ]
-      and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
-      if status is-interactive
-        abbr --add nb  "nix build"
-        abbr --add nba "nix build -f '<nixpkgs>'"
-        abbr --add ne  "nix-env"
-        abbr --add nei "nix-env -f '<nixpkgs>' -iA"
-        abbr --add neq "nix-env -f '<nixpkgs>' -qaP --description"
-        abbr --add nel "nix-env --list-generations"
-        # abbr --add ned "nix-env --delete-generations"
-        # abbr --add ner "nix-env --rollback"
-        abbr --add nc  "nix-channel"
-        abbr --add ncu "nix-channel --update"
-        abbr --add nsh "nix-shell"
-        abbr --add ns  "nix-store"
-        abbr --add nsg "nix-store --gc"
-        abbr --add nr  "nix repl '<nixpkgs>'"
+      set -q __fish_config_nix_sourced
+      or begin
+        set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+        [ (uname) = Darwin ]
+        and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
+        if status is-interactive
+          abbr --add nb  "nix build"
+          abbr --add nba "nix build -f '<nixpkgs>'"
+          abbr --add ne  "nix-env"
+          abbr --add nei "nix-env -f '<nixpkgs>' -iA"
+          abbr --add neq "nix-env -f '<nixpkgs>' -qaP --description"
+          abbr --add nel "nix-env --list-generations"
+          # abbr --add ned "nix-env --delete-generations"
+          # abbr --add ner "nix-env --rollback"
+          abbr --add nc  "nix-channel"
+          abbr --add ncu "nix-channel --update"
+          abbr --add nsh "nix-shell"
+          abbr --add ns  "nix-store"
+          abbr --add nsg "nix-store --gc"
+          abbr --add nr  "nix repl '<nixpkgs>'"
+        end
       end
+      set -g __fish_config_nix_sourced 1
     '';
   in runCommand name {} ''
     confd="$out/etc/fish/conf.d"

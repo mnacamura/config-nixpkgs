@@ -1,4 +1,5 @@
-if not set -q __fish_config_local_sourced
+set -q __fish_config_local_sourced
+or begin
   set -l local "$HOME/.local"
 
   [ -d "$local/bin" ]
