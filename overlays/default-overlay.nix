@@ -202,6 +202,7 @@ self: super:
           if type -q nvim
             set EDITOR nvim
             alias vim nvim
+            abbr --add v nvim
             abbr --add vi nvim
           end
           if type -q rg
