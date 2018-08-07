@@ -188,6 +188,27 @@ self: super:
         end
         set -g __fish_config_nix_sourced 1
       '';
+      misc = writeText "${name}-misc" ''
+        set -q __fish_config_misc_sourced
+        or if status is-interactive
+          if type -q lp
+            abbr --add lp 'lp -o media=a4'
+          end
+          if type -q nvim
+            set EDITOR nvim
+            alias vim nvim
+            abbr --add vi nvim
+          end
+          if type -q rg
+            abbr --add rg 'rg -S'
+          end
+          if type -q sk
+            set -gx SKIM_DEFAULT_COMMAND 'fd -c never || find .'
+            set -gx SKIM_DEFAULT_OPTIONS --color=light,matched_bg:153
+          end
+        end
+        set -g __fish_config_misc_sourced 1
+      '';
     };
   in runCommand name {} ''
     confd="$out/etc/fish/conf.d"
@@ -196,6 +217,7 @@ self: super:
     install -D -m 444 ${cfg.less} "$confd"/less.fish
     install -D -m 444 ${cfg.lsColors} "$confd"/ls-colors.fish
     install -D -m 444 ${cfg.nix} "$confd"/nix.fish
+    install -D -m 444 ${cfg.misc} "$confd"/misc.fish
   '';
 
   jupyter = super.callPackage ../pkgs/jupyter {
