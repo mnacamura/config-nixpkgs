@@ -20,6 +20,7 @@ if status is-login
   set -U fish_color_cancel -r
   set -U fish_color_history_current --bold
   set -U fish_color_selection white --bold --background=brblack
+
   set -U fish_pager_color_prefix normal --bold --underline  # default: white --bold --underline
   set -U fish_pager_color_completion
   set -U fish_pager_color_description yellow  # default: B3A06D yellow
