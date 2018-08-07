@@ -104,12 +104,14 @@ self: super:
     cfg = {
       direnv = writeText "${name}-direnv" ''
         set -q __fish_config_direnv_sourced
-        or eval (${direnv}/bin/direnv hook fish)
+        or if type -q direnv
+          eval (direnv hook fish)
+        end
         set -g __fish_config_direnv_sourced 1
       '';
       git = writeText "${name}-git" ''
         set -q __fish_config_git_sourced
-        or if status is-interactive
+        or if status is-interactive; and type -q git
           set __fish_git_prompt_showdirtystate y
           set __fish_git_prompt_showcolorhints y
           set __fish_git_prompt_showstashstate y
@@ -163,12 +165,15 @@ self: super:
         end
         set -g __fish_config_ls_colors_sourced 1
       '';
-      nix = writeText "${name}-nix" ''
+      nix = writeText "${name}-nix" (''
         set -q __fish_config_nix_sourced
         or begin
-          set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
-          [ (uname) = Darwin ]
+          [ -d $HOME/repos/nixpkgs ]
+          and set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+      '' + lib.optionalString stdenv.isDarwin ''
+          [ -d $HOME/repos/nix-darwin ]
           and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
+      '' + ''
           if status is-interactive
             abbr --add nb  "nix build"
             abbr --add nba "nix build -f '<nixpkgs>'"
@@ -187,7 +192,7 @@ self: super:
           end
         end
         set -g __fish_config_nix_sourced 1
-      '';
+      '');
       misc = writeText "${name}-misc" ''
         set -q __fish_config_misc_sourced
         or if status is-interactive
