@@ -101,6 +101,35 @@ self: super:
 
   fishExtraConfig = with self; let
     name = "fish-extra-config";
+    git = writeText "${name}-git" ''
+      if status is-interactive
+        set __fish_git_prompt_showdirtystate y
+        set __fish_git_prompt_showcolorhints y
+        set __fish_git_prompt_showstashstate y
+        set __fish_git_prompt_showuntrackedfiles y
+        set __fish_git_prompt_showupstream auto
+        set __fish_git_prompt_char_untrackedfiles '?'
+        set __fish_git_prompt_char_upstream_equal '''
+        set __fish_git_prompt_char_upstream_behind '↓'
+        set __fish_git_prompt_char_upstream_ahead '↑'
+        set __fish_git_prompt_char_upstream_diverged '↓↑'
+        set __fish_git_prompt_color_untrackedfiles $fish_status_color_warn
+        abbr --add g   'git'
+        abbr --add ga  'git add'
+        abbr --add gb  'git branch'
+        abbr --add gc  'git commit'
+        abbr --add gcl 'git clone'
+        abbr --add gco 'git checkout'
+        abbr --add gd  'git diff'
+        abbr --add gdc 'git diff --cached'
+        abbr --add gdd 'git diff --no-ext-diff'
+        abbr --add gl  'git log'
+        abbr --add glg 'git log --graph --oneline'
+        abbr --add gp  'git pull'
+        abbr --add gs  'git status'
+        abbr --add gss 'git show --ext-diff'
+      end
+    '';
     less = writeText "${name}-less" ''
       if status is-login
         # Set to fit Srcery color scheme
@@ -144,6 +173,7 @@ self: super:
     '';
   in runCommand name {} ''
     confd="$out/etc/fish/conf.d"
+    install -D -m 444 ${git} "$confd"/git.fish
     install -D -m 444 ${less} "$confd"/less.fish
     install -D -m 444 ${lsColors} "$confd"/ls-colors.fish
     install -D -m 444 ${nix} "$confd"/nix.fish
