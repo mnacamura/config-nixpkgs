@@ -99,6 +99,56 @@ self: super:
 
   fishConfig = super.callPackage ../pkgs/fish/config.nix {};
 
+  fishExtraConfig = with self; let
+    name = "fish-extra-config";
+    less = writeText "${name}-less" ''
+      if status is-login
+        # Set to fit Srcery color scheme
+        set -Ux LESS_TERMCAP_mb (printf "\e[1m")                    # Begin blinking
+        set -Ux LESS_TERMCAP_md (printf "\e[1;31m")                 # Begin bold
+        set -Ux LESS_TERMCAP_me (printf "\e[0m")                    # End mode
+        set -Ux LESS_TERMCAP_so (printf "\e[1;30;48;2;214;93;14m")  # Begin standout mode
+        set -Ux LESS_TERMCAP_se (printf "\e[0m")                    # End standout mode
+        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")                 # Begin underline
+        set -Ux LESS_TERMCAP_ue (printf "\e[0m")                    # End underline
+      end
+      if status is-interactive
+        set -gx LESS '-R -ig -j.5'
+      end
+    '';
+    lsColors = writeText "${name}-ls-colors" ''
+      if status is-login
+        eval (dircolors -c ${ls-colors}/share/LS_COLORS/LS_COLORS | sed 's|setenv|set -Ux|')
+      end
+    '';
+    nix = writeText "${name}-nix" ''
+      set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+      [ (uname) = Darwin ]
+      and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
+      if status is-interactive
+        abbr --add nb  "nix build"
+        abbr --add nba "nix build -f '<nixpkgs>'"
+        abbr --add ne  "nix-env"
+        abbr --add nei "nix-env -f '<nixpkgs>' -iA"
+        abbr --add neq "nix-env -f '<nixpkgs>' -qaP --description"
+        abbr --add nel "nix-env --list-generations"
+        # abbr --add ned "nix-env --delete-generations"
+        # abbr --add ner "nix-env --rollback"
+        abbr --add nc  "nix-channel"
+        abbr --add ncu "nix-channel --update"
+        abbr --add nsh "nix-shell"
+        abbr --add ns  "nix-store"
+        abbr --add nsg "nix-store --gc"
+        abbr --add nr  "nix repl '<nixpkgs>'"
+      end
+    '';
+  in runCommand name {} ''
+    confd="$out/etc/fish/conf.d"
+    install -D -m 444 ${less} "$confd"/less.fish
+    install -D -m 444 ${lsColors} "$confd"/ls-colors.fish
+    install -D -m 444 ${nix} "$confd"/nix.fish
+  '';
+
   jupyter = super.callPackage ../pkgs/jupyter {
     inherit (super.nodePackages_8_x) mathjax;
   };
@@ -145,56 +195,11 @@ self: super:
 
   consoleEnv = with self; let
     version = "2018-07-08";
-    lessConfig = writeText "less-config" ''
-      if status is-login
-        # Set to fit Srcery color scheme
-        set -Ux LESS_TERMCAP_mb (printf "\e[1m")                    # Begin blinking
-        set -Ux LESS_TERMCAP_md (printf "\e[1;31m")                 # Begin bold
-        set -Ux LESS_TERMCAP_me (printf "\e[0m")                    # End mode
-        set -Ux LESS_TERMCAP_so (printf "\e[1;30;48;2;214;93;14m")  # Begin standout mode
-        set -Ux LESS_TERMCAP_se (printf "\e[0m")                    # End standout mode
-        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")                 # Begin underline
-        set -Ux LESS_TERMCAP_ue (printf "\e[0m")                    # End underline
-      end
-      if status is-interactive
-        set -gx LESS '-R -ig -j.5'
-      end
-    '';
-    lsColorsConfig = writeText "ls-colors-config" ''
-      if status is-login
-        eval (dircolors -c ${ls-colors}/share/LS_COLORS/LS_COLORS | sed 's|setenv|set -Ux|')
-      end
-    '';
-    nixConfig = writeText "nix-config" ''
-      set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
-      [ (uname) = Darwin ]
-      and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
-      if status is-interactive
-        abbr --add nb  "nix build"
-        abbr --add nba "nix build -f '<nixpkgs>'"
-        abbr --add ne  "nix-env"
-        abbr --add nei "nix-env -f '<nixpkgs>' -iA"
-        abbr --add neq "nix-env -f '<nixpkgs>' -qaP --description"
-        abbr --add nel "nix-env --list-generations"
-        # abbr --add ned "nix-env --delete-generations"
-        # abbr --add ner "nix-env --rollback"
-        abbr --add nc  "nix-channel"
-        abbr --add ncu "nix-channel --update"
-        abbr --add nsh "nix-shell"
-        abbr --add ns  "nix-store"
-        abbr --add nsg "nix-store --gc"
-        abbr --add nr  "nix repl '<nixpkgs>'"
-      end
-    '';
   in buildEnv {
     name = "console-${version}-env";
     paths = [
       fishConfig
-      (runCommand "extra-fish-config" {} ''
-        install -D -m 444 ${lessConf} $out/etc/fish/conf.d/less.fish
-        install -D -m 444 ${lsColorsConfig} $out/etc/fish/conf.d/ls-colors.fish
-        install -D -m 444 ${nixConf} $out/etc/fish/conf.d/nix.fish
-      '')
+      fishExtraConfig
       (aspellWith {
         lang = "en_US";
         dicts = with aspellDicts; [ en en-computers en-science ];
