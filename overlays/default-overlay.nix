@@ -156,11 +156,34 @@ self: super:
         set -gx LESS '-R -ig -j.5'
       end
     '';
+    nixConf = writeText "nix-conf" ''
+      if status is-interactive
+        set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+        [ (uname) = Darwin ]
+        and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
+
+        abbr --add nb  "nix build"
+        abbr --add nba "nix build -f '<nixpkgs>'"
+        abbr --add ne  "nix-env"
+        abbr --add nei "nix-env -f '<nixpkgs>' -iA"
+        abbr --add neq "nix-env -f '<nixpkgs>' -qaP --description"
+        abbr --add nel "nix-env --list-generations"
+        # abbr --add ned "nix-env --delete-generations"
+        # abbr --add ner "nix-env --rollback"
+        abbr --add nc  "nix-channel"
+        abbr --add ncu "nix-channel --update"
+        abbr --add nsh "nix-shell"
+        abbr --add ns  "nix-store"
+        abbr --add nsg "nix-store --gc"
+        abbr --add nr  "nix repl '<nixpkgs>'"
+      end
+    '';
   in buildEnv {
     name = "console-${version}-env";
     paths = [
-      (runCommand "install-less-conf" {} ''
+      (runCommand "install-fish-conf" {} ''
         install -D -m 444 ${lessConf} $out/etc/fish/conf.d/less.fish
+        install -D -m 444 ${nixConf} $out/etc/fish/conf.d/nix.fish
       '')
       (aspellWith {
         lang = "en_US";
