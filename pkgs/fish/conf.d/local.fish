@@ -11,10 +11,11 @@ or begin
     and set INFOPATH "$_INFOPATH:$INFOPATH"
     or set -gx INFOPATH "$_INFOPATH"
 
-    set -l _MANPATH "$local/man:$local/share/man"
+    # Paths in MANPATH are not joined by : like INFOPATH
+    set -l _MANPATH "$local/man" "$local/share/man"
     set -q MANPATH
-    and set MANPATH "$_MANPATH:$MANPATH"
-    or set -gx MANPATH "$_MANPATH"
+    and set MANPATH $_MANPATH $MANPATH
+    or set -gx MANPATH $_MANPATH
   end
 end
 
