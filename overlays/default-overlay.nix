@@ -83,7 +83,7 @@ self: super:
     ctags = universal-ctags;
     conf = writeText "ctags-conf" (lib.strings.concatStringsSep "\n" options);
   in buildEnv {
-    name = "${ctags.name}-env";
+    name = "${ctags.name}-wrapper";
     paths = [ ctags ];
     pathsToLink = [ "/share" ];
     buildInputs = [ makeWrapper ];
