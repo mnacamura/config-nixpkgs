@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   name = "fish-config";
 
-  src = ./.;
+  src = ./src;
 
   buildCommand = ''
     for file in $src/conf.d/*; do

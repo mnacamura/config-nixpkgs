@@ -97,7 +97,7 @@ self: super:
     '';
   };
 
-  fishConfig = super.callPackage ../pkgs/fish/config.nix {};
+  fishConfig = super.callPackage ../pkgs/fish-config {};
 
   writeFishConfig = name: body:
   with super; let
