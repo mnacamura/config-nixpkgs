@@ -99,6 +99,8 @@ self: super:
 
   fishConfig = super.callPackage ../pkgs/fish-config {};
 
+  fishConfigAll = self.callPackage ../pkgs/fish-config/all.nix {};
+
   writeFishConfig = name: body:
   with super; let
     configFile = writeText "${name}.fish" ''
@@ -110,8 +112,6 @@ self: super:
   in runCommand "fish-config-${name}" {} ''
     install -D -m 444 ${configFile} $out/etc/fish/conf.d/${name}.fish
   '';
-
-  fishExtraConfig = self.callPackage ../pkgs/fish-config/extra.nix {};
 
   jupyter = super.callPackage ../pkgs/jupyter {
     inherit (super.nodePackages_8_x) mathjax;
@@ -162,8 +162,7 @@ self: super:
   in buildEnv {
     name = "console-${version}-env";
     paths = [
-      fishConfig
-      fishExtraConfig
+      fishConfigAll
       (aspellWith {
         lang = "en_US";
         dicts = with aspellDicts; [ en en-computers en-science ];

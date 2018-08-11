@@ -1,4 +1,4 @@
-{ stdenv, writeFishConfig, buildEnv, ls-colors }:
+{ stdenv, fishConfig, writeFishConfig, buildEnv, ls-colors }:
 
 let
   inherit (stdenv.lib) optionalString;
@@ -108,8 +108,9 @@ let
 in
 
 buildEnv {
-  name = "fish-config-extra";
+  name = "fish-config-all";
   paths = [
+    fishConfig
     direnv
     git
     less
