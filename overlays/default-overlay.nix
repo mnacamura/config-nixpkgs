@@ -103,11 +103,12 @@ self: super:
 
   writeFishConfig = name: body:
   with super; let
+    name_ = lib.replaceStrings ["-"] ["_"] name;
     configFile = writeText "${name}.fish" ''
-      set -q __fish_config_${name}_sourced; or begin
+      set -q __fish_config_${name_}_sourced; or begin
       ${body}
       end
-      set -g __fish_config_${name}_sourced 1
+      set -g __fish_config_${name_}_sourced 1
     '';
   in runCommand "fish-config-${name}" {} ''
     install -D -m 444 ${configFile} $out/etc/fish/conf.d/${name}.fish
