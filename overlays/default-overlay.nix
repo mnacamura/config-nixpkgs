@@ -222,7 +222,6 @@ self: super:
       rounded-mgenplus
       slack
       tdesktop
-      zathura
     ] ++ lib.optionals stdenv.isDarwin [
       gnome-breeze  # used by GNU Cash
     ];
