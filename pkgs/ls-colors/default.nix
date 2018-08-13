@@ -7,6 +7,7 @@ in
 
 stdenv.mkDerivation {
   name = "${pname}-${version}";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "trapd00r";
