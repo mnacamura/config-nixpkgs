@@ -99,7 +99,7 @@ self: super:
 
   fishConfig = super.callPackage ../pkgs/fish-config {};
 
-  fishConfigAll = self.callPackage ../pkgs/fish-config/all.nix {};
+  fishConfigFull = self.callPackage ../pkgs/fish-config/full.nix {};
 
   writeFishConfig = name: body:
   with super; let
@@ -163,7 +163,7 @@ self: super:
   in buildEnv {
     name = "console-${version}-env";
     paths = [
-      fishConfigAll
+      fishConfigFull
       (aspellWith {
         lang = "en_US";
         dicts = with aspellDicts; [ en en-computers en-science ];
