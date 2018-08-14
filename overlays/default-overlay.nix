@@ -29,50 +29,11 @@ self: super:
     '';
   };
 
-  ctagsOptions = {
-    html = ''
-      --regex-HTML=/id=\"([a-zA-Z0-9-]+)\"/\1/i,identifiers/
-      --regex-HTML=/class=\"([a-zA-Z0-9-]+)\"/\1/c,classes/
-    '';
-    julia = ''
-      --langdef=Julia
-      --langmap=Julia:.jl
-      --regex-Julia=/^[ \t]*(abstract)[ \t]+([^ \t({[]+).*$/\2/a,abstract/
-      --regex-Julia=/^[ \t]*(@with_kw[ \t]+)?(immutable)[ \t]+([^ \t({[]+).*$/\3/i,immutable/
-      --regex-Julia=/^[ \t]*(@with_kw[ \t]+)?(type|typealias)[ \t]+([^ \t({[]+).*$/\3/t,type/
-      --regex-Julia=/^[ \t]*(macro)[ \t]+([^ \t({[]+).*$/\2/m,macro/
-      --regex-Julia=/^[ \t]*(@inline[ \t]+|@noinline[ \t]+)?(function)[ \t]+([^ \t({[]+)[^(]*\([ \t]*([^ \t;,=)({]+).*$/\3 (\4, …)/f,function/
-      --regex-Julia=/^[ \t]*(@inline[ \t]+|@noinline[ \t]+)?(function)[ \t]+([^ \t({[]+)[^(]*(\([ \t]*\).*|\([ \t]*)$/\3/f,function/
-      --regex-Julia=/^[ \t]*(@inline[ \t]+|@noinline[ \t]+)?(([^@#$ \t({[]+)|\(([^@#$ \t({[]+)\)|\((\$)\))[ \t]*(\{.*\})?[ \t]*\([ \t]*\)[ \t]*=([^=].*$|$)/\3\4\5/f,function/
-      --regex-Julia=/^[ \t]*(@inline[ \t]+|@noinline[ \t]+)?(([^@#$ \t({[]+)|\(([^@#$ \t({[]+)\)|\((\$)\))[ \t]*(\{.*\})?[ \t]*\([ \t]*([^ \t;,=)({]+).*\)[ \t]*=([^=].*$|$)/\3\4\5 (\7, …)/f,function/
-      --regex-Julia=/^[ \t]*(@defstruct)[ \t]+([^ \t({[]+).*$/\2/t,type/
-      --regex-Julia=/^[ \t]*(@defimmutable)[ \t]+([^ \t({[]+).*$/\2/i,immutable/
-    '';
-    scheme = ''
-      --langdef=Scheme
-      --langmap=Scheme:.scm
-      --regex-Scheme=/^[[:space:]]*(\(|[[])define[^[:space:]]*[[:space:]]+(\(|[[])?([^][[:space:]()]+)/\3/d,definition/i
-    '';
+  ctagsWith = super.callPackage ../pkgs/ctags/with.nix {
+    ctags = super.universal-ctags;
   };
 
-  ctagsWith = { options ? [] }:
-  with super; let
-    ctags = universal-ctags;
-    conf = writeText "ctags-conf" (lib.strings.concatStringsSep "\n" options);
-  in buildEnv {
-    name = "${ctags.name}-wrapper";
-    paths = [ ctags ];
-    pathsToLink = [ "/share" ];
-    buildInputs = [ makeWrapper ];
-    postBuild = ''
-      mkdir $out/bin
-      makeWrapper ${ctags}/bin/ctags $out/bin/ctags --add-flags "--options ${conf}"
-      for path in ${ctags}/bin/*; do
-        name="$(basename "$path")"
-        [ "$name" != ctags ] && ln -s "$path" "$out/bin/$name"
-      done
-    '';
-  };
+  ctagsOptions = import ../pkgs/ctags/options.nix;
 
   fishConfig = super.callPackage ../pkgs/fish-config {};
 
