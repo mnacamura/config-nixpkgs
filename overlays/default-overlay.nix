@@ -157,7 +157,6 @@ self: super:
       gimp
       gnucash
       inkscape
-      libnotify
       rounded-mgenplus
       slack
       tdesktop
