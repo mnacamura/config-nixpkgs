@@ -3,30 +3,7 @@ self: super:
 {
   #{{{ Custom packages
 
-  aspellWith = { lang, dicts }:
-  with super; let
-    conf = writeText "aspell-conf-${lang}" ''
-      dict-dir ${dicts'}/lib/aspell
-      lang ${lang}
-    '';
-    dicts' = symlinkJoin {
-      name = "aspell-dicts-${lang}";
-      paths = dicts;
-    };
-  in buildEnv {
-    name = "${aspell.name}-${lang}";
-    paths = [ aspell ];
-    pathsToLink = [ "/share" ];
-    buildInputs = [ makeWrapper ];
-    postBuild = ''
-      mkdir $out/bin
-      makeWrapper ${aspell}/bin/aspell $out/bin/aspell --add-flags "--per-conf ${conf}"
-      for path in ${aspell}/bin/*; do
-        name="$(basename "$path")"
-        [ "$name" != aspell ] && ln -s "$path" "$out/bin/$name"
-      done
-    '';
-  };
+  aspellWith = super.callPackage ../pkgs/aspell/with.nix {};
 
   ccacheWrapper = super.ccacheWrapper.override {
     extraConfig = ''
