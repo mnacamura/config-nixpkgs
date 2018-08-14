@@ -49,8 +49,7 @@ let
       set -Ux LESS_TERMCAP_ue (printf "\e[0m")                    # End underline
     end
     if status is-interactive
-      set -gx PAGER less
-      set -gx LESS '-R -ig -j.5'
+      set -gx PAGER 'less -R -ig -j.5'
     end
   '';
 
