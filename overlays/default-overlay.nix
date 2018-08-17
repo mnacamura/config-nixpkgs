@@ -35,37 +35,15 @@ self: super:
 
   ctagsOptions = import ../pkgs/ctags/options.nix;
 
-  direnvWrapper = super.callPackage ../pkgs/direnv/wrapper.nix {};
+  direnvWrapper = self.callPackage ../pkgs/direnv/wrapper.nix {};
+
+  inherit (super.callPackage ../pkgs/fish-config/lib.nix {})
+  writeFishConfig
+  writeFishVendorConfig;
 
   fishConfig = super.callPackage ../pkgs/fish-config {};
 
   fishConfigFull = self.callPackage ../pkgs/fish-config/full.nix {};
-
-  writeFishConfig = name: body:
-  with super; let
-    name_ = lib.replaceStrings ["-"] ["_"] name;
-    configFile = writeText "${name}.fish" ''
-      set -q __fish_config_${name_}_sourced; or begin
-      ${body}
-      end
-      set -g __fish_config_${name_}_sourced 1
-    '';
-  in runCommand "fish-config-${name}" {} ''
-    install -D -m 444 ${configFile} $out/etc/fish/conf.d/${name}.fish
-  '';
-
-  writeFishVendorConfig = name: body:
-  with super; let
-    name_ = lib.replaceStrings ["-"] ["_"] name;
-    configFile = writeText "${name}.fish" ''
-      set -q __fish_vendor_config_${name_}_sourced; or begin
-      ${body}
-      end
-      set -g __fish_vendor_config_${name_}_sourced 1
-    '';
-  in runCommand "fish-vendor-config-${name}" {} ''
-    install -D -m 444 ${configFile} $out/share/fish/vendor_conf.d/${name}.fish
-  '';
 
   jupyter = super.callPackage ../pkgs/jupyter {
     inherit (super.nodePackages_8_x) mathjax;
