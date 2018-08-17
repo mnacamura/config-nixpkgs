@@ -35,6 +35,8 @@ self: super:
 
   ctagsOptions = import ../pkgs/ctags/options.nix;
 
+  direnvWrapper = super.callPackage ../pkgs/direnv/wrapper.nix {};
+
   fishConfig = super.callPackage ../pkgs/fish-config {};
 
   fishConfigFull = self.callPackage ../pkgs/fish-config/full.nix {};
@@ -109,7 +111,7 @@ self: super:
       (ctagsWith {
         options = with ctagsOptions; [ scheme julia html ];
       })
-      direnv
+      direnvWrapper
       fd
       feedgnuplot
       file
