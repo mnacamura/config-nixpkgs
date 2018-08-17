@@ -3,10 +3,6 @@
 let
   inherit (stdenv.lib) optionalString;
 
-  direnv = writeFishConfig "direnv" ''
-    type -q direnv; and eval (direnv hook fish)
-  '';
-
   git = writeFishConfig "git" ''
     if status is-interactive; and type -q git
       set __fish_git_prompt_showdirtystate y
@@ -109,7 +105,6 @@ in
 buildEnv {
   name = "fish-config-full";
   paths = [ fishConfig ] ++ [
-    direnv
     git
     less
     lsColors
