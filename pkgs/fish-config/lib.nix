@@ -1,25 +1,30 @@
 { lib, writeText, runCommand }:
 
 let
-  inherit (lib) replaceStrings;
+  inherit (lib) genList length replaceStrings;
+
+  replaceStrings1 = froms: to:
+  replaceStrings froms (genList (_: to) (length froms));
 
   writeFishScriptTo = path: name: body:
   let
     # Shell variable name may contain letters, digits, and underscores
-    name_ = replaceStrings ["-" "."] ["_" "_"] name;
-    path_ = replaceStrings ["/" "-" "."] ["_" "_" "_"] path;
+    _path = replaceStrings1 ["/" "-" "."] "_" path;
+    _name = replaceStrings1 ["-" "."] "_" name;
+    __var = "__fish${_path}_${_name}_sourced";
 
-    path' = replaceStrings ["/"] ["-"] path;
+    path' = replaceStrings1 ["/"] "-" path;
 
-    configFile = writeText "${name}.fish" ''
-      set -q __fish${path_}_${name_}_sourced; or begin
+    script = writeText "${name}.fish" ''
+      set -q ${__var}; or begin
+
       ${body}
       end
-      set -g __fish${path_}_${name_}_sourced 1
+      set -g ${__var} 1
     '';
   in
   runCommand "fish${path'}-${name}" {} ''
-    install -D -m 444 "${configFile}" "$out${path}/${name}.fish"
+    install -D -m 444 "${script}" "$out${path}/${name}.fish"
   '';
 in
 
