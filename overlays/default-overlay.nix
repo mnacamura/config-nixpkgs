@@ -102,7 +102,7 @@ self: super:
       (ctagsWith {
         options = with ctagsOptions; [ scheme julia html ];
       })
-      direnvWrapper
+      direnv
       fd
       feedgnuplot
       file
