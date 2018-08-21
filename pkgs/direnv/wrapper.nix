@@ -1,32 +1,34 @@
-{ direnv, runCommand, writeFishVendorConfig, buildEnv, makeWrapper }:
+{ direnv, runCommand, substituteAll, writeFishVendorConfig, buildEnv }:
 
 let
-  configHome = runCommand "direnv-config-home" {} ''
-    install -D -m 444 "${./direnvrc}" "$out/direnv/direnvrc"
+  direnvrc = runCommand "direnvrc" {} ''
+    cp "${./direnvrc}" $out
   '';
+
+  direnvPatched = direnv.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [
+      (substituteAll {
+        src = ./direnvrc.patch;
+        direnvrc = "${direnvrc}";
+      })
+    ];
+  });
 
   hook = writeFishVendorConfig "direnv" ''
     eval (${wrapper}/bin/direnv hook fish)
   '';
 
   wrapper = buildEnv {
-    name = "${direnv.name}-wrapper-without-fish-hook";
+    name = "${direnvPatched.name}-wrapper-without-hook";
 
-    paths = [ direnv ];
+    paths = [ direnvPatched ];
 
     # Hide ${direnv}/share/fish/vendor_conf.d/direnv.fish
-    pathsToLink = [ "/share/man" ];
-
-    buildInputs = [ makeWrapper ];
-
-    postBuild = ''
-      makeWrapper ${direnv}/bin/direnv $out/bin/direnv \
-        --set XDG_CONFIG_HOME "${configHome}"
-    '';
+    pathsToLink = [ "/bin" "/share/man" ];
   };
 in
 
 buildEnv {
-  name = "${direnv.name}-wrapper";
+  name = "${direnvPatched.name}-wrapper";
   paths = [ wrapper hook ];
 }
