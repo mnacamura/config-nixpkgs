@@ -60,7 +60,7 @@ use_nix() {
     local drv=`readlink -f "${default}/env.drv"`
     local dump="${dir}/dump-`md5sum ".envrc" | cut -c -32`-`md5sum ${drv} | cut -c -32`"
 
-    if [[ ! -f "${dump}" ]] || [[ "${XDG_CONFIG_DIR}/direnv/direnvrc" -nt "${dump}" ]]; then
+    if [[ ! -f "${dump}" ]] || [[ "${XDG_CONFIG_HOME}/direnv/direnvrc" -nt "${dump}" ]]; then
         log_status "use nix: updating cache"
 
         old=`find ${dir} -name 'dump-*'`
@@ -68,6 +68,7 @@ use_nix() {
         rm -f ${old}
     fi
 
+    log_status "use nix: using cache"
     direnv_load cat "${dump}"
 
     watch_file "${default}"
