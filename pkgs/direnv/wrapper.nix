@@ -1,8 +1,8 @@
 { direnv, runCommand, writeFishVendorConfig, buildEnv, makeWrapper }:
 
 let
-  configDir = runCommand "direnv-config-dir" {} ''
-    install -D -m 444 "${./direnvrc}" "$out/direnvrc"
+  configHome = runCommand "direnv-config-home" {} ''
+    install -D -m 444 "${./direnvrc}" "$out/direnv/direnvrc"
   '';
 
   hook = writeFishVendorConfig "direnv" ''
@@ -21,7 +21,7 @@ let
 
     postBuild = ''
       makeWrapper ${direnv}/bin/direnv $out/bin/direnv \
-        --set DIRENV_CONFIG "${configDir}"
+        --set XDG_CONFIG_HOME "${configHome}"
     '';
   };
 in
