@@ -1,0 +1,97 @@
+commit 2e298db611159c42c27730cde4dc10ea6bcd48d6
+Author: Mitsuhiro Nakamura <m.nacamura@gmail.com>
+Date:   Tue Aug 21 13:37:02 2018 +0900
+
+    Use DIRENV_DATA or XDG_DATA_HOME to store allow hashes
+
+diff --git a/cmd_status.go b/cmd_status.go
+index 23cb3d0..5989c3b 100644
+--- a/cmd_status.go
++++ b/cmd_status.go
+@@ -16,6 +16,7 @@ var CmdStatus = &Cmd{
+ 
+ 		fmt.Println("direnv exec path", config.SelfPath)
+ 		fmt.Println("DIRENV_CONFIG", config.ConfDir)
++		fmt.Println("DIRENV_DATA", config.DataDir)
+ 		fmt.Println("DIRENV_BASH", config.BashPath)
+ 
+ 		loadedRC := config.LoadedRC()
+diff --git a/config.go b/config.go
+index 3917b02..e9be14f 100644
+--- a/config.go
++++ b/config.go
+@@ -14,6 +14,7 @@ type Config struct {
+ 	Env             Env
+ 	WorkDir         string // Current directory
+ 	ConfDir         string
++	DataDir         string
+ 	SelfPath        string
+ 	BashPath        string
+ 	RCDir           string
+@@ -48,6 +49,15 @@ func LoadConfig(env Env) (config *Config, err error) {
+ 		return
+ 	}
+ 
++	config.DataDir = env[DIRENV_DATA]
++	if config.DataDir == "" {
++		config.DataDir = XdgDataDir(env, "direnv")
++	}
++	if config.DataDir == "" {
++		err = fmt.Errorf("Couldn't find a data directory for direnv")
++		return
++	}
++
+ 	var exePath string
+ 	if exePath, err = os.Executable(); err != nil {
+ 		err = fmt.Errorf("LoadConfig() os.Executable() failed: %q", err)
+@@ -110,7 +120,7 @@ func LoadConfig(env Env) (config *Config, err error) {
+ }
+ 
+ func (self *Config) AllowDir() string {
+-	return filepath.Join(self.ConfDir, "allow")
++	return filepath.Join(self.DataDir, "allow")
+ }
+ 
+ func (self *Config) LoadedRC() *RC {
+diff --git a/const.go b/const.go
+index f226329..3d2439b 100644
+--- a/const.go
++++ b/const.go
+@@ -2,6 +2,7 @@ package main
+ 
+ const (
+ 	DIRENV_CONFIG = "DIRENV_CONFIG"
++	DIRENV_DATA   = "DIRENV_DATA"
+ 	DIRENV_BASH   = "DIRENV_BASH"
+ 	DIRENV_DEBUG  = "DIRENV_DEBUG"
+ 
+diff --git a/env_diff.go b/env_diff.go
+index 965c75b..491c02f 100644
+--- a/env_diff.go
++++ b/env_diff.go
+@@ -8,6 +8,7 @@ import (
+ var IGNORED_KEYS = map[string]bool{
+ 	// direnv env config
+ 	"DIRENV_CONFIG": true,
++	"DIRENV_DATA":   true,
+ 	"DIRENV_BASH":   true,
+ 
+ 	"COMP_WORDBREAKS": true, // Avoids segfaults in bash
+diff --git a/xdg.go b/xdg.go
+index f768dd2..368a40f 100644
+--- a/xdg.go
++++ b/xdg.go
+@@ -16,3 +16,13 @@ func XdgConfigDir(env Env, programName string) string {
+ 	// In theory we could also read /etc/passwd and look for the home matching the process' Uid
+ 	return ""
+ }
++
++func XdgDataDir(env Env, programName string) string {
++	if env["XDG_DATA_HOME"] != "" {
++		return filepath.Join(env["XDG_DATA_HOME"], programName)
++	} else if env["HOME"] != "" {
++		return filepath.Join(env["HOME"], ".local", "share", programName)
++	}
++	// In theory we could also read /etc/passwd and look for the home matching the process' Uid
++	return ""
++}

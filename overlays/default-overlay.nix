@@ -35,6 +35,10 @@ self: super:
 
   ctagsOptions = import ../pkgs/ctags/options.nix;
 
+  direnv = super.direnv.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [ ../pkgs/direnv/datadir.patch ];
+  });
+
   direnvWrapper = self.callPackage ../pkgs/direnv/wrapper.nix {};
 
   inherit (super.callPackage ../pkgs/fish-config/lib.nix {})
@@ -109,7 +113,7 @@ self: super:
       (ctagsWith {
         options = with ctagsOptions; [ scheme julia html ];
       })
-      direnv
+      direnvWrapper
       fd
       feedgnuplot
       file
