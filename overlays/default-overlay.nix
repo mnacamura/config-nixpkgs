@@ -152,8 +152,6 @@ self: super:
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
-      dropbox-cli
-      firefox-devedition-bin
       gimp
       gnucash
       inkscape
