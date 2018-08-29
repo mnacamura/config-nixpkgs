@@ -107,7 +107,7 @@ self: super:
         dicts = with aspellDicts; [ en en-computers en-science ];
       })
       (ctagsWith {
-        options = with ctagsOptions; [ scheme julia html ];
+        options = with ctagsOptions; [ julia ];
       })
       direnvWrapper
       fd

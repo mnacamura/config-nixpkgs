@@ -18,7 +18,7 @@ buildEnv {
   postBuild = ''
     mkdir $out/bin
     makeWrapper ${ctags}/bin/ctags $out/bin/ctags \
-      --add-flags "--options ${configFile}"
+      --add-flags "--options=${configFile}"
     for path in ${ctags}/bin/*; do
       name="$(basename "$path")"
       [ "$name" != ctags ] && ln -s "$path" "$out/bin/$name"
