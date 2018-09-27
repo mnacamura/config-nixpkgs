@@ -72,10 +72,15 @@ self: super:
   nixify = super.callPackage ../pkgs/nixify {};
 
   haskellPackages = super.haskellPackages.extend (self: super: {
-    pandoc-crossref = super.pandoc-crossref.overrideAttrs (_: {
-      # https://github.com/lierdakil/pandoc-crossref/issues/181
-      doCheck = false;
-    });
+    pandoc_2_3 = super.pandoc_2_3.override {
+      haddock-library = super.haddock-library_1_6_0;
+    };
+    pandoc-crossref = super.pandoc-crossref.override {
+      pandoc = self.pandoc_2_3;
+    };
+    pandoc-citeproc_0_14_4 = super.pandoc-citeproc_0_14_4.override {
+      pandoc = self.pandoc_2_3;
+    };
   });
 
   #}}}
