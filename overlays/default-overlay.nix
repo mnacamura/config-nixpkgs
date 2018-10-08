@@ -72,14 +72,19 @@ self: super:
   nixify = super.callPackage ../pkgs/nixify {};
 
   haskellPackages = super.haskellPackages.extend (self: super: {
-    pandoc_2_3 = super.pandoc_2_3.override {
+    hslua-module-text_0_2_0 = super.hslua-module-text_0_2_0.override {
+      hslua = super.hslua_1_0_1;
+    };
+    pandoc_2_3_1 = super.pandoc_2_3_1.override {
       haddock-library = super.haddock-library_1_6_0;
+      hslua = super.hslua_1_0_1;
+      hslua-module-text = self.hslua-module-text_0_2_0;
     };
     pandoc-crossref = super.pandoc-crossref.override {
-      pandoc = self.pandoc_2_3;
+      pandoc = self.pandoc_2_3_1;
     };
-    pandoc-citeproc_0_14_4 = super.pandoc-citeproc_0_14_4.override {
-      pandoc = self.pandoc_2_3;
+    pandoc-citeproc = super.pandoc-citeproc.override {
+      pandoc = self.pandoc_2_3_1;
     };
   });
 
