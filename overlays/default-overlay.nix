@@ -162,7 +162,6 @@ self: super:
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
-      adobeReader
       gimp
       gnucash
       inkscape
