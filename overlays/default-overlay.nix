@@ -76,16 +76,16 @@ self: super:
     hslua-module-text_0_2_0 = super.hslua-module-text_0_2_0.override {
       hslua = super.hslua_1_0_1;
     };
-    pandoc_2_3_1 = doJailbreak (super.pandoc_2_3_1.override {
+    pandoc_2_4 = super.pandoc_2_4.override {
       haddock-library = super.haddock-library_1_7_0;
       hslua = super.hslua_1_0_1;
       hslua-module-text = self.hslua-module-text_0_2_0;
-    });
+    };
     pandoc-crossref = super.pandoc-crossref.override {
-      pandoc = self.pandoc_2_3_1;
+      pandoc = self.pandoc_2_4;  # broken
     };
     pandoc-citeproc = super.pandoc-citeproc.override {
-      pandoc = self.pandoc_2_3_1;
+      pandoc = self.pandoc_2_4;
     };
   });
 
