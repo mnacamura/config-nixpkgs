@@ -73,20 +73,10 @@ self: super:
 
   haskellPackages = with super.haskell.lib;
   super.haskellPackages.extend (self: super: {
-    hslua-module-text_0_2_0 = super.hslua-module-text_0_2_0.override {
-      hslua = super.hslua_1_0_1;
-    };
-    pandoc_2_4 = super.pandoc_2_4.override {
-      haddock-library = super.haddock-library_1_7_0;
-      hslua = super.hslua_1_0_1;
-      hslua-module-text = self.hslua-module-text_0_2_0;
-    };
-    pandoc-crossref = super.pandoc-crossref.override {
-      pandoc = self.pandoc_2_4;  # broken
-    };
-    pandoc-citeproc = super.pandoc-citeproc.override {
-      pandoc = self.pandoc_2_4;
-    };
+    pandoc-crossref = overrideCabal super.pandoc-crossref (_: {
+      version = "0.3.2.1";
+      sha256 = "0rxinqgfri1zlq1di4dx949migm3j76lvb10hvmpa4rxz0fkq0l6";
+    });
   });
 
   #}}}
