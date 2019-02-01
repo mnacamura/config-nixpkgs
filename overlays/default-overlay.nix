@@ -139,7 +139,6 @@ self: super:
       vim-vint
       wget
     ] ++ lib.optionals stdenv.isLinux [
-      patdiff
       trash-cli
       xsel
     ] ++ lib.optionals stdenv.isDarwin [
