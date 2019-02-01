@@ -22,14 +22,15 @@ let
       abbr --add gc  'git commit'
       abbr --add gcl 'git clone'
       abbr --add gco 'git checkout'
-      abbr --add gd  'git diff'
-      abbr --add gdc 'git diff --cached'
-      abbr --add gdd 'git diff --no-ext-diff'
+      abbr --add gd  'git diff --word-diff=color'
+      abbr --add gdc 'git diff --word-diff=color --cached'
+      abbr --add gdd 'git diff'
       abbr --add gl  'git log'
       abbr --add glg 'git log --graph --oneline'
       abbr --add gp  'git pull'
-      abbr --add gs  'git status'
-      abbr --add gss 'git show --ext-diff'
+      abbr --add gw  'git status'  # `darcs whatsnew`
+      abbr --add gs  'git show --word-diff=color'
+      abbr --add gss 'git show'
     end
   '';
 
