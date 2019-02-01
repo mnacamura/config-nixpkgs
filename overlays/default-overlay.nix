@@ -98,7 +98,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2018-08-08";
+    version = "2019-02-01";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -108,18 +108,15 @@ self: super:
         dicts = with aspellDicts; [ en en-computers en-science ];
       })
       (ctagsWith {
-        options = with ctagsOptions; [ julia ];
+        options = with ctagsOptions; [ ];
       })
       direnvWrapper
       fd
-      feedgnuplot
       file
       fortune
       git
       gnumake
       htop
-      jo
-      jq
       lf
       neovim
       nixify
@@ -127,17 +124,12 @@ self: super:
       parallel-rust
       rclone
       ripgrep
-      rlwrap
-      scim
       skim
       sl
-      stow
       tree
       tty-clock
       unrar
       unzip
-      vim-vint
-      wget
     ] ++ lib.optionals stdenv.isLinux [
       trash-cli
       xsel
