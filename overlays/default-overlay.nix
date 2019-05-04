@@ -71,6 +71,8 @@ self: super:
 
   nixify = super.callPackage ../pkgs/nixify {};
 
+  rounded-sgenplus = super.callPackage ../pkgs/rounded-sgenplus {};
+
   #}}}
   #{{{ Environments
 
