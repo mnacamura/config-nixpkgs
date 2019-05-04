@@ -4,69 +4,73 @@ let
   pname = "rounded-sgenplus";
 
   builder = writeText "${pname}-builder" ''
-    import os, fontforge
+    import fontforge
     recipes = [
         {
-            "fontname":   "${pname}-1m-regular",
+            "out":        "${pname}-1m-regular.ttf",
             "familyname": "Rounded Sgen+ 1m",
             "fullname":   "Rounded Sgen+ 1m Regular",
+            "fontname":   "RoundedSgen+1m-Regular",
             "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-Regular.otf",
             "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-1m-regular.ttf"
         },
         {
-            "fontname":   "${pname}-1m-italic",
+            "out":        "${pname}-1m-italic.ttf",
             "familyname": "Rounded Sgen+ 1m",
             "fullname":   "Rounded Sgen+ 1m Italic",
+            "fontname":   "RoundedSgen+1m-Italic",
             "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-It.otf",
-            "src_jp": "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-1m-medium.ttf"
+            "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-1m-medium.ttf"
         },
         {
-            "fontname":   "${pname}-1m-bold",
+            "out":        "${pname}-1m-bold.ttf",
             "familyname": "Rounded Sgen+ 1m",
             "fullname":   "Rounded Sgen+ 1m Bold",
-            "src_lt": "${source-code-pro}/share/fonts/opentype/SourceCodePro-Bold.otf",
-            "src_jp": "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-1m-bold.ttf"
+            "fontname":   "RoundedSgen+1m-Bold",
+            "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-Bold.otf",
+            "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-1m-bold.ttf"
         },
         {
-            "fontname":   "${pname}-2m-regular",
+            "out":        "${pname}-2m-regular.ttf",
             "familyname": "Rounded Sgen+ 2m",
             "fullname":   "Rounded Sgen+ 2m Regular",
+            "fontname":   "RoundedSgen+2m-Regular",
             "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-Regular.otf",
             "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-2m-regular.ttf"
         },
         {
-            "fontname":   "${pname}-2m-italic",
+            "out":        "${pname}-2m-italic.ttf",
             "familyname": "Rounded Sgen+ 2m",
             "fullname":   "Rounded Sgen+ 2m Italic",
+            "fontname":   "RoundedSgen+2m-Italic",
             "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-It.otf",
-            "src_jp": "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-2m-medium.ttf"
+            "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-2m-medium.ttf"
         },
         {
-            "fontname":   "${pname}-2m-bold",
+            "out":        "${pname}-2m-bold.ttf",
             "familyname": "Rounded Sgen+ 2m",
             "fullname":   "Rounded Sgen+ 2m Bold",
-            "src_lt": "${source-code-pro}/share/fonts/opentype/SourceCodePro-Bold.otf",
-            "src_jp": "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-2m-bold.ttf"
+            "fontname":   "RoundedSgen+2m-Bold",
+            "src_lt":     "${source-code-pro}/share/fonts/opentype/SourceCodePro-Bold.otf",
+            "src_jp":     "${rounded-mgenplus}/share/fonts/rounded-mgenplus/rounded-mgenplus-2m-bold.ttf"
         },
     ]
     for recipe in recipes:
         lt = fontforge.open(recipe["src_lt"])
         lt.em = 1024
-        lt.generate("lt.ttf")
+        lt.generate(lt.fontname)
         lt.close
         jp = fontforge.open(recipe["src_jp"])
         jp.em = 1024
-        jp.generate("jp.ttf")
+        jp.generate(jp.fontname)
         jp.close
-        dest = fontforge.open("lt.ttf")
-        dest.mergeFonts("jp.ttf")
-        dest.fontname = recipe["fontname"]
+        dest = fontforge.open(lt.fontname)
+        dest.mergeFonts(jp.fontname)
         dest.familyname = recipe["familyname"]
         dest.fullname = recipe["fullname"]
-        dest.generate(dest.fontname + ".ttf")
+        dest.fontname = recipe["fontname"]
+        dest.generate(recipe["out"])
         dest.close
-        os.remove("lt.ttf")
-        os.remove("jp.ttf")
   '';
 in
 
@@ -84,7 +88,7 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/share/fonts/${pname}
-    install -m 444 -D -t $out/share/fonts/${pname} *.ttf
+    install -m 444 -D -t $out/share/fonts/${pname} ${pname}-*.ttf
   '';
 
   meta = with stdenvNoCC.lib; {
