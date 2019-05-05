@@ -73,6 +73,10 @@ self: super:
 
   rounded-sgenplus = super.callPackage ../pkgs/rounded-sgenplus {};
 
+  SDL2 = super.SDL2.override {
+    fcitxSupport = true;
+  };
+
   #}}}
   #{{{ Environments
 
