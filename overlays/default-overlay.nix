@@ -96,7 +96,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2019-02-01";
+    version = "2019-05-11";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -120,6 +120,7 @@ self: super:
       nixify
       p7zip
       parallel-rust
+      pdftk
       rclone
       ripgrep
       skim
