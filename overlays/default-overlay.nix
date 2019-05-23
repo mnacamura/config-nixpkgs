@@ -120,7 +120,7 @@ self: super:
       nixify
       p7zip
       parallel-rust
-      pdftk
+      ocamlPackages.cpdf
       rclone
       ripgrep
       skim
