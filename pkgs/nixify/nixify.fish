@@ -7,9 +7,9 @@ end
 
 if [ ! -e default.nix ]
   echo -n "\
-{ nixpkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {} }:
 
-with nixpkgs;
+with pkgs;
 
 stdenv.mkDerivation rec {
   name = \"my-pkg-\${version}\";
@@ -28,7 +28,7 @@ if [ ! -e shell.nix ]
 with import <nixpkgs> {};
 
 mkShell {
-  inputsFrom = [ (import ./default.nix {}) ];
+  inputsFrom = [ (callPackage ./. {}) ];
   buildInputs = [ ];
 
   shellHook = ''
@@ -38,7 +38,7 @@ mkShell {
 end
 
 set -l ignore "\
-# Nix direnv related stuff
+# Nix and direnv stuff
 .direnv
 result
 "
