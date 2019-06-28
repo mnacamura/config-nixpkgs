@@ -59,7 +59,7 @@ let
 
   nix = writeFishConfig "nix" (''
     [ -d $HOME/repos/nixpkgs ]
-    and set NIX_PATH "nixpkgs=$HOME/repos/nixpkgs:$NIX_PATH"
+    and set NIX_PATH "nixpkgs-local=$HOME/repos/nixpkgs:$NIX_PATH"
   '' + optionalString stdenv.isDarwin ''
     [ -d $HOME/repos/nix-darwin ]
     and set NIX_PATH "darwin=$HOME/repos/nix-darwin:$NIX_PATH"
