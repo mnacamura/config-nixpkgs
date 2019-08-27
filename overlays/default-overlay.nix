@@ -120,8 +120,8 @@ self: super:
       nixify
       p7zip
       parallel-rust
-      ocamlPackages.cpdf
-      rclone
+      # ocamlPackages.cpdf
+      # rclone
       ripgrep
       skim
       sl
@@ -143,9 +143,9 @@ self: super:
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
-      gimp
-      gnucash
-      inkscape
+      # gimp
+      # gnucash
+      # inkscape
       rounded-mgenplus
       slack
       tdesktop
