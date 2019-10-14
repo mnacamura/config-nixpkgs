@@ -45,10 +45,6 @@ self: super:
 
   fishConfigFull = self.callPackage ../pkgs/fish-config/full.nix {};
 
-  jupyter = super.callPackage ../pkgs/jupyter {
-    inherit (super.nodePackages_8_x) mathjax;
-  };
-
   ls-colors = super.callPackage ../pkgs/ls-colors {};
 
   neovim = super.neovim.override {
@@ -152,92 +148,6 @@ self: super:
     ] ++ lib.optionals stdenv.isDarwin [
       gnome-breeze  # used by GNU Cash
     ];
-  };
-
-  juliaEnv = self.callPackage ../pkgs/julia/env.nix {};
-
-  nodejsEnv = with self; let
-    nodejs = super.nodejs-8_x;
-    yarn = super.yarn.override { inherit nodejs; };
-  in buildEnv {
-    name = "${nodejs.name}-env";
-    paths = [
-      nodejs
-      yarn
-    ];
-  };
-
-  rEnv = self.callPackage ../pkgs/R/env.nix {};
-
-  rustEnv = with self; let
-    rust-src = stdenv.mkDerivation {
-      inherit (rustc.src) name;
-      inherit (rustc) src;
-      phases = [ "unpackPhase" "installPhase" ];
-      installPhase = "cp -r src $out";
-    };
-    fishConf = writeText "rust-fish-conf" ''
-      if status is-interactive
-        [ -d "$HOME/.cargo/bin" ]
-        and set PATH "$HOME/.cargo/bin" $PATH
-        set -q RUST_SRC_PATH
-        or set -gx RUST_SRC_PATH "${rust-src}"
-      end
-    '';
-  in buildEnv {
-    name = "rust-${rustc.version}-env";
-    paths = [
-      (runCommand "install-rust-fish-conf" {} ''
-        install -D -m 444 ${fishConf} $out/etc/fish/conf.d/rust.fish
-      '')
-      cargo
-      cargo-edit
-      cargo-tree
-      rustc
-      rustracer
-    ];
-  };
-
-  statsEnv = with self; let
-    version = "2018-06-18";
-  in buildEnv {
-    name = "stats-${version}-env";
-    buildInputs = [ makeWrapper ];
-    paths = [ jupyter rEnv ];
-    postBuild = ''
-      for script in "$out"/bin/jupyter*; do
-        wrapProgram $script --set JUPYTER_PATH "$out/share/jupyter"
-      done
-    '';
-  };
-
-  texliveEnv = with self; let
-    myTexlive = texlive.combine {
-      inherit (texlive)
-      scheme-basic  # installs collection-{basic,latex}
-      collection-luatex
-      collection-latexrecommended
-      collection-latexextra
-      collection-bibtexextra
-      collection-fontsrecommended
-      collection-fontsextra
-      collection-fontutils
-      collection-langjapanese
-      latexmk
-      latexdiff
-      revtex;
-    };
-    version = lib.getVersion myTexlive;
-  in buildEnv {
-    name = "texlive-${version}-env";
-    paths = [
-      ghostscript  # required by LaTeXiT
-      myTexlive
-    ] ++ (with haskellPackages; [
-      pandoc
-      pandoc-citeproc
-      pandoc-crossref
-    ]);
   };
 
   #}}}
