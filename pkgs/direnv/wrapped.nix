@@ -14,12 +14,12 @@ let
     ];
   });
 
-  hook = writeFishVendorConfig "direnv" ''
-    eval (${wrapper}/bin/direnv hook fish)
+  fishHook = writeFishVendorConfig "direnv" ''
+    eval (${wrapped}/bin/direnv hook fish)
   '';
 
-  wrapper = buildEnv {
-    name = "${patched.name}-wrapper-without-hook";
+  wrapped = buildEnv {
+    name = "${patched.name}-wrapped-without-hook";
     paths = [ patched ];
     # Hide ${direnv}/share/fish/vendor_conf.d/direnv.fish
     pathsToLink = [ "/bin" "/share/man" ];
@@ -27,6 +27,6 @@ let
 in
 
 buildEnv {
-  name = "${patched.name}-wrapper";
-  paths = [ wrapper hook ];
+  name = "${patched.name}-wrapped";
+  paths = [ wrapped fishHook ];
 }

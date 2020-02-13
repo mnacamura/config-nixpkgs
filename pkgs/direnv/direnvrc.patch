@@ -1,13 +1,14 @@
 diff --git a/stdlib.go b/stdlib.go
-index 2accba8..da0f198 100644
+index 0cbf361..98da78e 100644
 --- a/stdlib.go
 +++ b/stdlib.go
-@@ -708,5 +708,8 @@ const STDLIB = "#!bash\n" +
- 	"elif [[ -f $HOME/.direnvrc ]]; then\n" +
- 	"  # shellcheck disable=SC1090\n" +
- 	"  source \"$HOME/.direnvrc\" >&2\n" +
-+	"elif [[ -f @direnvrc@ ]]; then\n" +
-+	"  # shellcheck disable=SC1090\n" +
-+	"  source \"@direnvrc@\" >&2\n" +
- 	"fi\n" +
- 	""
+@@ -828,6 +828,9 @@ const StdLib = "#!/usr/bin/env bash\n" +
+ 	"  elif [[ -f $HOME/.direnvrc ]]; then\n" +
+ 	"    # shellcheck disable=SC1090\n" +
+ 	"    source \"$HOME/.direnvrc\" >&2\n" +
++	"  elif [[ -f @direnvrc@ ]]; then\n" +
++	"    # shellcheck disable=SC1090\n" +
++	"    source \"@direnvrc@\" >&2\n" +
+ 	"  fi\n" +
+ 	"\n" +
+ 	"  # and finally load the .envrc\n" +

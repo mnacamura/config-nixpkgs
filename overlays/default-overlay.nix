@@ -35,7 +35,7 @@ self: super:
 
   ctagsOptions = import ../pkgs/ctags/options.nix;
 
-  direnvWrapper = self.callPackage ../pkgs/direnv/wrapper.nix {};
+  direnvWrapped = self.callPackage ../pkgs/direnv/wrapped.nix {};
 
   inherit (super.callPackage ../pkgs/fish-config/lib.nix {})
   writeFishConfig
@@ -104,7 +104,7 @@ self: super:
       (ctagsWith {
         options = with ctagsOptions; [ ];
       })
-      direnvWrapper
+      direnvWrapped
       fd
       file
       fortune
