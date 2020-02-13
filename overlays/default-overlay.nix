@@ -92,7 +92,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2019-05-11";
+    version = "2020-02-14";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
