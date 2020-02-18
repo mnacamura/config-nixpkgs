@@ -7,7 +7,7 @@ let
 in
 
 buildEnv {
-  name = "${ctags.name}-wrapper";
+  name = "${ctags.name}-wrapped";
 
   paths = [ ctags ];
 

@@ -12,6 +12,11 @@ self: super:
         en-science
       ];
     };
+
+    ctags = self.ctagsWith {
+      options = with self.ctagsOptions; [
+      ];
+    };
   };
 
   aspellWith = super.callPackage ../pkgs/aspell/with.nix {};
@@ -109,9 +114,7 @@ self: super:
     paths = [
       fishConfigFull
       wrapped.aspell
-      (ctagsWith {
-        options = with ctagsOptions; [ ];
-      })
+      wrapped.ctags
       direnvWrapped
       fd
       file
