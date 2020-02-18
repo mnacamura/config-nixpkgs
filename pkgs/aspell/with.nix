@@ -4,8 +4,8 @@
 
 let
   configFile = writeText "aspell-config-${lang}" ''
-    dict-dir ${dicts'}/lib/aspell
     lang ${lang}
+    dict-dir ${dicts'}/lib/aspell
   '';
 
   dicts' = symlinkJoin {
@@ -26,7 +26,7 @@ buildEnv {
   postBuild = ''
     mkdir $out/bin
     makeWrapper ${aspell}/bin/aspell $out/bin/aspell \
-      --add-flags "--per-conf ${configFile}"
+      --add-flags "--conf ${configFile}"
     for path in ${aspell}/bin/*; do
       name="$(basename "$path")"
       [ "$name" != aspell ] && ln -s "$path" "$out/bin/$name"

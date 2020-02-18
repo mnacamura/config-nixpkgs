@@ -3,6 +3,17 @@ self: super:
 {
   #{{{ Custom packages
 
+  wrapped = {
+    aspell = self.aspellWith {
+      lang = "en_US";
+      dicts = with super.aspellDicts; [
+        en
+        en-computers
+        en-science
+      ];
+    };
+  };
+
   aspellWith = super.callPackage ../pkgs/aspell/with.nix {};
 
   ccacheWrapper = super.ccacheWrapper.override {
@@ -97,10 +108,7 @@ self: super:
     name = "console-${version}-env";
     paths = [
       fishConfigFull
-      (aspellWith {
-        lang = "en_US";
-        dicts = with aspellDicts; [ en en-computers en-science ];
-      })
+      wrapped.aspell
       (ctagsWith {
         options = with ctagsOptions; [ ];
       })
