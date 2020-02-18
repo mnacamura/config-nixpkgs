@@ -1,8 +1,6 @@
 self: super:
 
 {
-  #{{{ Custom packages
-
   wrapped = {
     aspell = self.aspellWith {
       lang = "en_US";
@@ -89,9 +87,6 @@ self: super:
     fcitxSupport = self.stdenv.isLinux;
   };
 
-  #}}}
-  #{{{ Environments
-
   adminEnv = with self; let
     version = "2018-06-18";
   in buildEnv {
@@ -108,7 +103,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2020-02-14";
+    version = "2020-02-18";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -126,14 +121,14 @@ self: super:
       neovim
       nixify
       p7zip
-      parallel-rust
-      # ocamlPackages.cpdf
+      # papis
+      # parallel-rust
       # rclone
       ripgrep
       skim
       sl
       tree
-      tty-clock
+      # tty-clock
       unrar
       unzip
     ] ++ lib.optionals stdenv.isLinux [
@@ -146,22 +141,15 @@ self: super:
   };
 
   desktopEnv = with self; let
-    version = "2018-06-18";
+    version = "2020-02-18";
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
-      # gimp
-      # gnucash
-      # inkscape
+      latest.firefox-nightly-bin
       rounded-mgenplus
-      slack
+      # slack
       tdesktop
     ] ++ lib.optionals stdenv.isDarwin [
-      gnome-breeze  # used by GNU Cash
     ];
   };
-
-  #}}}
 }
-
-# vim: fdm=marker
