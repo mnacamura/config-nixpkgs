@@ -17,6 +17,8 @@ self: super:
       options = with self.ctagsOptions; [
       ];
     };
+
+    direnv = self.callPackage ../pkgs/direnv/wrapped.nix {};
   };
 
   aspellWith = super.callPackage ../pkgs/aspell/with.nix {};
@@ -50,8 +52,6 @@ self: super:
   };
 
   ctagsOptions = import ../pkgs/ctags/options.nix;
-
-  direnvWrapped = self.callPackage ../pkgs/direnv/wrapped.nix {};
 
   inherit (super.callPackage ../pkgs/fish-config/lib.nix {})
   writeFishConfig
@@ -115,7 +115,7 @@ self: super:
       fishConfigFull
       wrapped.aspell
       wrapped.ctags
-      direnvWrapped
+      wrapped.direnv
       fd
       file
       fortune
