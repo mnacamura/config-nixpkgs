@@ -61,6 +61,8 @@ self: super:
 
   ls-colors = super.callPackage ../pkgs/ls-colors {};
 
+  mgenplus = super.callPackage ../pkgs/mgenplus {};
+
   neovim = super.neovim.override {
     withRuby = false;
     configure = {
@@ -141,11 +143,12 @@ self: super:
   };
 
   desktopEnv = with self; let
-    version = "2020-02-18";
+    version = "2020-02-21";
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
       latest.firefox-nightly-bin
+      mgenplus
       rounded-mgenplus
       # slack
       tdesktop
