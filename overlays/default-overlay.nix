@@ -143,13 +143,13 @@ self: super:
   };
 
   desktopEnv = with self; let
-    version = "2020-02-21";
+    version = "2020-03-05";
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
       latest.firefox-nightly-bin
-      mgenplus
-      rounded-mgenplus
+      # mgenplus
+      # rounded-mgenplus
       # slack
       tdesktop
     ] ++ lib.optionals stdenv.isDarwin [
