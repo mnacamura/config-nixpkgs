@@ -4,13 +4,13 @@ or if status is-login
   set -U fish_color_command --bold
   set -U fish_color_param cyan
   set -U fish_color_redirection brblue
-  set -U fish_color_comment 888 brblack  # default: red
+  set -U fish_color_comment white  # default: red
   set -U fish_color_error brred
   set -U fish_color_escape bryellow --bold
   set -U fish_color_operator bryellow
   set -U fish_color_end brmagenta
   set -U fish_color_quote yellow
-  set -U fish_color_autosuggestion 888 brblack  # default: 555 black
+  set -U fish_color_autosuggestion white  # default: 555 black
   set -U fish_color_user normal  # default: brgreen
   set -U fish_color_host normal  # default: normal
   set -U fish_color_valid_path --underline
