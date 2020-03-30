@@ -48,6 +48,7 @@ let
     if status is-interactive
       set -gx PAGER less
       set -gx LESS '-R -ig -j.5'
+      set -gx LESSCHARSET utf-8
     end
   '';
 
