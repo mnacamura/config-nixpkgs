@@ -12,7 +12,7 @@ if [ ! -e default.nix ]
 with pkgs;
 
 stdenv.mkDerivation rec {
-  name = \"my-pkg-\${version}\";
+  pname = \"my-pkg\";
   version = \"0.0.1\";
 
   src = ./.;

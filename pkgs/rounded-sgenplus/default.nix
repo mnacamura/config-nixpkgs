@@ -75,7 +75,7 @@ let
 in
 
 stdenvNoCC.mkDerivation rec {
-  name = "${pname}-${version}";
+  inherit pname;
   version = "2019-05-04";
 
   nativeBuildInputs = [ fontforge ];
