@@ -1,19 +1,14 @@
 { stdenv, fetchFromGitHub }:
 
-let
+stdenv.mkDerivation rec {
   pname = "LS_COLORS";
-  version = "2018-08-07";
-in
-
-stdenv.mkDerivation {
-  name = "${pname}-${version}";
-  inherit version;
+  version = "2020-04-01";
 
   src = fetchFromGitHub {
     owner = "trapd00r";
     repo = pname;
-    rev = "0e974280d43cd235805727944dfdcb099d739e25";
-    sha256 = "0d6a2r670ldys28agd5c6mrjjmm2c4000k2xh8aahc56ylgyx7cg";
+    rev = "da2f061feb4977bc5e3dfdb16ab65d93b3eca1ca";
+    sha256 = "1yw4qz152r9jsg4v4n592gngfvwkcrkj68hrhm6n6d0qj6f6qf68";
   };
 
   buildCommand = ''
