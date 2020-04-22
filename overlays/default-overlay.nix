@@ -66,17 +66,39 @@ self: super:
   neovim = super.neovim.override {
     withRuby = false;
     configure = {
-      customRC = ''
-          let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
-          if filereadable($MYVIMRC)
+      customRC = let
+        vimrc = self.callPackage ../pkgs/vimrc {};
+      in ''
+        source ${vimrc}
+        let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
+        if filereadable($MYVIMRC)
           source $MYVIMRC
-          else
+        else
           echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
-          endif
+        endif
       '';
-      packages.default = with super.vimPlugins; {
-        start = [ skim vim-nix ];
+      packages.default = with self.vimPlugins; {
+        start = [
+          lightline-ale
+          lightline-vim
+          skim
+          srcery-vim
+          vim-nix
+        ];
         opt = [];
+      };
+    };
+  };
+
+  vimPlugins = with super; vimPlugins // {
+    srcery-vim = vimUtils.buildVimPlugin {
+      pname = "srcery-vim";
+      version = "2020-03-15";
+      src = fetchFromGitHub {
+        owner = "srcery-colors";
+        repo = "srcery-vim";
+        rev = "099d871aa26df29e892acb5b8b3f1766a7199021";
+        sha256 = "0wn82gib4ambvanb34hzj6nanpy2ybaw9dxj9d2fml4i3wfg2cps";
       };
     };
   };
