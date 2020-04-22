@@ -1,25 +1,27 @@
 self: super:
 
 {
-  wrapped = {
-    aspell = self.aspellWith {
-      lang = "en_US";
-      dicts = with super.aspellDicts; [
-        en
-        en-computers
-        en-science
-      ];
-    };
-
-    ctags = self.ctagsWith {
-      options = with self.ctagsOptions; [
-      ];
-    };
-
-    direnv = self.callPackage ../pkgs/direnv/wrapped.nix {};
+  wrapped.aspell = self.aspellWith {
+    lang = "en_US";
+    dicts = with self.aspellDicts; [
+      en
+      en-computers
+      en-science
+    ];
   };
 
-  aspellWith = super.callPackage ../pkgs/aspell/with.nix {};
+  aspellWith = self.callPackage ../pkgs/aspell/with.nix {};
+
+  wrapped.ctags = self.ctagsWith {
+    options = with self.ctagsOptions; [
+    ];
+  };
+
+  ctagsWith = self.callPackage ../pkgs/ctags/with.nix {
+    ctags = super.universal-ctags;
+  };
+
+  ctagsOptions = import ../pkgs/ctags/options.nix;
 
   ccacheWrapper = super.ccacheWrapper.override {
     extraConfig = ''
@@ -45,50 +47,25 @@ self: super:
     '';
   };
 
-  ctagsWith = super.callPackage ../pkgs/ctags/with.nix {
-    ctags = super.universal-ctags;
+  wrapped.direnv = self.callPackage ../pkgs/direnv/wrapped.nix {};
+
+  configFiles.fish = self.callPackage ../pkgs/fish-config {
+    core = self.callPackage ../pkgs/fish-config/core.nix {};
   };
 
-  ctagsOptions = import ../pkgs/ctags/options.nix;
-
-  inherit (super.callPackage ../pkgs/fish-config/lib.nix {})
+  inherit (self.callPackage ../pkgs/fish-config/lib.nix {})
   writeFishConfig
   writeFishVendorConfig;
 
-  fishConfig = super.callPackage ../pkgs/fish-config {};
+  ls-colors = self.callPackage ../pkgs/ls-colors {};
 
-  fishConfigFull = self.callPackage ../pkgs/fish-config/full.nix {};
-
-  ls-colors = super.callPackage ../pkgs/ls-colors {};
-
-  mgenplus = super.callPackage ../pkgs/mgenplus {};
+  mgenplus = self.callPackage ../pkgs/mgenplus {};
 
   neovim = super.neovim.override {
     withRuby = false;
-    configure = {
-      customRC = let
-        vimrc = self.callPackage ../pkgs/vimrc {};
-      in ''
-        source ${vimrc}
-        let $MYVIMRC = $HOME . '/.config/nvim/init.vim'
-        if filereadable($MYVIMRC)
-          source $MYVIMRC
-        else
-          echomsg 'Warning: ' . $MYVIMRC . ' is not readable'
-        endif
-      '';
-      packages.default = with self.vimPlugins; {
-        start = [
-          lightline-ale
-          lightline-vim
-          skim
-          srcery-vim
-          vim-nix
-        ];
-        opt = [];
-      };
-    };
   };
+
+  wrapped.neovim = self.callPackage ../pkgs/neovim/wrapped.nix {};
 
   vimPlugins = with super; vimPlugins // {
     srcery-vim = vimUtils.buildVimPlugin {
@@ -127,11 +104,11 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2020-02-18";
+    version = "2020-04-22";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
-      fishConfigFull
+      configFiles.fish
       wrapped.aspell
       wrapped.ctags
       wrapped.direnv
@@ -142,7 +119,7 @@ self: super:
       gnumake
       htop
       lf
-      neovim
+      wrapped.neovim
       nixify
       p7zip
       # papis

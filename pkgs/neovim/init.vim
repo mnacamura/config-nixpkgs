@@ -44,4 +44,13 @@ let g:lightline.active = {
       \ }
 let g:lightline#ale#indicator_ok = ''
 
+"" Impure settings {{{1
+
+let s:init_vim = $HOME . '/.config/nvim/init.vim'
+if filereadable(s:init_vim)
+  exec 'source ' . s:init_vim
+else
+  echomsg 'Warning: ' . s:init_vim . ' is not readable'
+endif
+
 " vim: fdm=marker sw=2 et
