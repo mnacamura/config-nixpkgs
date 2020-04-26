@@ -47,13 +47,13 @@ self: super:
     '';
   };
 
-  wrapped.direnv = self.callPackage ../pkgs/direnv/wrapped.nix {};
+  wrapped.direnv = self.callPackage ../pkgs/direnv/wrapper.nix {};
 
-  configFiles.fish = self.callPackage ../pkgs/fish-config {
-    core = self.callPackage ../pkgs/fish-config/core.nix {};
+  configFiles.fish = self.callPackage ../pkgs/fish/config.nix {
+    config-core = self.callPackage ../pkgs/fish/config-core.nix {};
   };
 
-  inherit (self.callPackage ../pkgs/fish-config/lib.nix {})
+  inherit (self.callPackage ../pkgs/fish/lib.nix {})
   writeFishConfig
   writeFishVendorConfig;
 
@@ -65,7 +65,7 @@ self: super:
     withRuby = false;
   };
 
-  wrapped.neovim = self.callPackage ../pkgs/neovim/wrapped.nix {};
+  wrapped.neovim = self.callPackage ../pkgs/neovim/wrapper.nix {};
 
   vimPlugins = with super; vimPlugins // {
     srcery-vim = vimUtils.buildVimPlugin {
