@@ -15,9 +15,9 @@ augroup color_tweaks
   autocmd!
   " Srcery orange
   au VimEnter,ColorScheme *
-        \ hi Search    ctermfg=0 ctermbg=166 guifg=#1c1b19 guibg=#d75f00 |
-        \ hi IncSearch ctermfg=0 ctermbg=208 guifg=#1c1b19 guibg=#ff8700 |
-        \ hi PmenuSel  ctermfg=0 ctermbg=208 guifg=#1c1b19 guibg=#ff8700
+        \ hi Search    ctermfg=15 ctermbg=166 guifg=#fce8c3 guibg=#d75f00 |
+        \ hi IncSearch ctermfg=15 ctermbg=208 guifg=#fce8c3 guibg=#ff8700 |
+        \ hi PmenuSel  ctermfg=15 ctermbg=166 guifg=#fce8c3 guibg=#d75f00
 
   " Srcery brred
   au VimEnter,ColorScheme *
