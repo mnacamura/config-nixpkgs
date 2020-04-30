@@ -65,7 +65,11 @@ self: super:
     withRuby = false;
   };
 
-  wrapped.neovim = self.callPackage ../pkgs/neovim/wrapper.nix {};
+  configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};
+
+  wrapped.neovim = self.callPackage ../pkgs/neovim/wrapper.nix {
+    configFile = self.configFiles.neovim;
+  };
 
   vimPlugins = with super; vimPlugins // {
     srcery-vim = vimUtils.buildVimPlugin {
