@@ -13,15 +13,11 @@ endtry
 
 augroup color_tweaks
   autocmd!
-  " Srcery orange
   au VimEnter,ColorScheme *
-        \ hi Search    ctermfg=15 ctermbg=166 guifg=#fce8c3 guibg=#d75f00 |
-        \ hi IncSearch ctermfg=15 ctermbg=208 guifg=#fce8c3 guibg=#ff8700 |
-        \ hi PmenuSel  ctermfg=15 ctermbg=166 guifg=#fce8c3 guibg=#d75f00
-
-  " Srcery brred
-  au VimEnter,ColorScheme *
-        \ hi SpellBad ctermfg=9 guifg=#f75341 gui=undercurl
+        \ @hi_search@ |
+        \ @hi_incsearch@ |
+        \ @hi_pmenusel@ |
+        \ @hi_spellbad@
 augroup END
 
 if !exists('g:lightline') | let g:lightline = {} | endif
