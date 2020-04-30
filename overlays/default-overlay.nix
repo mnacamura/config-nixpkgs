@@ -92,6 +92,12 @@ self: super:
     fcitxSupport = self.stdenv.isLinux;
   };
 
+  configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
+
+  wrapped.zathura = self.callPackage ../pkgs/zathura/wrapper.nix {
+    configFile = self.configFiles.zathura;
+  };
+
   adminEnv = with self; let
     version = "2018-06-18";
   in buildEnv {
@@ -146,11 +152,12 @@ self: super:
   };
 
   desktopEnv = with self; let
-    version = "2020-03-05";
+    version = "2020-04-30";
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
       latest.firefox-nightly-bin
+      wrapped.zathura
       # mgenplus
       # rounded-mgenplus
       # slack
