@@ -6,27 +6,28 @@ let
   '';
 
   patched = direnv.overrideAttrs (old: {
+    name = "${direnv.name}-patched";
+
     patches = (old.patches or []) ++ [
       (substituteAll {
         src = ./direnvrc.patch;
         direnvrc = "${direnvrc}";
       })
     ];
+
+  installPhase = (old.installPhase or "") + ''
+      # Delete share/fish/vendor_conf.d/direnv.fish for later convenience
+      rm -f "$bin/share/fish/vendor_conf.d/direnv.fish"
+    '';
   });
 
-  wrappedWithoutHook = buildEnv {
-    name = "${patched.name}-wrapped-without-hook";
-    paths = [ patched ];
-    # Hide ${direnv}/share/fish/vendor_conf.d/direnv.fish
-    pathsToLink = [ "/bin" "/share/man" ];
-  };
-
   fishHook = writeFishVendorConfig "direnv" ''
-    eval (${wrappedWithoutHook}/bin/direnv hook fish)
+    eval (${patched}/bin/direnv hook fish)
   '';
 in
 
 buildEnv {
   name = "${patched.name}-wrapped";
-  paths = [ wrappedWithoutHook fishHook ];
+
+  paths = [ patched fishHook ];
 }
