@@ -38,13 +38,13 @@ let
     less = writeFishConfig "less" ''
       if status is-login
         # Set to fit Srcery color scheme
-        set -Ux LESS_TERMCAP_mb (printf "\e[5m")                 # Begin blinking
-        set -Ux LESS_TERMCAP_md (printf "\e[1m")                 # Begin bold
-        set -Ux LESS_TERMCAP_me (printf "\e[0m")                 # End blinking/bold
-        set -Ux LESS_TERMCAP_so (printf "\e[97;48;2;215;95;0m")  # Begin standout
-        set -Ux LESS_TERMCAP_se (printf "\e[0m")                 # End standout
-        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")              # Begin underline
-        set -Ux LESS_TERMCAP_ue (printf "\e[0m")                 # End underline
+        set -Ux LESS_TERMCAP_mb (printf "\e[5m")              # Begin blinking
+        set -Ux LESS_TERMCAP_md (printf "\e[1m")              # Begin bold
+        set -Ux LESS_TERMCAP_me (printf "\e[0m")              # End blinking/bold
+        set -Ux LESS_TERMCAP_so (printf "\e[48;2;215;95;0m")  # Begin standout
+        set -Ux LESS_TERMCAP_se (printf "\e[0m")              # End standout
+        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")           # Begin underline
+        set -Ux LESS_TERMCAP_ue (printf "\e[0m")              # End underline
       end
     '';
 
