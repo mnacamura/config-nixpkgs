@@ -14,10 +14,11 @@ endtry
 augroup color_tweaks
   autocmd!
   au VimEnter,ColorScheme *
-        \ @hi_search@ |
-        \ @hi_incsearch@ |
         \ @hi_pmenusel@ |
-        \ @hi_spellbad@
+        \ @hi_spellcap@ |
+        \ @hi_spellbad@ |
+        \ @hi_spelllocal@ |
+        \ @hi_spellrare@
 augroup END
 
 if !exists('g:lightline') | let g:lightline = {} | endif

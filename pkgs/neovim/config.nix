@@ -20,14 +20,17 @@ let
     "guifg=${hex.${args.fg}}"
   ] ++ lib.optionals (args ? bg) [
     "guibg=${hex.${args.bg}}"
+  ] ++ lib.optionals (args ? guisp) [
+    "guisp=${hex.${args.guisp}}"
   ]);
 in
 
 substituteAll {
   src = ./init.vim;
 
-  hi_search = hi "Search" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "orange"; };
-  hi_incsearch = hi "IncSearch" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "brorange"; };
-  hi_pmenusel = hi "PmenuSel" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "orange"; };
-  hi_spellbad = hi "SpellBad" { fg = "brred"; gui = "undercurl"; };
+  hi_pmenusel = hi "PmenuSel" { bg = "orange"; };
+  hi_spellcap = hi "SpellCap" { fg = "bryellow"; };
+  hi_spellbad = hi "SpellBad" { guisp = "brred"; };
+  hi_spelllocal = hi "SpellLocal" { guisp = "brmagenta"; };
+  hi_spellrare = hi "SpellRare" { guisp = "brcyan"; };
 }
