@@ -26,8 +26,8 @@ in
 substituteAll {
   src = ./init.vim;
 
-  hi_search = hi "Search" { fg = "brwhite"; bg = "orange"; };
-  hi_incsearch = hi "IncSearch" { fg = "brwhite"; bg = "brorange"; };
-  hi_pmenusel = hi "PmenuSel" { fg = "brwhite"; bg = "orange"; };
+  hi_search = hi "Search" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "orange"; };
+  hi_incsearch = hi "IncSearch" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "brorange"; };
+  hi_pmenusel = hi "PmenuSel" { cterm = "none"; gui = "none"; fg = "brwhite"; bg = "orange"; };
   hi_spellbad = hi "SpellBad" { fg = "brred"; gui = "undercurl"; };
 }
