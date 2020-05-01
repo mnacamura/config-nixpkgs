@@ -2,34 +2,32 @@
 
 let
   hi = group: args:
-  let
-    inherit (config.colortheme) nr hex;
-  in
   lib.concatStringsSep " " ([
     "hi" group
   ] ++ lib.optionals (args ? cterm) [
     "cterm=${args.cterm}"
   ] ++ lib.optionals (args ? fg) [
-    "ctermfg=${toString nr.${args.fg}}"
+    "ctermfg=${toString args.fg.nr}"
   ] ++ lib.optionals (args ? bg) [
-    "ctermbg=${toString nr.${args.bg}}"
+    "ctermbg=${toString args.bg.nr}"
   ] ++ lib.optionals (args ? gui) [
     "gui=${args.gui}"
   ] ++ lib.optionals (args ? fg) [
-    "guifg=${hex.${args.fg}}"
+    "guifg=${args.fg.hex}"
   ] ++ lib.optionals (args ? bg) [
-    "guibg=${hex.${args.bg}}"
+    "guibg=${args.bg.hex}"
   ] ++ lib.optionals (args ? guisp) [
-    "guisp=${hex.${args.guisp}}"
+    "guisp=${args.guisp.hex}"
   ]);
 in
 
+with config.colortheme.palette;
 substituteAll {
   src = ./init.vim;
 
-  hi_pmenusel = hi "PmenuSel" { bg = "orange"; };
-  hi_spellcap = hi "SpellCap" { fg = "bryellow"; };
-  hi_spellbad = hi "SpellBad" { guisp = "brred"; };
-  hi_spelllocal = hi "SpellLocal" { guisp = "brmagenta"; };
-  hi_spellrare = hi "SpellRare" { guisp = "brcyan"; };
+  hi_pmenusel = hi "PmenuSel" { bg = orange; };
+  hi_spellcap = hi "SpellCap" { fg = bryellow; };
+  hi_spellbad = hi "SpellBad" { guisp = brred; };
+  hi_spelllocal = hi "SpellLocal" { guisp = brmagenta; };
+  hi_spellrare = hi "SpellRare" { guisp = brcyan; };
 }
