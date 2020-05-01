@@ -1,6 +1,14 @@
 self: super:
 
 {
+  config = with self;
+  lib.recursiveUpdate super.config {
+    colortheme = {
+      nr = lib.mapAttrs (_: c: c.nr) config.colortheme.palette;
+      hex = lib.mapAttrs (_: c: c.hex) config.colortheme.palette;
+    };
+  };
+
   wrapped.aspell = self.aspellWith {
     lang = "en_US";
     dicts = with self.aspellDicts; [

@@ -2,7 +2,7 @@
   allowUnfree = true;
   # allowBroken = true;
 
-  colortheme = {
+  colortheme.palette = {
     # Srcery: https://github.com/srcery-colors/srcery-vim
     black     = { nr =   0; hex = "#1C1B19"; };
     red       = { nr =   1; hex = "#EF2F27"; };

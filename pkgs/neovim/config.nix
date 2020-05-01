@@ -3,17 +3,16 @@
 let
   hi = group: args:
   let
-    nr = lib.mapAttrs (_: c: toString c.nr) config.colortheme;
-    hex = lib.mapAttrs (_: c: c.hex) config.colortheme;
+    inherit (config.colortheme) nr hex;
   in
   lib.concatStringsSep " " ([
     "hi" group
   ] ++ lib.optionals (args ? cterm) [
     "cterm=${args.cterm}"
   ] ++ lib.optionals (args ? fg) [
-    "ctermfg=${nr.${args.fg}}"
+    "ctermfg=${toString nr.${args.fg}}"
   ] ++ lib.optionals (args ? bg) [
-    "ctermbg=${nr.${args.bg}}"
+    "ctermbg=${toString nr.${args.bg}}"
   ] ++ lib.optionals (args ? gui) [
     "gui=${args.gui}"
   ] ++ lib.optionals (args ? fg) [
