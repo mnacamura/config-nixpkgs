@@ -25,7 +25,7 @@ with config.colortheme.palette;
 substituteAll {
   src = ./init.vim;
 
-  hi_pmenusel = hi "PmenuSel" { bg = orange; };
+  hi_pmenusel = hi "PmenuSel" { fg = black; bg = brorange; };
   hi_spellcap = hi "SpellCap" { fg = bryellow; };
   hi_spellbad = hi "SpellBad" { guisp = brred; };
   hi_spelllocal = hi "SpellLocal" { guisp = brmagenta; };
