@@ -94,6 +94,10 @@ self: super:
 
   themix-gui = self.callPackage ../pkgs/themix/gui {};
 
+  themixPlugins = {
+    import-images = self.callPackage ../pkgs/themix/import-images {};
+  };
+
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
 
   wrapped.zathura = self.callPackage ../pkgs/zathura/wrapper.nix {
