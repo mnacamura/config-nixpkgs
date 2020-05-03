@@ -92,7 +92,12 @@ self: super:
     fcitxSupport = self.stdenv.isLinux;
   };
 
-  themix-gui = self.callPackage ../pkgs/themix/gui {};
+  themix-gui = self.callPackage ../pkgs/themix/gui {
+    unwrapped = self.callPackage ../pkgs/themix/gui/unwrapped.nix {};
+    plugins = with self.themixPlugins; [
+      import-images
+    ];
+  };
 
   themixPlugins = {
     import-images = self.callPackage ../pkgs/themix/import-images {};
