@@ -96,11 +96,13 @@ self: super:
     unwrapped = self.callPackage ../pkgs/themix/gui/unwrapped.nix {};
     plugins = with self.themixPlugins; [
       import-images
+      theme-oomox
     ];
   };
 
   themixPlugins = {
     import-images = self.callPackage ../pkgs/themix/import-images {};
+    theme-oomox = self.callPackage ../pkgs/themix/theme-oomox {};
   };
 
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
