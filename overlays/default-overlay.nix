@@ -92,6 +92,8 @@ self: super:
     fcitxSupport = self.stdenv.isLinux;
   };
 
+  themix-gui = self.callPackage ../pkgs/themix/gui {};
+
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
 
   wrapped.zathura = self.callPackage ../pkgs/zathura/wrapper.nix {
