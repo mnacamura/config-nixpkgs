@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
     sha256 = "015yj9hl283dsgphkva441r1fr580wiyssm4s2x4xfjprqksxg8w";
   };
 
+  patches = [ ./writable.patch ];
+
   postPatch = ''
     patchShebangs .
     for path in packaging/bin/*; do
