@@ -15,6 +15,9 @@ else unwrapped.overrideAttrs (old: {
   buildInputs = old.buildInputs ++ plugins;
 
   preFixup = old.preFixup + ''
-    gappsWrapperArgs+=(--set OOMOX_ROOT "${unwrappedWithPlugins}/opt/oomox")
+    gappsWrapperArgs+=(
+        --set OOMOX_ROOT "${unwrappedWithPlugins}/opt/oomox"
+        --prefix PATH : "$PATH"
+    )
   '';
 })
