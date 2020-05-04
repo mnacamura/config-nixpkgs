@@ -97,12 +97,14 @@ self: super:
     plugins = with self.themixPlugins; [
       import-images
       theme-oomox
+      icons-papirus
     ];
   };
 
   themixPlugins = {
     import-images = self.callPackage ../pkgs/themix/import-images {};
     theme-oomox = self.callPackage ../pkgs/themix/theme-oomox {};
+    icons-papirus = self.callPackage ../pkgs/themix/icons-papirus {};
   };
 
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
