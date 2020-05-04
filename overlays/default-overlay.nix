@@ -106,7 +106,11 @@ self: super:
   themix-gui = self.callPackage ../pkgs/themix/gui {
     unwrapped = self.callPackage ../pkgs/themix/gui/unwrapped.nix {};
     plugins = with self.themixPlugins; [
-      import-images
+      (import-images.override {
+        enableColorthief = true;
+        enableColorz = true;
+        enableHaishoku = true;
+      })
       theme-oomox
       icons-papirus
     ];
