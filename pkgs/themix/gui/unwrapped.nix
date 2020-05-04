@@ -1,5 +1,5 @@
 { stdenv, fetchFromGitHub, gettext, python3
-, wrapGAppsHook, gtk3, gobject-introspection
+, wrapGAppsHook, gtk3, gobject-introspection, hicolor-icon-theme
 }:
 
 stdenv.mkDerivation rec {
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ wrapGAppsHook ];
 
-  buildInputs = [ gettext gtk3 gobject-introspection python3 ] ++
+  buildInputs = [ gettext gtk3 gobject-introspection hicolor-icon-theme python3 ] ++
   (with python3.pkgs; [ pygobject3 ]);
 
   buildPhase = ''
