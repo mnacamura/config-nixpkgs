@@ -86,6 +86,13 @@ self: super:
 
   nixify = super.callPackage ../pkgs/nixify {};
 
+  python3 = super.python3.override ({
+    packageOverrides = pyself: pysuper:
+    {
+      colorz = pyself.callPackage ../pkgs/python/colorz {};
+    };
+  });
+
   rounded-sgenplus = super.callPackage ../pkgs/rounded-sgenplus {};
 
   SDL2 = super.SDL2.override {
