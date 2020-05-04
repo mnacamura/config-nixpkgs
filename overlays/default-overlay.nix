@@ -90,6 +90,8 @@ self: super:
     packageOverrides = pyself: pysuper:
     {
       colorz = pyself.callPackage ../pkgs/python/colorz {};
+
+      haishoku = pyself.callPackage ../pkgs/python/haishoku {};
     };
   });
 
