@@ -124,6 +124,8 @@ self: super:
     icons-papirus = self.callPackage ../pkgs/themix/icons-papirus {};
   };
 
+  xtermcolor = self.callPackage ../pkgs/xtermcolor {};
+
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
 
   wrapped.zathura = self.callPackage ../pkgs/zathura/wrapper.nix {
