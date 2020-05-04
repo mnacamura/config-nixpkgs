@@ -89,6 +89,8 @@ self: super:
   python3 = super.python3.override ({
     packageOverrides = pyself: pysuper:
     {
+      colorthief = pyself.callPackage ../pkgs/python/colorthief {};
+
       colorz = pyself.callPackage ../pkgs/python/colorz {};
 
       haishoku = pyself.callPackage ../pkgs/python/haishoku {};
