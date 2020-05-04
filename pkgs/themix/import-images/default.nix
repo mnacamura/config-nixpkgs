@@ -18,6 +18,6 @@ stdenv.mkDerivation rec {
   installTargets = "install_import_images";
 
   meta = themix-gui.meta // {
-    description = "Themix GUI plugin to get color palettes from images";
+    description = "Plugin for Themix GUI designer to get color palettes from images";
   };
 }
