@@ -1,7 +1,23 @@
 #!@fish@/bin/fish
 
-set -l grep @gnugrep@/bin/grep
-set -l file @file@/bin/file
+set -g program_name (basename (status filename))
+
+set -g grep @gnugrep@/bin/grep
+set -g file @file@/bin/file
+
+function warn
+    set_color yellow
+    echo $program_name: $argv >&2 
+    set_color normal
+end
+
+function edit
+    if [ -n "$EDITOR" ]
+        eval $EDITOR $argv
+    else
+        warn Please set EDITOR environment variable to edit nix files
+    end
+end
 
 if [ ! -e ./.envrc ]
     echo "use nix" > .envrc
@@ -34,10 +50,4 @@ else
     end
 end
 
-if [ -n "$EDITOR" ]
-    eval $EDITOR default.nix
-else
-    set_color yellow
-    echo (status -f): Please set EDITOR environment variable to edit nix files >&2 
-    set_color normal
-end
+edit default.nix
