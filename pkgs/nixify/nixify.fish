@@ -21,45 +21,50 @@ function edit
     end
 end
 
-if [ ! -e ./.envrc ]
-    echo "use nix" > .envrc
-    msg "added .envrc"
+function direnv_allow
     if type -q direnv
         command direnv allow
     else
         warn "direnv not found; skipped executing 'direnv allow'"
     end
-else if not $grep 'use nix' .envrc &>-
-    echo "use nix" >> .envrc
-    msg "appended 'use nix' to .envrc"
 end
 
-if [ ! -e default.nix ]
-    msg "editing default.nix"
-    cp @default_template@ default.nix
-    chmod +w default.nix
-    edit default.nix
-end
-
-if [ ! -e shell.nix ]
-    msg "editing shell.nix"
-    cp @shell_template@ shell.nix
-    chmod +w shell.nix
-    edit shell.nix
-end
-
-set -l ignored_files "\
-# Nix and direnv stuff
-.direnv
-result
-"
-if [ ! -e .gitignore ]; or $file .gitignore | $grep empty &>-
-    echo -n $ignored_files > .gitignore
-    msg "added .gitignore"
-else
-    if not $grep '# Nix and direnv stuff' .gitignore &>-
-        echo >> .gitignore
-        echo -n $ignored_files >> .gitignore
-        msg "appended lines to .gitignore"
+function add_envrc
+    if [ ! -e ./.envrc ]
+        echo "use nix" > .envrc
+        msg "added .envrc"
+        direnv_allow
+    else if not $grep 'use nix' .envrc &>-
+        echo "use nix" >> .envrc
+        msg "appended 'use nix' to .envrc"
     end
 end
+
+function add_nix_file -a name template
+    msg "editing $name"
+    if [ ! -e $name ]
+        cp $template $name
+        chmod +w $name
+    end
+    edit $name
+end
+
+function add_gitignore
+    set -l ignored_files "# Nix and direnv stuff"\n".direnv"\n"result"
+
+    if [ ! -e .gitignore ]; or $file .gitignore | $grep empty &>-
+        echo -n $ignored_files > .gitignore
+        msg "added .gitignore"
+    else
+        if not $grep '# Nix and direnv stuff' .gitignore &>-
+            echo >> .gitignore
+            echo -n $ignored_files >> .gitignore
+            msg "appended lines to .gitignore"
+        end
+    end
+end
+
+add_envrc
+add_nix_file default.nix @default_template@
+add_nix_file shell.nix @shell_template@
+add_gitignore
