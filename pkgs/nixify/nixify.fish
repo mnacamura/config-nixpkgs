@@ -1,5 +1,8 @@
 #!@fish@/bin/fish
 
+set -l grep @gnugrep@/bin/grep
+set -l file @file@/bin/file
+
 if [ ! -e ./.envrc ]
     echo "use nix" > .envrc
     direnv allow
@@ -15,15 +18,18 @@ if [ ! -e shell.nix ]
     chmod +w shell.nix
 end
 
-set -l ignore "\
+set -l ignored_files "\
 # Nix and direnv stuff
 .direnv
 result
 "
-if [ ! -e ./.gitignore ]
-    echo -n "$ignore" > .gitignore
+if [ ! -e .gitignore ]; or $file .gitignore | $grep empty &>-
+    echo -n $ignored_files > .gitignore
 else
-    echo -n "$ignore" >> .gitignore
+    if not $grep '# Nix and direnv stuff' .gitignore &>-
+        echo >> .gitignore
+        echo -n $ignored_files >> .gitignore
+    end
 end
 
 if [ -n "$EDITOR" ]

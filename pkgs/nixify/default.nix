@@ -1,10 +1,10 @@
-{ substituteAll, runCommand, fish }:
+{ substituteAll, runCommand, fish, gnugrep, file }:
 
 let
   nixify = substituteAll {
     src = ./nixify.fish;
 
-    inherit fish;
+    inherit fish gnugrep file;
     default_template = ./templates/default.nix;
     shell_template = ./templates/shell.nix;
   };
