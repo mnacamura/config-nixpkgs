@@ -33,11 +33,13 @@ end
 if [ ! -e default.nix ]
     cp @default_template@ default.nix
     chmod +w default.nix
+    edit default.nix
 end
 
 if [ ! -e shell.nix ]
     cp @shell_template@ shell.nix
     chmod +w shell.nix
+    edit shell.nix
 end
 
 set -l ignored_files "\
@@ -53,5 +55,3 @@ else
         echo -n $ignored_files >> .gitignore
     end
 end
-
-edit default.nix
