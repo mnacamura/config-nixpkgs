@@ -48,8 +48,10 @@ else
     echo -n "$ignore" >> .gitignore
 end
 
-if [ -z "$EDITOR" ]
-    @vim@/bin/vim default.nix
-else
+if [ -n "$EDITOR" ]
     eval $EDITOR default.nix
+else
+    set_color yellow
+    echo (status -f): Please set EDITOR environment variable to edit nix files >&2 
+    set_color normal
 end

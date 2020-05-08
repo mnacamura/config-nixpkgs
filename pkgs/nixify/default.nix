@@ -1,10 +1,10 @@
-{ stdenv, substituteAll, runCommand, fish, vim }:
+{ stdenv, substituteAll, runCommand, fish }:
 
 let
   nixify = substituteAll {
     src = ./nixify.fish;
 
-    inherit fish vim;
+    inherit fish;
   };
 in
 
