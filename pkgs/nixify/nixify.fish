@@ -52,7 +52,7 @@ end
 function add_gitignore
     set -l ignored_files "# Nix and direnv stuff"\n".direnv"\n"result"
 
-    if [ ! -e .gitignore ]; or $file .gitignore | $grep empty &>-
+    if [ ! -e .gitignore ]; or [ ! -s .gitignore ] &>-
         echo -n $ignored_files > .gitignore
         msg "added .gitignore"
     else
