@@ -15,7 +15,7 @@ function edit
     if [ -n "$EDITOR" ]
         eval $EDITOR $argv
     else
-        warn Please set EDITOR environment variable to edit nix files
+        warn "Please set EDITOR environment variable to edit nix files"
     end
 end
 
@@ -24,7 +24,7 @@ if [ ! -e ./.envrc ]
     if type -q direnv
         command direnv allow
     else
-        warn \'direnv\' not found, skip executing `direnv allow`
+        warn "direnv not found; skip executing 'direnv allow'"
     end
 else if not $grep 'use nix' .envrc &>-
     echo "use nix" >> .envrc
