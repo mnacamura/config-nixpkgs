@@ -6,35 +6,13 @@ if [ ! -e ./.envrc ]
 end
 
 if [ ! -e default.nix ]
-    echo -n "\
-{ pkgs ? import <nixpkgs> {} }:
-
-with pkgs;
-
-stdenv.mkDerivation rec {
-  pname = \"my-pkg\";
-  version = \"0.0.1\";
-
-  src = ./.;
-
-  nativeBuildInputs = [ ];
-  buildInputs = [ ];
-}
-" > default.nix
+    cp @default_template@ default.nix
+    chmod +w default.nix
 end
 
 if [ ! -e shell.nix ]
-    echo -n "\
-with import <nixpkgs> {};
-
-mkShell {
-  inputsFrom = [ (callPackage ./. {}) ];
-  buildInputs = [ ];
-
-  shellHook = ''
-  '';
-}
-" > shell.nix
+    cp @shell_template@ shell.nix
+    chmod +w shell.nix
 end
 
 set -l ignore "\

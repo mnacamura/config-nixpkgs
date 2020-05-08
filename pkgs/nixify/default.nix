@@ -5,6 +5,8 @@ let
     src = ./nixify.fish;
 
     inherit fish;
+    default_template = ./templates/default.nix;
+    shell_template = ./templates/shell.nix;
   };
 in
 
