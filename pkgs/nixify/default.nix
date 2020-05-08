@@ -1,4 +1,4 @@
-{ stdenv, substituteAll, runCommand, fish }:
+{ substituteAll, runCommand, fish }:
 
 let
   nixify = substituteAll {
