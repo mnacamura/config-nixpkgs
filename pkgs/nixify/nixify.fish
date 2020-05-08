@@ -1,12 +1,12 @@
 #!@fish@/bin/fish
 
 if [ ! -e ./.envrc ]
-  echo "use nix" > .envrc
-  direnv allow
+    echo "use nix" > .envrc
+    direnv allow
 end
 
 if [ ! -e default.nix ]
-  echo -n "\
+    echo -n "\
 { pkgs ? import <nixpkgs> {} }:
 
 with pkgs;
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 end
 
 if [ ! -e shell.nix ]
-  echo -n "\
+    echo -n "\
 with import <nixpkgs> {};
 
 mkShell {
@@ -43,13 +43,13 @@ set -l ignore "\
 result
 "
 if [ ! -e ./.gitignore ]
-  echo -n "$ignore" > .gitignore
+    echo -n "$ignore" > .gitignore
 else
-  echo -n "$ignore" >> .gitignore
+    echo -n "$ignore" >> .gitignore
 end
 
 if [ -z "$EDITOR" ]
-  @vim@/bin/vim default.nix
+    @vim@/bin/vim default.nix
 else
-  eval $EDITOR default.nix
+    eval $EDITOR default.nix
 end
