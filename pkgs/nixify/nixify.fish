@@ -5,7 +5,9 @@ set -l file @file@/bin/file
 
 if [ ! -e ./.envrc ]
     echo "use nix" > .envrc
-    direnv allow
+    command direnv allow
+else if not $grep 'use nix' .envrc &>-
+    echo "use nix" >> .envrc
 end
 
 if [ ! -e default.nix ]
