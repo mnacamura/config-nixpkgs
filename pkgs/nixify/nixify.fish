@@ -21,7 +21,11 @@ end
 
 if [ ! -e ./.envrc ]
     echo "use nix" > .envrc
-    command direnv allow
+    if type -q direnv
+        command direnv allow
+    else
+        warn \'direnv\' not found, skip executing `direnv allow`
+    end
 else if not $grep 'use nix' .envrc &>-
     echo "use nix" >> .envrc
 end
