@@ -75,8 +75,6 @@ self: super:
      srcery-vim = self.callPackage ../pkgs/vim/srcery-vim {};
   };
 
-  nixify = super.callPackage ../pkgs/nixify {};
-
   python3 = super.python3.override ({
     packageOverrides = pyself: pysuper:
     {
