@@ -17,7 +17,7 @@ let
 
   installPhase = (old.installPhase or "") + ''
       # Delete share/fish/vendor_conf.d/direnv.fish for later convenience
-      rm -f "$bin/share/fish/vendor_conf.d/direnv.fish"
+      rm -f "$out/share/fish/vendor_conf.d/direnv.fish"
     '';
   });
 
