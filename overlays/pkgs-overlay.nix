@@ -57,6 +57,8 @@ self: super:
   writeFishConfig
   writeFishVendorConfig;
 
+  fishtape = self.callPackage ../pkgs/fishtape {};
+
   ls-colors = self.callPackage ../pkgs/ls-colors {};
 
   mgenplus = self.callPackage ../pkgs/mgenplus {};
