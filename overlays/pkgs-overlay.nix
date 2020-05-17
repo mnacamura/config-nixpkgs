@@ -155,7 +155,7 @@ self: super:
       htop
       lf
       wrapped.neovim
-      nixify
+      nixify-unstable
       p7zip
       # papis
       # parallel-rust
