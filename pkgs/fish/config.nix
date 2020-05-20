@@ -24,7 +24,7 @@ let
         abbr --add gcl 'git clone'
         abbr --add gco 'git checkout'
         abbr --add gd  'git diff --word-diff=color'
-        abbr --add gdc 'git diff --word-diff=color --cached'
+        abbr --add gdc 'git diff --cached --word-diff=color'
         abbr --add gdd 'git diff'
         abbr --add gl  'git log'
         abbr --add glg 'git log --graph --oneline'
