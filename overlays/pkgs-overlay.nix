@@ -156,7 +156,7 @@ self: super:
       lf
       wrapped.neovim
       nixify-unstable
-      p7zip
+      libarchive
       # papis
       # parallel-rust
       # rclone
