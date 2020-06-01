@@ -177,7 +177,7 @@ self: super:
   };
 
   desktopEnv = with self; let
-    version = "2020-04-30";
+    version = "2020-06-01";
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
@@ -186,7 +186,7 @@ self: super:
       # mgenplus
       # rounded-mgenplus
       # slack
-      tdesktop
+      # tdesktop
     ] ++ lib.optionals stdenv.isDarwin [
     ];
   };
