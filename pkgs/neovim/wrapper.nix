@@ -13,6 +13,7 @@ neovim.override {
         lightline-vim
         skim
         srcery-vim
+        iron-nvim
         vim-nix
       ];
 

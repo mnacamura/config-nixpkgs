@@ -74,7 +74,8 @@ self: super:
   };
 
   vimPlugins = with super; vimPlugins // {
-     srcery-vim = self.callPackage ../pkgs/vim/srcery-vim {};
+    srcery-vim = self.callPackage ../pkgs/vim/srcery-vim {};
+    iron-nvim = self.callPackage ../pkgs/vim/iron-nvim {};
   };
 
   python3 = super.python3.override ({
