@@ -64,8 +64,20 @@ self: super:
   mgenplus = self.callPackage ../pkgs/mgenplus {};
 
   neovim = super.neovim.override {
+    withPython = false;
+    withPython3 = false;
     withRuby = false;
   };
+
+  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: {
+    version = "2020-06-25";
+    src = super.fetchFromGitHub {
+      owner = "neovim";
+      repo = "neovim";
+      rev = "225f0bcd98dd8ff8cab964f13816dfdf327038ae";
+      sha256 = "0r3744l50gaayf8vqz055hlyrb9qj3zkhjww5fs2yi5xzih13wp7";
+    };
+  });
 
   configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};
 
