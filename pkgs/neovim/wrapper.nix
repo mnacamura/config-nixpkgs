@@ -1,5 +1,6 @@
 { neovim, vimPlugins, configFile }:
 
+
 neovim.override {
   configure = {
     customRC = ''
@@ -15,6 +16,7 @@ neovim.override {
         srcery-vim
         iron-nvim
         vim-nix
+        vim-sensible
       ];
 
       opt = [

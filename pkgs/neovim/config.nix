@@ -1,4 +1,4 @@
-{ config, lib, substituteAll }:
+{ config, lib, substituteAll, bashInteractive }:
 
 let
   hi = group: args:
@@ -24,6 +24,8 @@ in
 with config.colortheme.palette;
 substituteAll {
   src = ./init.vim;
+
+  shell = "${bashInteractive}/bin/sh";
 
   hi_pmenusel = hi "PmenuSel" { fg = black; bg = brorange; };
   hi_spellcap = hi "SpellCap" { fg = bryellow; };

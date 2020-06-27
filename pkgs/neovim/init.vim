@@ -1,3 +1,37 @@
+"" Basic settings {{{1
+
+set clipboard+=unnamedplus
+set complete+=k
+set cursorline
+set diffopt+=vertical
+set hidden
+set ignorecase
+set infercase
+set list
+set listchars=eol:¬,tab:›_,trail:_,extends:»,precedes:«,nbsp:_
+set mouse=nv
+set nowrap
+set number
+set path=.,,
+set relativenumber
+set scrolloff=5
+set shiftwidth=4
+set showbreak=»
+set showmatch
+set smartcase
+set smartindent
+set softtabstop=-1
+set textwidth=100
+set undofile
+set virtualedit=block,onemore
+set visualbell
+set wildignorecase
+set wildmode=list:longest
+
+"" Hack for vim + fish problem:
+let $SHELL = '@shell@'
+let &shell = $SHELL
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2
