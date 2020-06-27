@@ -39,11 +39,9 @@ if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2
 endif
 set background=dark
 
-try
-  colorscheme srcery
-catch /\v^Vim%(\(\a+\))=:E185/
-  " Suppress error messages
-endtry
+let g:srcery_transparent_background = 1
+let g:srcery_dim_lisp_paren = 1
+colorscheme srcery
 
 augroup color_tweaks
   autocmd!
