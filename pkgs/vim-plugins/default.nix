@@ -8,4 +8,6 @@
   srcery-vim = callPackage ./srcery-vim {};
 
   vim-yoink = callPackage ./vim-yoink {};
+
+  vim-wordmotion = callPackage ./vim-wordmotion {};
 }

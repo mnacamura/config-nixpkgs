@@ -58,6 +58,9 @@ nmap <C-p> <Plug>(YoinkPostPasteSwapForward)
 nmap <c-=> <plug>(YoinkPostPasteToggleFormat)
 map <Leader>y :Yanks<CR>
 
+"" vim-wordmotion
+let g:wordmotion_spaces = '_-.'
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2

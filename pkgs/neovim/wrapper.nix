@@ -21,6 +21,7 @@ neovim.override {
         vim-sandwich
         vim-unimpaired
         vim-yoink
+        vim-wordmotion
       ];
 
       opt = [
