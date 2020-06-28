@@ -32,6 +32,20 @@ set wildmode=list:longest
 let $SHELL = '@shell@'
 let &shell = $SHELL
 
+"" UI enhancements {{{1
+
+"" Yoink.vim
+nmap y <Plug>(YoinkYankPreserveCursorPosition)
+xmap y <Plug>(YoinkYankPreserveCursorPosition)
+nmap p <Plug>(YoinkPaste_p)
+nmap P <Plug>(YoinkPaste_P)
+nmap [y <Plug>(YoinkRotateBack)
+nmap ]y <Plug>(YoinkRotateForward)
+nmap <C-n> <Plug>(YoinkPostPasteSwapBack)
+nmap <C-p> <Plug>(YoinkPostPasteSwapForward)
+nmap <c-=> <plug>(YoinkPostPasteToggleFormat)
+map <Leader>y :Yanks<CR>
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2
