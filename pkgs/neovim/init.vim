@@ -64,7 +64,29 @@ let g:wordmotion_spaces = '_-.'
 "" vim-easy-align
 nnoremap gA ga
 nmap ga <Plug>(EasyAlign)
-vmap <Tab> <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
+
+"" iron.nvim
+let g:iron_map_defaults = 0
+let g:iron_map_extended = 0
+map <Leader>r [iron]
+noremap [iron] <Nop>
+nmap <silent> [iron]r :IronRepl<CR><Esc>
+nmap [iron]t :IronReplHere 
+nmap <silent> [iron]R :IronRestart<CR>
+nmap [iron]s :IronSend! 
+nmap [iron]S :IronSend 
+nmap <silent> [iron]f :IronFocus<CR>
+nmap [iron]w :IronWatchCurrentFile 
+nmap [iron]u :IronUnwatchCurrentFile<CR>
+nmap <silent> gr <Plug>(iron-send-motion)
+vmap <silent> gr <Plug>(iron-visual-send)
+nmap <silent> [iron]. <Plug>(iron-repeat-cmd)
+nmap <silent> [iron]l <Plug>(iron-send-line)
+nmap <silent> [iron]<CR> <Plug>(iron-cr)
+nmap <silent> [iron]<C-c> <Plug>(iron-interrupt)
+nmap <silent> [iron]q <Plug>(iron-exit)
+nmap <silent> [iron]<C-l> <Plug>(iron-clear)
 
 "" Color scheme and status line {{{1
 
