@@ -18,6 +18,7 @@ neovim.override {
         srcery-vim
         vim-nix
         vim-sensible
+        vim-sandwich
         vim-unimpaired
         vim-yoink
       ];
