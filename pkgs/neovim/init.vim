@@ -23,7 +23,7 @@ set smartindent
 set softtabstop=-1
 set textwidth=100
 set undofile
-set virtualedit=block,onemore
+set virtualedit=block
 set visualbell
 set wildignorecase
 set wildmode=list:longest
