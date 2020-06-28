@@ -88,6 +88,30 @@ nmap <silent> [iron]<C-c> <Plug>(iron-interrupt)
 nmap <silent> [iron]q <Plug>(iron-exit)
 nmap <silent> [iron]<C-l> <Plug>(iron-clear)
 
+" TODO: Not sure but required to init iron later
+augroup iron_init
+  autocmd!
+  au VimEnter * call s:init_iron()
+augroup END
+fun! s:init_iron() abort
+  lua << EOF
+local iron = require('iron')
+iron.core.set_config {
+  repl_open_cmd = 'top 10 split',
+  preferred = {
+    fennel = 'fennel',
+    r7rs = 'gauche',
+    scheme = 'gauche'
+  }
+}
+iron.core.add_repl_definitions {
+  fennel = { fennel = { command = {'fennel'} } },
+  scheme = { gauche = { command = {'gosh'} } },
+  r7rs = { gauche = { command = {'gosh'} } }
+}
+EOF
+endfun
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2
