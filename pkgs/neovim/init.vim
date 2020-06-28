@@ -43,6 +43,9 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>"]
 let g:mapleader = ';'
 let g:maplocalleader = ','
 
+"" unimpaired.vim
+map <Leader>o yo
+
 "" Yoink.vim
 nmap y <Plug>(YoinkYankPreserveCursorPosition)
 xmap y <Plug>(YoinkYankPreserveCursorPosition)

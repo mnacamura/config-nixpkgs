@@ -19,6 +19,7 @@ neovim.override {
         vim-sensible
         vim-yoink
         clever-f-vim
+        vim-unimpaired
       ];
 
       opt = [
