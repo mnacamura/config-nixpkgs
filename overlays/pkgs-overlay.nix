@@ -64,8 +64,6 @@ self: super:
   mgenplus = self.callPackage ../pkgs/mgenplus {};
 
   neovim = super.neovim.override {
-    withPython = false;
-    withPython3 = false;
     withRuby = false;
   };
 
