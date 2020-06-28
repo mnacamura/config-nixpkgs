@@ -16,6 +16,7 @@ neovim.override {
         lightline-vim
         skim
         srcery-vim
+        vim-easy-align
         vim-nix
         vim-sensible
         vim-sandwich

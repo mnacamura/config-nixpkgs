@@ -61,6 +61,11 @@ map <Leader>y :Yanks<CR>
 "" vim-wordmotion
 let g:wordmotion_spaces = '_-.'
 
+"" vim-easy-align
+nnoremap gA ga
+nmap ga <Plug>(EasyAlign)
+vmap <Tab> <Plug>(EasyAlign)
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2
