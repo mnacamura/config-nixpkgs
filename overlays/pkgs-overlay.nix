@@ -85,10 +85,7 @@ self: super:
     configFile = self.configFiles.neovim;
   };
 
-  vimPlugins = with super; vimPlugins // {
-    srcery-vim = self.callPackage ../pkgs/vim/srcery-vim {};
-    iron-nvim = self.callPackage ../pkgs/vim/iron-nvim {};
-  };
+  vimPlugins = super.vimPlugins // (self.callPackage ../pkgs/vim-plugins {});
 
   python3 = super.python3.override ({
     packageOverrides = pyself: pysuper:
