@@ -34,6 +34,15 @@ let &shell = $SHELL
 
 "" UI enhancements {{{1
 
+"" clever-f.vim
+let g:clever_f_smart_case = 1
+let g:clever_f_use_migemo = 1
+let g:clever_f_repeat_last_char_inputs = ["\<CR>"]
+
+"" Use ';' as <Leader>, which is now free
+let g:mapleader = ';'
+let g:maplocalleader = ','
+
 "" Yoink.vim
 nmap y <Plug>(YoinkYankPreserveCursorPosition)
 xmap y <Plug>(YoinkYankPreserveCursorPosition)
