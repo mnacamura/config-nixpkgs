@@ -1,11 +1,11 @@
 { callPackage }:
 
 {
-  srcery-vim = callPackage ./srcery-vim {};
+  clever-f-vim = callPackage ./clever-f-vim {};
 
   iron-nvim = callPackage ./iron-nvim {};
 
-  vim-yoink = callPackage ./vim-yoink {};
+  srcery-vim = callPackage ./srcery-vim {};
 
-  clever-f-vim = callPackage ./clever-f-vim {};
+  vim-yoink = callPackage ./vim-yoink {};
 }

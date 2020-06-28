@@ -10,16 +10,16 @@ neovim.override {
 
     packages.default = with vimPlugins; {
       start = [
+        clever-f-vim
+        iron-nvim
         lightline-ale
         lightline-vim
         skim
         srcery-vim
-        iron-nvim
         vim-nix
         vim-sensible
-        vim-yoink
-        clever-f-vim
         vim-unimpaired
+        vim-yoink
       ];
 
       opt = [
