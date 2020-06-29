@@ -18,6 +18,8 @@ neovim.override {
         srcery-vim
         vim-easy-align
         vim-nix
+        vim-pandoc
+        vim-pandoc-syntax
         vim-sensible
         vim-sandwich
         vim-unimpaired

@@ -170,6 +170,21 @@ let g:lightline.active = {
       \ }
 let g:lightline#ale#indicator_ok = ''
 
+"" File type extensions {{{1
+
+"" Markdown
+let g:pandoc#formatting#mode = 'hA'
+let g:pandoc#formatting#textwidth = 78
+let g:pandoc#command#latex_engine = 'lualatex'
+let g:pandoc#folding#mode = 'stacked'
+let g:pandoc#hypertext#create_if_no_alternates_exists = 1
+let g:pandoc#hypertext#split_open_cmd = 'botright split'
+let g:pandoc#syntax#conceal#use = 0
+augroup pandoc
+  au!
+  au FileType pandoc nmap <buffer> <silent> <LocalLeader><Tab> :TOC<CR>
+augroup END
+
 "" Impure settings {{{1
 
 let s:init_vim = $HOME . '/.config/nvim/init.vim'
