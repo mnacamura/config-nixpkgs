@@ -4,6 +4,7 @@ set clipboard+=unnamedplus
 set complete+=k
 set cursorline
 set diffopt+=vertical
+set expandtab
 set hidden
 set ignorecase
 set infercase
