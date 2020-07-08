@@ -1,17 +1,13 @@
-{ direnv, runCommand, substituteAll, writeFishVendorConfig, buildEnv }:
+{ direnv, nix-direnv, substituteAll, writeFishVendorConfig, buildEnv }:
 
 let
-  direnvrc = runCommand "direnvrc" {} ''
-    cp "${./direnvrc}" $out
-  '';
-
   patched = direnv.overrideAttrs (old: {
     name = "${direnv.name}-patched";
 
     patches = (old.patches or []) ++ [
       (substituteAll {
         src = ./direnvrc.patch;
-        direnvrc = "${direnvrc}";
+        direnvrc = "${nix-direnv}/share/nix-direnv/direnvrc";
       })
     ];
 
