@@ -103,6 +103,8 @@ iron.core.set_config {
     fennel = 'fennel',
     r7rs = 'gauche',
     scheme = 'gauche',
+    r = 'r',
+    rmarkdown = 'r',
   }
 }
 local fennel_repls = {
@@ -115,10 +117,17 @@ local scheme_repls = {
     command = {'gosh'}
   }
 }
+local r_repls = {
+  r = {
+    command = {'R'}
+  }
+}
 iron.core.add_repl_definitions {
   fennel = fennel_repls,
   r7rs = scheme_repls,
   scheme = scheme_repls,
+  r = r_repls,
+  rmarkdown = r_repls,
 }
 EOF
 endfun
