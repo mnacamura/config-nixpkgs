@@ -90,25 +90,35 @@ nmap <silent> [iron]q <Plug>(iron-exit)
 nmap <silent> [iron]<C-l> <Plug>(iron-clear)
 
 " TODO: Not sure but required to init iron later
-augroup iron_init
+augroup iron
   autocmd!
-  au VimEnter * call s:init_iron()
+  au VimEnter * call s:IronInit()
 augroup END
-fun! s:init_iron() abort
+fun! s:IronInit() abort
   lua << EOF
-local iron = require('iron')
+local iron = require'iron'
 iron.core.set_config {
   repl_open_cmd = 'top 10 split',
   preferred = {
     fennel = 'fennel',
     r7rs = 'gauche',
-    scheme = 'gauche'
+    scheme = 'gauche',
+  }
+}
+local fennel_repls = {
+  fennel = {
+    command = {'fennel'}
+  }
+}
+local scheme_repls = {
+  gauche = {
+    command = {'gosh'}
   }
 }
 iron.core.add_repl_definitions {
-  fennel = { fennel = { command = {'fennel'} } },
-  scheme = { gauche = { command = {'gosh'} } },
-  r7rs = { gauche = { command = {'gosh'} } }
+  fennel = fennel_repls,
+  r7rs = scheme_repls,
+  scheme = scheme_repls,
 }
 EOF
 endfun
