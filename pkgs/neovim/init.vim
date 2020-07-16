@@ -12,9 +12,7 @@ set list
 set listchars=eol:¬,tab:›_,trail:_,extends:»,precedes:«,nbsp:_
 set mouse=nv
 set nowrap
-set number
 set path=.,,
-set relativenumber
 set scrolloff=5
 set shiftwidth=4
 set showbreak=»
