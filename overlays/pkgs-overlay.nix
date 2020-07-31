@@ -159,7 +159,6 @@ self: super:
       file
       fortune
       git
-      git-lfs
       gnumake
       htop
       lf
