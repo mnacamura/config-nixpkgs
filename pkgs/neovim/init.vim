@@ -46,8 +46,8 @@ let g:maplocalleader = ','
 map <Leader>o yo
 
 "" Yoink.vim
-nmap y <Plug>(YoinkYankPreserveCursorPosition)
-xmap y <Plug>(YoinkYankPreserveCursorPosition)
+" nmap y <Plug>(YoinkYankPreserveCursorPosition)
+" xmap y <Plug>(YoinkYankPreserveCursorPosition)
 nmap p <Plug>(YoinkPaste_p)
 nmap P <Plug>(YoinkPaste_P)
 nmap [y <Plug>(YoinkRotateBack)
