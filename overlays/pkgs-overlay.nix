@@ -68,12 +68,12 @@ self: super:
   };
 
   neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: {
-    version = "2020-08-11";
+    version = "2020-10-01";
     src = super.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      rev = "94b7ff730a1914c14f347f5dc75175dc34a4b3f5";
-      sha256 = "15fpihn2xbdzp4nb1sgni0wyr94q89y45jaxfmzh6vjbx8f76m0w";
+      rev = "3430e40c609ff29e7fce52f017361583c380f46b";
+      sha256 = "1h14fgmr33sm8nsn8z5laxjy1pkvjcw1bxiys5cg1y9945k70n8w";
     };
   });
 
