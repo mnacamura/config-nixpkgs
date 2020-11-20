@@ -167,6 +167,7 @@ self: super:
       libarchive
       # papis
       # parallel-rust
+      patdiff
       # rclone
       ripgrep
       skim
