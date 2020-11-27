@@ -79,6 +79,22 @@ let
       end
     '');
 
+    pubs = writeFishConfig "pubs" ''
+      if status is-interactive; and type -q pubs
+        abbr --add p   'pubs'
+        abbr --add pa  'pubs add'
+        abbr --add pda 'pubs doc add'
+        abbr --add pdo 'pubs doc open'
+        abbr --add pe  'pubs edit'
+        abbr --add pl  'pubs list'
+        abbr --add pn  'pubs note'
+        abbr --add pr  'pubs rename'
+        abbr --add pt  'pubs tag'
+        abbr --add pu  'pubs url'
+        abbr --add pw  'pubs websearch'
+      end
+    '';
+
     misc = writeFishConfig "misc" ''
       if status is-interactive
         if type -q lp
@@ -111,6 +127,7 @@ buildEnv {
     less
     ls-colors
     nix
+    pubs
     misc
   ]);
 }

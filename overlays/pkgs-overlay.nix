@@ -147,7 +147,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2020-04-22";
+    version = "2020-11-27";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -165,9 +165,9 @@ self: super:
       wrapped.neovim
       nixify-unstable
       libarchive
-      # papis
       # parallel-rust
       patdiff
+      pubs
       # rclone
       ripgrep
       skim
