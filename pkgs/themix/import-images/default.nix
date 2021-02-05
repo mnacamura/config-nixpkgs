@@ -1,11 +1,11 @@
-{ stdenv, themix-gui, python3
+{ lib, stdenv, themix-gui, python3
 , enableColorthief ? false
 , enableColorz ? false
 , enableHaishoku ? false
 }:
 
 let
-  inherit (stdenv.lib) optionals;
+  inherit (lib) optionals;
 in
 
 stdenv.mkDerivation rec {

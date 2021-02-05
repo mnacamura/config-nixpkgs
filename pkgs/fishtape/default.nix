@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, fetchpatch, fish }:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, fish }:
 
 stdenv.mkDerivation rec {
   pname = "fishtape";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "TAP-based test runner for the fish shell";
     homepage = "https://github.com/jorgebucaran/fishtape/";
     license = licenses.mit;

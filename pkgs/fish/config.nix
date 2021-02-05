@@ -1,7 +1,7 @@
-{ stdenv, buildEnv, config-core, writeFishConfig, ls-colors }:
+{ lib, stdenv, buildEnv, config-core, writeFishConfig, ls-colors }:
 
 let
-  inherit (stdenv.lib) optionalString;
+  inherit (lib) optionalString;
 
   configFiles = {
     git = writeFishConfig "git" ''

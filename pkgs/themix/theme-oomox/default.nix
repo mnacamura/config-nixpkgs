@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, python3, bc, sassc, glib, libxml2, gdk-pixbuf
+{ lib, stdenv, fetchFromGitHub, python3, bc, sassc, glib, libxml2, gdk-pixbuf
 , gtk-engine-murrine
 }:
 
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     cp -r __pycache__ "$out/opt/oomox/plugins/theme_oomox"/
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     inherit (src.meta) homepage;
     description = "Oomox theme plugin for Themix GUI designer";
     platforms = platforms.all;

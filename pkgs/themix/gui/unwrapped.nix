@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, gettext, python3
+{ lib, stdenv, fetchFromGitHub, gettext, python3
 , wrapGAppsHook, gtk3, gobject-introspection, hicolor-icon-theme
 }:
 
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     gappsWrapperArgs+=(--prefix PYTHONPATH : "$PYTHONPATH")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     inherit (src.meta) homepage;
     description = "Plugin-based theme designer GUI for desktop environments";
     platforms = platforms.all;
