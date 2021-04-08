@@ -147,7 +147,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2020-11-27";
+    version = "2021-04-08";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -163,7 +163,7 @@ self: super:
       htop
       lf
       wrapped.neovim
-      nixify-unstable
+      # nixify-unstable
       libarchive
       # parallel-rust
       patdiff
