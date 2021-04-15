@@ -33,6 +33,30 @@ let &shell = $SHELL
 
 "" UI enhancements {{{1
 
+"" Practical Vim, Tip 42: '%%' expands to '%:h'
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h') . '/' : '%%'
+
+"" Practical Vim, Tip 93: Repeat the last substitution by '&'
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+augroup remember_last_cursor_position
+  autocmd!
+  au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exec "normal g`\"" |
+        \ endif
+augroup END
+
+"" Colorize columns over &textwidth
+exec 'set colorcolumn=+' . join(range(1, 256), ',+')
+
+"" Use ripgrep if available
+if executable('rg')
+  set grepprg=rg\ -S\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
 "" clever-f.vim
 let g:clever_f_smart_case = 1
 let g:clever_f_use_migemo = 1
