@@ -12,6 +12,7 @@ neovim.override {
       start = [
         clever-f-vim
         iron-nvim
+        jp-format-vim
         lightline-ale
         lightline-vim
         skim

@@ -27,6 +27,17 @@ in
     };
   };
 
+  jp-format-vim = buildVimPlugin {
+    pname = "jp-format-vim";
+    version = "2019-07-13";
+    src = fetchFromGitHub {
+      owner = "fuenor";
+      repo = "JpFormat.vim";
+      rev = "02736fc184e15efa8a233caaec037aabb90ad706";
+      sha256 = "06g4nmanknm652jxdkjz0hgw3hhzd7bkvmr53nidv1qqq33dkmv2";
+    };
+  };
+
   srcery-vim = callPackage ./srcery-vim {};
 
   vim-textobj-indent = buildVimPlugin {
