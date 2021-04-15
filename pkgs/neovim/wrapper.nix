@@ -22,6 +22,9 @@ neovim.override {
         vim-pandoc-syntax
         vim-sensible
         vim-sandwich
+        vim-textobj-comment
+        vim-textobj-indent
+        vim-textobj-user
         vim-unimpaired
         vim-yoink
         vim-wordmotion

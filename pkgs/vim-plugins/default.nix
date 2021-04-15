@@ -29,6 +29,17 @@ in
 
   srcery-vim = callPackage ./srcery-vim {};
 
+  vim-textobj-indent = buildVimPlugin {
+    pname = "vim-textobj-indent";
+    version = "2013-01-18";
+    src = fetchFromGitHub {
+      owner = "kana";
+      repo = "vim-textobj-indent";
+      rev = "deb76867c302f933c8f21753806cbf2d8461b548";
+      sha256 = "0m7v8iq09x0khp2li563q8pbywa3dr3zw538cz54cfl8dwyd8p50";
+    };
+  };
+
   vim-yoink = buildVimPlugin {
     pname = "vim-yoink";
     version = "2020-10-14";
