@@ -29,6 +29,7 @@ neovim.override {
         vim-textobj-indent
         vim-textobj-user
         vim-unimpaired
+        vim-visualstar
         vim-yoink
         vim-wordmotion
       ];
