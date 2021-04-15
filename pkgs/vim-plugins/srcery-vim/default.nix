@@ -43,13 +43,13 @@ in
 
 vimUtils.buildVimPlugin {
   pname = "srcery-vim";
-  version = "2020-03-15";
+  version = "2021-04-14";
 
   src = fetchFromGitHub {
     owner = "srcery-colors";
     repo = "srcery-vim";
-    rev = "099d871aa26df29e892acb5b8b3f1766a7199021";
-    sha256 = "0wn82gib4ambvanb34hzj6nanpy2ybaw9dxj9d2fml4i3wfg2cps";
+    rev = "9c692e3f17b3485969b55d76a708136e2ccaa5de";
+    sha256 = "1cd4vxx0zb4xcn2yp7kl5xgl8crfr0fwifn4apkn878lqx6ni7gj";
   };
 
   patches = [ themePatch ];
