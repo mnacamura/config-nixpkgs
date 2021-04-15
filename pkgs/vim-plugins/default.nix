@@ -42,13 +42,13 @@ in
 
   vim-wordmotion = buildVimPlugin {
     pname = "vim-wordmotion";
-    version = "2020-01-06";
+    version = "2021-03-14";
 
     src = fetchFromGitHub {
       owner = "chaoren";
       repo = "vim-wordmotion";
-      rev = "d4a1db684ec0a0e49f626c8cf5d7e7c518f613a6";
-      sha256 = "0p0x56cxvw96284w45nc11sv41986jqqxpfc3kyjaxhcqzlq4lkm";
+      rev = "e1638ba4fb357e1c5ec0230806851371ffb89cb0";
+      sha256 = "00k95nkwwm857vmpfixpp5qlmzmnscpz6c9vvb5idxknx4wbnzlx";
     };
   };
 }
