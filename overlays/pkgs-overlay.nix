@@ -67,14 +67,15 @@ self: super:
     withRuby = false;
   };
 
-  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: {
-    version = "2020-10-08";
+  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
+    version = "2021-04-15";
     src = super.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      rev = "3ea5df0f045b416c827e8fa841d01333fa0146e6";
-      sha256 = "07xqkq50x7qqhx3ml8q9gadjprsxzsi657z70h1v1m94d675spx3";
+      rev = "e915ec47f3ce378ad3577fedc2a3119d62039894";
+      sha256 = "1flbhmk22q3mk8wlxi8f6mpn4zhbyhiw80dzd1naagbnw60303jr";
     };
+    buildInputs = old.buildInputs ++ [ super.tree-sitter ];
   });
 
   configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};
