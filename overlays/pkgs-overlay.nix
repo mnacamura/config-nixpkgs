@@ -147,7 +147,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2021-04-08";
+    version = "2021-04-15";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -168,7 +168,7 @@ self: super:
       # parallel-rust
       patdiff
       pubs
-      # rclone
+      rclone
       ripgrep
       skim
       sl
