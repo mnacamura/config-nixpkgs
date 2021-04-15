@@ -166,6 +166,7 @@ self: super:
       # nixify-unstable
       libarchive
       # parallel-rust
+      p7zip
       patdiff
       pubs
       rclone
