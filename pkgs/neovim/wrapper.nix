@@ -16,6 +16,7 @@ neovim.override {
         lightline-vim
         skim
         srcery-vim
+        vim-commentary
         vim-easy-align
         vim-nix
         vim-pandoc
