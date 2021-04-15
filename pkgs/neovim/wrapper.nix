@@ -16,6 +16,7 @@ neovim.override {
         lightline-vim
         skim
         srcery-vim
+        tagbar
         vim-commentary
         vim-easy-align
         vim-nix
