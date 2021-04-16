@@ -51,6 +51,17 @@ in
     };
   };
 
+  vim-fish = buildVimPlugin {
+    pname = "vim-fish";
+    version = "2020-04-14";
+    src = fetchFromGitHub {
+      owner = "NovaDev94";
+      repo = "vim-fish";
+      rev = "9e48a9dbb54bf1a8d5b8c00220ec77f802eb113d";
+      sha256 = "0zp46cry13728g5lzms3akz6c1jggyx3a1wa9xmdvfykg2lb0ww9";
+    };
+  };
+
   vim-textobj-indent = buildVimPlugin {
     pname = "vim-textobj-indent";
     version = "2013-01-18";

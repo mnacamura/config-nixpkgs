@@ -271,6 +271,14 @@ set formatexpr=jpfmt#formatexpr()
 
 "" File type extensions {{{1
 
+"" Fish
+augroup fish
+  autocmd!
+  au FileType fish
+        \ compiler fish |
+        \ setl shiftwidth=2
+augroup END
+
 "" Markdown
 let g:pandoc#formatting#mode = 'hA'
 let g:pandoc#formatting#textwidth = 78
