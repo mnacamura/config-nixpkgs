@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 "" Basic settings {{{1
 
 set clipboard+=unnamedplus
