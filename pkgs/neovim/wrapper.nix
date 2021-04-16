@@ -29,6 +29,7 @@ neovim.override {
         vim-repeat
         vim-sensible
         vim-sandwich
+        vim-speeddating
         vim-textobj-comment
         vim-textobj-indent
         vim-textobj-user
