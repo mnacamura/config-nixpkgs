@@ -285,6 +285,12 @@ augroup fish
         \ setl shiftwidth=2
 augroup END
 
+"" Make
+augroup ft_make
+  autocmd!
+  au FileType make setl tabstop=4
+augroup END
+
 "" Markdown
 let g:pandoc#formatting#mode = 'hA'
 let g:pandoc#formatting#textwidth = 78
