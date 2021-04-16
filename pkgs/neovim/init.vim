@@ -271,27 +271,27 @@ set formatexpr=jpfmt#formatexpr()
 
 "" File type extensions {{{1
 
-"" VimL
-augroup viml "{{{2
+"" VimL {{{2
+augroup ft_vim
   autocmd!
   au FileType vim setl shiftwidth=2
 augroup END
 
-"" Fish
-augroup fish
+"" Fish {{{2
+augroup ft_fish
   autocmd!
   au FileType fish
         \ compiler fish |
         \ setl shiftwidth=2
 augroup END
 
-"" Make
+"" Make {{{2
 augroup ft_make
   autocmd!
   au FileType make setl tabstop=4
 augroup END
 
-"" Markdown
+"" Markdown {{{2
 let g:pandoc#formatting#mode = 'hA'
 let g:pandoc#formatting#textwidth = 78
 let g:pandoc#command#latex_engine = 'lualatex'
@@ -299,7 +299,7 @@ let g:pandoc#folding#mode = 'stacked'
 let g:pandoc#hypertext#create_if_no_alternates_exists = 1
 let g:pandoc#hypertext#split_open_cmd = 'botright split'
 let g:pandoc#syntax#conceal#use = 0
-augroup pandoc
+augroup ft_pandoc
   au!
   au FileType pandoc nmap <buffer> <silent> <LocalLeader><Tab> :TOC<CR>
 augroup END
