@@ -271,6 +271,12 @@ set formatexpr=jpfmt#formatexpr()
 
 "" File type extensions {{{1
 
+"" VimL
+augroup viml "{{{2
+  autocmd!
+  au FileType vim setl shiftwidth=2
+augroup END
+
 "" Fish
 augroup fish
   autocmd!
