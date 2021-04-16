@@ -10,6 +10,7 @@ neovim.override {
 
     packages.default = with vimPlugins; {
       start = [
+        ale
         clever-f-vim
         iron-nvim
         jp-format-vim

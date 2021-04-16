@@ -57,6 +57,12 @@ if executable('rg')
   set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+"" Modern Vim, Tip 12: ALE mappings in the style of unimpaired
+nmap <silent> [W <Plug>(ale_first)
+nmap <silent> [w <Plug>(ale_previous)
+nmap <silent> ]w <Plug>(ale_next)
+nmap <silent> ]W <Plug>(ale_last)
+
 "" clever-f.vim
 let g:clever_f_smart_case = 1
 let g:clever_f_use_migemo = 1
@@ -200,20 +206,25 @@ augroup END
 if !exists('g:lightline') | let g:lightline = {} | endif
 let g:lightline.colorscheme = 'srcery'
 let g:lightline.component_expand = {
+      \   'ale_checking': 'lightline#ale#checking',
+      \   'ale_infos': 'lightline#ale#infos',
       \   'ale_warnings': 'lightline#ale#warnings',
       \   'ale_errors': 'lightline#ale#errors',
       \   'ale_ok': 'lightline#ale#ok',
       \ }
 let g:lightline.component_type = {
+      \   'ale_checking': 'right',
+      \   'ale_infos': 'right',
       \   'ale_warnings': 'warning',
       \   'ale_errors': 'error',
+      \   'ale_ok': 'right',
       \ }
-let g:lightline.active = {
+let  g:lightline.active = {
       \  'left': [
       \     [ 'mode', 'paste' ],
       \     [ 'readonly', 'filename', 'modified' ],
-      \     [ 'ale_errors', 'ale_warnings', 'ale_ok' ],
-      \   ]
+      \     [ 'ale_checking', 'ale_errors', 'ale_warnings', 'ale_infos', 'ale_ok' ],
+      \   ],
       \ }
 let g:lightline#ale#indicator_ok = ''
 
