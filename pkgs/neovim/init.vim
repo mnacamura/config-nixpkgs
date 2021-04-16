@@ -2,7 +2,7 @@ scriptencoding utf-8
 
 "" Basic settings {{{1
 
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 set complete+=k
 set cursorline
 set diffopt+=vertical
@@ -78,8 +78,8 @@ let g:maplocalleader = ','
 map <Leader>o yo
 
 "" Yoink.vim
-" nmap y <Plug>(YoinkYankPreserveCursorPosition)
-" xmap y <Plug>(YoinkYankPreserveCursorPosition)
+let g:yoinkSyncNumberedRegisters = 1
+let g:yoinkSavePersistently = 1
 nmap p <Plug>(YoinkPaste_p)
 nmap P <Plug>(YoinkPaste_P)
 nmap [y <Plug>(YoinkRotateBack)
