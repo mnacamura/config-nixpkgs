@@ -272,6 +272,27 @@ nnoremap っy yy
 
 set formatexpr=jpfmt#formatexpr()
 
+"" Tree-sitter {{{1
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  ignore_install = {
+  },
+  highlight = {
+    enable = true,
+    disable = {
+    }
+  },
+  incremental_selection = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+}
+EOF
+
 "" File type extensions {{{1
 
 "" VimL {{{2

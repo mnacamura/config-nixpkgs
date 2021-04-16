@@ -76,6 +76,10 @@ self: super:
       sha256 = "1flbhmk22q3mk8wlxi8f6mpn4zhbyhiw80dzd1naagbnw60303jr";
     };
     buildInputs = old.buildInputs ++ [ super.tree-sitter ];
+    propagatedUserEnvPkgs = [
+      super.tree-sitter
+      super.nodejs  # required to compile tree-sitter parsers
+    ];
   });
 
   configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};

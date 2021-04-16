@@ -16,6 +16,7 @@ neovim.override {
         jp-format-vim
         lightline-ale
         lightline-vim
+        nvim-treesitter
         skim
         skim-vim
         srcery-vim
