@@ -26,6 +26,7 @@ neovim.override {
         vim-nix
         vim-pandoc
         vim-pandoc-syntax
+        vim-repeat
         vim-sensible
         vim-sandwich
         vim-textobj-comment
