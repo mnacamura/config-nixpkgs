@@ -40,6 +40,17 @@ in
 
   srcery-vim = callPackage ./srcery-vim {};
 
+  vim-emacscommandline = buildVimPlugin {
+    pname = "vim-emacscommandline";
+    version = "2017-11-24";
+    src = fetchFromGitHub {
+      owner = "houtsnip";
+      repo = "vim-emacscommandline";
+      rev = "3363eeb1f958bd0630448fdaa5f19ba7a834b343";
+      sha256 = "1hngkzxmsh5l24hbsl0vx0lw9n69s4b32q2v8bg6bhr69a4jqrsa";
+    };
+  };
+
   vim-textobj-indent = buildVimPlugin {
     pname = "vim-textobj-indent";
     version = "2013-01-18";

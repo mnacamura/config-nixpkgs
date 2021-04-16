@@ -22,6 +22,7 @@ neovim.override {
         tagbar
         vim-commentary
         vim-easy-align
+        vim-emacscommandline
         vim-nix
         vim-pandoc
         vim-pandoc-syntax
