@@ -17,6 +17,7 @@ neovim.override {
         lightline-ale
         lightline-vim
         nvim-treesitter
+        requirements-txt-vim
         skim
         skim-vim
         srcery-vim

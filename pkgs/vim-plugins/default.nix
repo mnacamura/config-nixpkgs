@@ -38,6 +38,17 @@ in
     };
   };
 
+  requirements-txt-vim = buildVimPlugin {
+    pname = "requirements-txt-vim";
+    version = "2021-03-31";
+    src = fetchFromGitHub {
+      owner = "raimon49";
+      repo = "requirements.txt.vim";
+      rev = "ac7f865672a34a090981b77e17cbb9f95ac61850";
+      sha256 = "17lq3f0cilzg61lkjlh7kb2sd9zkb7q3n1k1qb8liy6y2h2p14vn";
+    };
+  };
+
   srcery-vim = callPackage ./srcery-vim {};
 
   vim-emacscommandline = buildVimPlugin {
