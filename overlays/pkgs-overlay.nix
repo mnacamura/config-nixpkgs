@@ -61,6 +61,8 @@ self: super:
 
   ls-colors = self.callPackage ../pkgs/ls-colors {};
 
+  mandown = self.callPackage ../pkgs/mandown {};
+
   mgenplus = self.callPackage ../pkgs/mgenplus {};
 
   neovim = super.neovim.override {
