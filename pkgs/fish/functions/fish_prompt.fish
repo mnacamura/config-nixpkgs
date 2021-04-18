@@ -16,6 +16,8 @@ function fish_prompt
     set todo (math $todo + 1)
   end
 
+  # TODO: Add python venv indicator here
+
   if [ (umask) != 0077 ]
     set prompt_umask true
     set todo (math $todo + 1)
@@ -23,7 +25,7 @@ function fish_prompt
 
   if [ $todo -gt 0 ]
     set_color reset; set_color $fish_color_comment
-    echo -n "["
+    echo -n ""
 
     if [ -n "$prompt_login" ]
       set_color reset; set_color $fish_color_user
@@ -39,19 +41,19 @@ function fish_prompt
 
       if [ $todo -gt 0 ]
         set_color reset; set_color $fish_color_comment
-        echo -n "|"
+        echo -n " "
       end
     end
 
     if [ -n "$prompt_nix_shell" ]
-      set_color reset; set_color brgreen --bold
+      set_color reset; set_color brblue --bold
       echo -n nix-shell
 
       set todo (math $todo - 1)
 
       if [ $todo -gt 0 ]
         set_color reset; set_color $fish_color_comment
-        echo -n "|"
+        echo -n " "
       end
     end
 
@@ -63,21 +65,21 @@ function fish_prompt
 
       if [ $todo -gt 0 ]
         set_color reset; set_color $fish_color_comment
-        echo -n "|"
+        echo -n " "
       end
     end
 
     set_color reset; set_color $fish_color_comment
-    echo -n "]"
+    echo -n ""
   end
 
   set_color reset
   if [ $last_status -eq 0 ]
-    set_color $fish_status_color_good
+    set_color $fish_status_color_ok
   else
-    set_color $fish_status_color_bad
+    set_color $fish_status_color_error
   end
-  echo -n '% '
+  echo -n '❱ '
 
   set_color reset; set_color $fish_color_normal
 end
