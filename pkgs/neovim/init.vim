@@ -174,6 +174,7 @@ iron.core.set_config {
     r7rs = 'gauche',
     scheme = 'gauche',
     rmarkdown = 'R',
+    python = 'ipython',
   }
 }
 local fennel_repls = {
