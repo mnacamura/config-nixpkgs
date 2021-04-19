@@ -4,6 +4,7 @@ function fish_prompt
   set -l todo 0
   set -l prompt_login
   set -l prompt_nix_shell
+  set -l prompt_venv
   set -l prompt_umask
 
   if status is-login; and [ -z "$TMUX" ]
@@ -16,7 +17,11 @@ function fish_prompt
     set todo (math $todo + 1)
   end
 
-  # TODO: Add python venv indicator here
+  if [ -n "$VIRTUAL_ENV" ]
+    set prompt_venv true
+    set todo (math $todo + 1)
+    set -gx VIRTUAL_ENV_DISABLE_PROMPT true
+  end
 
   if [ (umask) != 0077 ]
     set prompt_umask true
@@ -48,6 +53,18 @@ function fish_prompt
     if [ -n "$prompt_nix_shell" ]
       set_color reset; set_color brblue --bold
       echo -n nix-shell
+
+      set todo (math $todo - 1)
+
+      if [ $todo -gt 0 ]
+        set_color reset; set_color $fish_color_comment
+        echo -n " "
+      end
+    end
+
+    if [ -n "$prompt_venv" ]
+      set_color reset; set_color bryellow --bold
+      echo -n (command basename $VIRTUAL_ENV)
 
       set todo (math $todo - 1)
 
