@@ -204,7 +204,8 @@ endfun
 
 "" Tagbar settings
 let g:tagbar_singleclick = 1
-let g:tagbar_autoclose = 1
+" let g:tagbar_autoclose = 1
+let g:tagbar_iconchars = ['▸', '▾']
 nmap <silent> <Leader>l :TagbarToggle<CR>
 
 "" bullets.vim
