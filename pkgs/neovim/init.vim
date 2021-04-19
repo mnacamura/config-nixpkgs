@@ -207,6 +207,10 @@ let g:tagbar_singleclick = 1
 let g:tagbar_autoclose = 1
 nmap <silent> <Leader>l :TagbarToggle<CR>
 
+"" bullets.vim
+let g:bullets_enabled_file_types = [ 'markdown', 'pandoc', 'text', 'gitcommit']
+let g:bullets_checkbox_markers = ' x'
+
 "" Color scheme and status line {{{1
 
 if $COLORTERM ==# 'truecolor'  " VTE, Konsole, and iTerm2

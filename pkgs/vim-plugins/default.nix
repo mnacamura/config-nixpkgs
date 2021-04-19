@@ -5,6 +5,18 @@ let
 in
 
 {
+  bullets-vim = buildVimPlugin {
+    pname = "bullets-vim";
+    version = "2021-03-05";
+
+    src = fetchFromGitHub {
+      owner = "dkarter";
+      repo = "bullets.vim";
+      rev = "486f97d831cdd42ff66e5acaa1dd58eb79c2d12c";
+      sha256 = "0ppss4x3yf7x3pf5z8gxs6b12dd2l9sq7ijni9bqnm56xm5w4bhd";
+    };
+  };
+
   clever-f-vim = buildVimPlugin {
     pname = "clever-f-vim";
     version = "2021-03-05";
