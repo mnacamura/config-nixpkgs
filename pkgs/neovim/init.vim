@@ -85,12 +85,12 @@ noremap [skim] <Nop>
 map <Leader>e [skim]
 nmap <silent> [skim]f :<C-u>Files ./<CR>
 nmap [skim]F :<C-u>Files 
-nmap <silent> [skim]g :<C-u>GFiles<CR>
+nmap <silent> [skim]l :<C-u>GFiles<CR>
 nmap <silent> [skim]s :<C-u>GFiles?<CR>
 nmap <silent> [skim]b :<C-u>Buffers<CR>
-nmap <silent> [skim]r :<C-u>Rg<CR>
-nmap <silent> [skim]l :<C-u>BLines<CR>
-nmap <silent> [skim]L :<C-u>Lines<CR>
+nmap <silent> [skim]g :<C-u>Rg<CR>
+nmap <silent> [skim]n :<C-u>BLines<CR>
+nmap <silent> [skim]N :<C-u>Lines<CR>
 nmap <silent> [skim]t :<C-u>BTags<CR>
 nmap <silent> [skim]T :<C-u>Tags<CR>
 nmap <silent> [skim]m :<C-u>Marks<CR>
@@ -100,8 +100,8 @@ nmap <silent> [skim]h :<C-u>History<CR>
 nmap <silent> [skim]/ :<C-u>History/<CR>
 " nmap <silent> [skim]c :<C-u>BCommits<CR>  " fugative.vim is required
 " nmap <silent> [skim]C :<C-u>Commits<CR>  " fugative.vim is required
-nmap <silent> [skim]x :<C-u>Commands<CR>
-nmap <silent> [skim]X :<C-u>History:<CR>
+nmap <silent> [skim]e :<C-u>Commands<CR>
+nmap <silent> [skim]E :<C-u>History:<CR>
 
 "" Modern Vim, Tip 12: ALE mappings in the style of unimpaired
 nmap <silent> [W <Plug>(ale_first)
