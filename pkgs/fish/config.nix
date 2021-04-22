@@ -113,6 +113,9 @@ let
           set -gx SKIM_DEFAULT_COMMAND 'fd -c never || find .'
           set -gx SKIM_DEFAULT_OPTIONS --color=light,matched_bg:153
         end
+        if type -q tree
+          abbr --add t 'tree -N'
+        end
       end
     '';
   };
