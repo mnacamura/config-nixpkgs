@@ -107,7 +107,7 @@ let
           abbr --add vi nvim
         end
         if type -q rg
-          abbr --add rg 'rg -S'
+          abbr --add r 'rg -S'
         end
         if type -q sk
           set -gx SKIM_DEFAULT_COMMAND 'fd -c never || find .'
