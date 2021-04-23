@@ -78,13 +78,6 @@ self: super:
       sha256 = "1flbhmk22q3mk8wlxi8f6mpn4zhbyhiw80dzd1naagbnw60303jr";
     };
     buildInputs = old.buildInputs ++ [ super.tree-sitter ];
-    propagatedUserEnvPkgs = [
-      super.tree-sitter
-
-      # required to compile tree-sitter parsers
-      super.stdenv.cc.cc
-      super.nodejs
-    ];
   });
 
   configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};
@@ -125,7 +118,7 @@ self: super:
   };
 
   consoleEnv = with self; let
-    version = "2021-04-15";
+    version = "2021-04-23";
   in buildEnv {
     name = "console-${version}-env";
     paths = [
@@ -141,6 +134,9 @@ self: super:
       htop
       lf
       wrapped.neovim
+      tree-sitter   # required to compile tree-sitter parsers
+      stdenv.cc.cc  # required to compile tree-sitter parsers
+      nodejs        # required to compile tree-sitter parsers
       # nixify-unstable
       libarchive
       # parallel-rust
@@ -155,6 +151,7 @@ self: super:
       # tty-clock
       unrar
       unzip
+
     ] ++ lib.optionals stdenv.isLinux [
       trash-cli
       xsel
