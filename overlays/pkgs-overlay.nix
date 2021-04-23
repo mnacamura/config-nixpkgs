@@ -80,7 +80,10 @@ self: super:
     buildInputs = old.buildInputs ++ [ super.tree-sitter ];
     propagatedUserEnvPkgs = [
       super.tree-sitter
-      super.nodejs  # required to compile tree-sitter parsers
+
+      # required to compile tree-sitter parsers
+      super.stdenv.cc.cc
+      super.nodejs
     ];
   });
 
