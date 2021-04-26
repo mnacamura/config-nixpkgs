@@ -37,6 +37,7 @@ neovim.override {
         vim-textobj-comment
         vim-textobj-indent
         vim-textobj-user
+        vim-toml
         vim-unimpaired
         vim-visualstar
         vim-yoink
