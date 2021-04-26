@@ -70,12 +70,12 @@ self: super:
   };
 
   neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
-    version = "2021-04-15";
+    version = "2021-04-24";
     src = super.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      rev = "e915ec47f3ce378ad3577fedc2a3119d62039894";
-      sha256 = "1flbhmk22q3mk8wlxi8f6mpn4zhbyhiw80dzd1naagbnw60303jr";
+      rev = "bb7d3790bf08b5519623d261d8235bad77b5c0dd";
+      sha256 = "1d3a53fp8grv477nqz7ik21r3bzrm8mdgx9c7mfzs6i1xyh1wldf";
     };
     buildInputs = old.buildInputs ++ [ super.tree-sitter ];
   });
