@@ -166,7 +166,7 @@ self: super:
   in buildEnv {
     name = "desktop-${version}-env";
     paths = lib.optionals stdenv.isLinux [
-      latest.firefox-nightly-bin
+      # latest.firefox-nightly-bin
       wrapped.zathura
       # mgenplus
       # rounded-mgenplus
