@@ -302,9 +302,7 @@ augroup END
 "" Fish {{{2
 augroup ft_fish
   autocmd!
-  au FileType fish
-        \ compiler fish |
-        \ setl shiftwidth=2
+  au FileType fish compiler fish
 augroup END
 
 "" Make {{{2
