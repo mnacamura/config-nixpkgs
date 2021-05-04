@@ -1,9 +1,9 @@
 { config, lib, substituteAll }:
 
 let
-  inherit (config) colortheme;
+  inherit (config.environment) colors;
 in
 
-substituteAll (colortheme.hex // {
+substituteAll (colors.hex // {
   src = ./zathurarc;
 })

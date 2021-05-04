@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.colortheme;
+  cfg = config.environment.colors;
 
   color256 = with types; ints.between 0 255;
 
@@ -31,7 +31,7 @@ in
 
 {
   options = {
-    colortheme.palette = mkOption {
+    environment.colors.palette = mkOption {
       type = with types; attrsOf (attrsOf (oneOf [
         color256
         colorHex
@@ -48,17 +48,17 @@ in
       '';
     };
 
-    colortheme.nr = mkOption {
+    environment.colors.nr = mkOption {
       type = with types; attrsOf color256;
       description = ''
-        'nr' values of 'colortheme.palette'.
+        'nr' values of 'environment.colors.palette'.
       '';
     };
 
-    colortheme.hex = mkOption {
+    environment.colors.hex = mkOption {
       type = with types; attrsOf colorHex;
       description = ''
-        'hex' values of 'colortheme.palette'.
+        'hex' values of 'environment.colors.palette'.
       '';
     };
   };
@@ -74,25 +74,25 @@ in
           ];
         in all (n: elem n definedNames) expectedNames;
         message = ''
-          colortheme: At least 16 colors should be defined.
+          environment.colors: At least 16 colors should be defined.
         '';
       }
       {
         assertion = all (b: b) (mapAttrsToList (_: c: c ? nr) cfg.palette);
         message = ''
-          colortheme: Color(s) with no 'nr' value found.
+          environment.colors: Color(s) with no 'nr' value found.
         '';
       }
       {
         assertion = all (b: b) (mapAttrsToList (_: c: c ? hex) cfg.palette);
         message = ''
-          colortheme: Color(s) with no 'hex' value found.
+          environment.colors: Color(s) with no 'hex' value found.
         '';
       }
     ];
 
-    colortheme.nr = mapAttrs (_: c: c.nr) (filterAttrs (_: c: c ?  nr) cfg.palette);
+    environment.colors.nr = mapAttrs (_: c: c.nr) (filterAttrs (_: c: c ?  nr) cfg.palette);
 
-    colortheme.hex = mapAttrs (_: c: c.hex) cfg.palette;
+    environment.colors.hex = mapAttrs (_: c: c.hex) cfg.palette;
   };
 }

@@ -10,7 +10,7 @@ let
       (args: {
         imports = [
           ../modules/assertions.nix
-          ../modules/colortheme.nix
+          ../modules/colors
         ];
         config = import ../my.nix (args // { pkgs = self; });
       })

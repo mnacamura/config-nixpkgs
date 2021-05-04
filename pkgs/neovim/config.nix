@@ -21,7 +21,7 @@ let
   ]);
 in
 
-with config.colortheme.palette;
+with config.environment.colors.palette;
 substituteAll {
   src = ./init.vim;
 

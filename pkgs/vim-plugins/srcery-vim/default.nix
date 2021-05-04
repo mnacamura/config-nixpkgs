@@ -1,7 +1,7 @@
 { config, substituteAll, vimUtils, fetchFromGitHub }:
 
 let
-  inherit (config.colortheme) palette;
+  inherit (config.environment.colors) palette;
 
   themePatch = substituteAll (with palette; {
     src = ./theme.patch;
