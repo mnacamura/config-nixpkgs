@@ -31,7 +31,7 @@ rec {
   term_bg = black;
 
   black     = { nr =   0; hex = "#2b2a29"; };
-  red       = { nr =   1; hex = "#aa1f25"; };
+  red       = { nr =   1; hex = "#a61c39"; };
   green     = { nr =   2; hex = "#338475"; };
   yellow    = { nr =   3; hex = "#e5835e"; };
   blue      = { nr =   4; hex = "#187984"; };
@@ -40,7 +40,7 @@ rec {
   white     = { nr =   7; hex = "#fff8e6"; };
 
   brblack   = { nr =   8; hex = "#aaa9a7"; };
-  brred     = { nr =   9; hex = "#f22833"; };
+  brred     = { nr =   9; hex = "#ca3c46"; };
   brgreen   = { nr =  10; hex = "#20998c"; };
   bryellow  = { nr =  11; hex = "#edd079"; };
   brblue    = { nr =  12; hex = "#9bb2c2"; };
