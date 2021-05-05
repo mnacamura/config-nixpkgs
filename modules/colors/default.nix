@@ -11,6 +11,7 @@ let
 
   palettes = {
     srcery = import ./palettes/srcery.nix;
+    marnie = import ./palettes/marnie.nix;
   };
 in
 
