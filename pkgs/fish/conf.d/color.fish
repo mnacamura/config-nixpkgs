@@ -1,19 +1,15 @@
 set -q __fish_config_color_sourced
 or if status is-login
 
-  # srcery extra colors
-  set -l orange ff5f00
-  set -l brorange ff8700
-
   set -U fish_color_normal normal
   set -U fish_color_command --bold  # default: 005fd7
   set -U fish_color_param cyan  # default: 00afff
   set -U fish_color_keyword magenta  # default: none
-  set -U fish_color_redirection $orange  # default: 00afff
+  set -U fish_color_redirection yellow  # default: 00afff
   set -U fish_color_comment brblack  # default: red
   set -U fish_color_error red --bold  # default: ff0000
-  set -U fish_color_escape $orange  # default: 00a6b2
-  set -U fish_color_operator $orange  # default: 00a6b2
+  set -U fish_color_escape yellow  # default: 00a6b2
+  set -U fish_color_operator yellow  # default: 00a6b2
   set -U fish_color_end brblack  # default: 009900
   set -U fish_color_quote brgreen  # default: 999900
   set -U fish_color_autosuggestion brblack  # default: 555 black
@@ -32,7 +28,7 @@ or if status is-login
   # set -U fish_pager_color_background
   set -U fish_pager_color_completion brblack
   set -U fish_pager_color_description yellow  # default: B3A06D yellow
-  set -U fish_pager_color_progress black --bold --background=$brorange  # default: brwhite --background=cyan
+  set -U fish_pager_color_progress black --bold --background=@accent@  # default: brwhite --background=cyan
 
   # NOTE: Below are not found in share/functions/__fish_config_interactive.fish
   # set -U fish_pager_color_selected_background
