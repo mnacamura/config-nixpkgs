@@ -85,6 +85,17 @@ in
     };
   };
 
+  vim-hy = buildVimPlugin {
+    pname = "vim-hy";
+    version = "2021-04-11";
+    src = fetchFromGitHub {
+      owner = "hylang";
+      repo = "vim-hy";
+      rev = "f54791f59167fe12e0a229ae73736f9a7842e905";
+      sha256 = "1aqyd9j70iqzn66imivbhbygwmm3h24isqgb610dqnhcyyq38cv8";
+    };
+  };
+
   vim-textobj-indent = buildVimPlugin {
     pname = "vim-textobj-indent";
     version = "2013-01-18";
