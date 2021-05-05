@@ -38,6 +38,11 @@ let
     brmagenta_nr = brmagenta.nr;
     brcyan_nr    = brcyan.nr;
     brwhite_nr   = brwhite.nr;
+
+    orange_hex  = sel_bg.hex;
+    orange_nr  = sel_bg.nr;
+    brorange_hex  = accent.hex;
+    brorange_nr  = accent.nr;
   });
 in
 

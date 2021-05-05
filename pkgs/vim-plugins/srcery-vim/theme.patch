@@ -1,8 +1,8 @@
 diff --git a/colors/srcery.vim b/colors/srcery.vim
-index d35fa61..0dd56d4 100644
+index abd5436..3fd038b 100644
 --- a/colors/srcery.vim
 +++ b/colors/srcery.vim
-@@ -22,22 +22,22 @@ endif
+@@ -22,26 +22,26 @@ endif
  
  " Palette {{{
  
@@ -40,4 +40,10 @@ index d35fa61..0dd56d4 100644
 +let s:bright_white   = ['@brwhite_hex@', @brwhite_nr@]
  
  " xterm colors.
- let s:orange        = ['#FF5F00', 202]
+-let s:orange        = ['#FF5F00', 202]
+-let s:bright_orange = ['#FF8700', 208]
++let s:orange        = ['@orange_hex@', @orange_nr@]
++let s:bright_orange = ['@brorange_hex@', @brorange_nr@]
+ let s:hard_black    = ['#121212', 233]
+ let s:xgray1        = ['#262626', 235]
+ let s:xgray2        = ['#303030', 236]
