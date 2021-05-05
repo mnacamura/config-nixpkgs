@@ -27,6 +27,7 @@ neovim.override {
         vim-easy-align
         vim-emacscommandline
         vim-fish
+        vim-hy
         vim-nix
         vim-pandoc
         vim-pandoc-syntax
