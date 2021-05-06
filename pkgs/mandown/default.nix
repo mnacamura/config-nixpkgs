@@ -16,6 +16,8 @@ stdenv.mkDerivation rec {
   postPatch = ''
     substituteInPlace Makefile \
         --replace "/usr/include/libxml2" "${libxml2.dev}/include/libxml2"
+  '' + lib.optionalString stdenv.isDarwin ''
+    substituteInPlace Makefile --replace "gcc" "clang"
   '';
 
   installFlags = [ "PREFIX=$(out)" ];
