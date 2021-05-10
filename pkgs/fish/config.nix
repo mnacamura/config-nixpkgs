@@ -28,6 +28,7 @@ let
         abbr --add gdd 'git diff'
         abbr --add gl  'git log'
         abbr --add glg 'git log --graph --oneline'
+        abbr --add gls 'git log --stat'
         abbr --add gp  'git pull'
         abbr --add gw  'git status'  # `darcs whatsnew`
         abbr --add gs  'git show --word-diff=color'
