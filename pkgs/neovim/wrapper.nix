@@ -11,6 +11,7 @@ neovim.override {
     packages.default = with vimPlugins; {
       start = [
         ale
+        bats-vim
         bullets-vim
         clever-f-vim
         iron-nvim

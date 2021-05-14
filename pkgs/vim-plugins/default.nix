@@ -5,6 +5,17 @@ let
 in
 
 {
+  bats-vim = buildVimPlugin {
+    pname = "bats-vim";
+    version = "2021-01-11";
+    src = fetchFromGitHub {
+      owner = "aliou";
+      repo = "bats.vim";
+      rev = "6a5d2ef22b0ede503d867770afd02ebb1f97b709";
+      sha256 = "0jps6w6g2f8rf1iyg2ixl0dsp7p31l92r2j7symb3fp3wdfy7x4k";
+    };
+  };
+
   bullets-vim = buildVimPlugin {
     pname = "bullets-vim";
     version = "2021-03-05";
