@@ -47,6 +47,16 @@ self: super:
     '';
   };
 
+  nix-direnv = super.nix-direnv.overrideAttrs (old: {
+    version = "2021-05-14";
+    src = self.fetchFromGitHub {
+      owner = "nix-community";
+      repo = "nix-direnv";
+      rev = "adfca0d26dc687c1d10a4e88ef32cbc11bcaee47";
+      sha256 = "1nq7ymqq4lbz4mixs7zp8wi68s00616bl27dzh5qrcn5cffqqd4h";
+    };
+  });
+
   wrapped.direnv = self.callPackage ../pkgs/direnv/wrapper.nix {};
 
   configFiles.fish = self.callPackage ../pkgs/fish/config.nix {
