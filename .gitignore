@@ -1,5 +1,6 @@
 overlays/*
 !overlays/config-overlay.nix
 !overlays/default-overlay.nix
+!overlays/misc
 result*
 .direnv/
