@@ -46,6 +46,15 @@ let
     end
   '';
 
+  lsd = writeFishConfig "lsd" ''
+    if status is-interactive; and type -q lsd
+        function lsd
+            command lsd --date '+%Y-%m-%d %H:%M' $argv
+        end
+        alias ls lsd
+    end
+  '';
+
   nix = writeFishConfig "nix" (''
     [ -d $HOME/repos/nixpkgs ]
     and set NIX_PATH "nixpkgs-local=$HOME/repos/nixpkgs:$NIX_PATH"
@@ -117,6 +126,7 @@ buildEnv {
   paths = [
     base
     less
+    lsd
     nix
     git
     pubs

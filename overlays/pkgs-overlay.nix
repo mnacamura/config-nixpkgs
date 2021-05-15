@@ -133,6 +133,7 @@ self: super:
       gnumake
       htop
       lf
+      lsd
       wrapped.neovim
       tree-sitter   # required to compile tree-sitter parsers
       stdenv.cc.cc  # required to compile tree-sitter parsers
