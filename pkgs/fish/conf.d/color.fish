@@ -13,12 +13,12 @@ or if status is-login
   set -U fish_color_end brblack  # default: 009900
   set -U fish_color_quote brgreen  # default: 999900
   set -U fish_color_autosuggestion brblack  # default: 555 black
-  set -U fish_color_user normal  # default: brgreen
-  set -U fish_color_host normal
-  set -U fish_color_host_remote bryellow  # default: yellow
+  set -U fish_color_user white  # default: brgreen
+  set -U fish_color_host white  # default: normal
+  set -U fish_color_host_remote bryellow --bold  # default: yellow
   set -U fish_color_valid_path --underline
-  set -U fish_color_cwd blue  # default: green
-  set -U fish_color_cwd_root brred  # default: red
+  set -U fish_color_cwd blue --bold # default: green
+  set -U fish_color_cwd_root brred --bold  # default: red
   set -U fish_color_search_match --reverse  # default: bryellow --background=brblack
   set -U fish_color_cancel -r
   set -U fish_color_selection --reverse  # default: white --bold --background=brblack
@@ -41,9 +41,9 @@ or if status is-login
   # set -U fish_pager_color_secondary_description
 
   ## Convenient definitions for VCS, spell check, etc.
-  set -U fish_status_color_ok green
-  set -U fish_status_color_error red
-  set -U fish_status_color_warn yellow
+  set -U fish_status_color_ok green --bold
+  set -U fish_status_color_error red --bold
+  set -U fish_status_color_warn yellow --bold
 end
 
 set -g __fish_config_color_sourced
