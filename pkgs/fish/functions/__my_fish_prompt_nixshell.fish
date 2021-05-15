@@ -1,8 +1,10 @@
-function __my_prompt_nixshell -d "Prompt nix environment"
+function __my_fish_prompt_nixshell \
+    -d "Helper function for fish_prompt to indicate nix environment"
+
     if [ -n "$IN_NIX_SHELL" ]
         set_color normal
         set_color brblue --bold
-        echo -n nix-shell
+        echo -n $my_fish_symbol_nix$IN_NIX_SHELL
         set_color normal
         true
     else

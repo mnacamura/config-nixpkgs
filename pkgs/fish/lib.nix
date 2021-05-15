@@ -1,10 +1,8 @@
 { lib, writeText, runCommand }:
 
 let
-  inherit (lib) genList length replaceStrings;
-
   replaceStrings1 = froms: to:
-  replaceStrings froms (genList (_: to) (length froms));
+  lib.replaceStrings froms (lib.genList (_: to) (lib.length froms));
 
   writeFishScriptTo = path: name: body:
   let

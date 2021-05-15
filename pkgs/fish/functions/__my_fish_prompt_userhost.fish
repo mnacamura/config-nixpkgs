@@ -1,4 +1,6 @@
-function __my_prompt_userhost
+function __my_fish_prompt_userhost \
+    -d "Helper function for fish_prompt to show user and host when using ssh"
+
     if status is-login
         set_color normal
         if [ -n "$SSH_CONNECTION" ]

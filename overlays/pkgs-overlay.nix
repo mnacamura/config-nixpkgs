@@ -50,7 +50,7 @@ self: super:
   wrapped.direnv = self.callPackage ../pkgs/direnv/wrapper.nix {};
 
   configFiles.fish = self.callPackage ../pkgs/fish/config.nix {
-    config-core = self.callPackage ../pkgs/fish/config-core.nix {};
+    base = self.callPackage ../pkgs/fish/config-base.nix {};
   };
 
   inherit (self.callPackage ../pkgs/fish/lib.nix {})
