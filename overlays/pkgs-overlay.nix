@@ -59,10 +59,6 @@ self: super:
 
   fishtape = self.callPackage ../pkgs/fishtape {};
 
-  mandown = self.callPackage ../pkgs/mandown {};
-
-  mgenplus = self.callPackage ../pkgs/mgenplus {};
-
   neovim = super.neovim.override {
     withRuby = false;
   };
