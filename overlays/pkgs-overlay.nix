@@ -86,8 +86,6 @@ self: super:
 
   vimPlugins = super.vimPlugins // (self.callPackage ../pkgs/vim-plugins {});
 
-  rounded-sgenplus = super.callPackage ../pkgs/rounded-sgenplus {};
-
   SDL2 = super.SDL2.override {
     fcitxSupport = self.stdenv.isLinux;
   };
