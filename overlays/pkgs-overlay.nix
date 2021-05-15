@@ -59,8 +59,6 @@ self: super:
 
   fishtape = self.callPackage ../pkgs/fishtape {};
 
-  ls-colors = self.callPackage ../pkgs/ls-colors {};
-
   mandown = self.callPackage ../pkgs/mandown {};
 
   mgenplus = self.callPackage ../pkgs/mgenplus {};
