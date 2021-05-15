@@ -90,8 +90,6 @@ self: super:
     fcitxSupport = self.stdenv.isLinux;
   };
 
-  xtermcolor = self.callPackage ../pkgs/xtermcolor {};
-
   configFiles.zathura = self.callPackage ../pkgs/zathura/config.nix {};
 
   wrapped.zathura = self.callPackage ../pkgs/zathura/wrapper.nix {
