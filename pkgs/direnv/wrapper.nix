@@ -18,7 +18,7 @@ let
   });
 
   fishHook = writeFishVendorConfig "direnv" ''
-    eval (${patched}/bin/direnv hook fish)
+    ${patched}/bin/direnv hook fish | source
   '';
 in
 
