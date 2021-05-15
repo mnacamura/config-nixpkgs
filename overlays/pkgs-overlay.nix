@@ -57,8 +57,6 @@ self: super:
   writeFishConfig
   writeFishVendorConfig;
 
-  fishtape = self.callPackage ../pkgs/fishtape {};
-
   neovim = super.neovim.override {
     withRuby = false;
   };
