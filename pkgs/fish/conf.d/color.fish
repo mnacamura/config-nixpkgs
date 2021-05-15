@@ -7,7 +7,7 @@ or if status is-login
   set -U fish_color_keyword magenta  # default: none
   set -U fish_color_redirection yellow  # default: 00afff
   set -U fish_color_comment brblack  # default: red
-  set -U fish_color_error red --bold  # default: ff0000
+  set -U fish_color_error red  # default: ff0000
   set -U fish_color_escape yellow  # default: 00a6b2
   set -U fish_color_operator yellow  # default: 00a6b2
   set -U fish_color_end brblack  # default: 009900
@@ -41,9 +41,9 @@ or if status is-login
   # set -U fish_pager_color_secondary_description
 
   ## Convenient definitions for VCS, spell check, etc.
-  set -U fish_status_color_ok green --bold
-  set -U fish_status_color_error red --bold
-  set -U fish_status_color_warn yellow --bold
+  set -U my_status_color_ok green
+  set -U my_status_color_error red
+  set -U my_status_color_warn yellow
 end
 
 set -g __fish_config_color_sourced

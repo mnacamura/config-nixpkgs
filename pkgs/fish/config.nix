@@ -16,7 +16,7 @@ let
         set __fish_git_prompt_char_upstream_behind '↓'
         set __fish_git_prompt_char_upstream_ahead '↑'
         set __fish_git_prompt_char_upstream_diverged '↓↑'
-        set __fish_git_prompt_color_untrackedfiles $fish_status_color_warn
+        set __fish_git_prompt_color_untrackedfiles $my_status_color_warn
         abbr --add g   'git'
         abbr --add ga  'git add'
         abbr --add gb  'git branch'
