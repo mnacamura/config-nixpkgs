@@ -1,6 +1,6 @@
 overlays/*
-!overlays/config-overlay.nix
-!overlays/pkgs-overlay.nix
+!overlays/config.nix
+!overlays/pkgs.nix
 !overlays/misc
 result*
 .direnv/
