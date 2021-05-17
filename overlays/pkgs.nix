@@ -127,7 +127,6 @@ self: super:
       fd
       file
       fortune
-      git
       gnumake
       htop
       lf
