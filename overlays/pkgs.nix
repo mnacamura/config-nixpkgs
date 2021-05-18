@@ -67,20 +67,16 @@ self: super:
   writeFishConfig
   writeFishVendorConfig;
 
-  neovim = super.neovim.override {
-    withRuby = false;
-  };
+  neovim = self.wrapNeovim self.neovim-nightly {};
 
-  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
-    version = "2021-04-24";
-    src = super.fetchFromGitHub {
-      owner = "neovim";
-      repo = "neovim";
-      rev = "bb7d3790bf08b5519623d261d8235bad77b5c0dd";
-      sha256 = "1d3a53fp8grv477nqz7ik21r3bzrm8mdgx9c7mfzs6i1xyh1wldf";
+  neovim-nightly = with self.lib;
+  let
+    neovim-nightly-overlay = builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     };
-    buildInputs = old.buildInputs ++ [ super.tree-sitter ];
-  });
+    self' = fix (extends (import neovim-nightly-overlay) (_: super));
+  in
+  self'.neovim-nightly;
 
   configFiles.neovim = self.callPackage ../pkgs/neovim/config.nix {};
 
