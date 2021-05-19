@@ -111,47 +111,48 @@ self: super:
     ];
   };
 
-  consoleEnv = with self; let
-    version = "2021-04-23";
-  in buildEnv {
+  consoleEnv = let
+    version = "2021-05-19";
+  in self.buildEnv {
     name = "console-${version}-env";
-    paths = [
+    paths = with self; [
       configFiles.fish
-      wrapped.aspell
-      wrapped.ctags
-      wrapped.direnv
-      fd
-      file
-      fortune
-      gnumake
-      htop
-      lf
       lsd
-      wrapped.neovim
-      tree-sitter   # required to compile tree-sitter parsers
-      stdenv.cc.cc  # required to compile tree-sitter parsers
-      nodejs        # required to compile tree-sitter parsers
-      # nixify-unstable
-      libarchive
-      # parallel-rust
-      p7zip
-      patdiff
-      pubs
-      rclone
+      fd
       ripgrep
       skim
-      sl
+      patdiff
+      file
       tree
-      # tty-clock
+      p7zip
       unrar
-      unzip
-
+      wrapped.direnv
+      sl
+      htop
+      pubs
     ] ++ lib.optionals stdenv.isLinux [
       trash-cli
       xsel
     ] ++ lib.optionals stdenv.isDarwin [
       darwin.trash
       reattach-to-user-namespace
+    ];
+    meta.priority = 6;
+  };
+
+  neovimEnv = let
+    neovim = self.wrapped.neovim;
+  in
+  self.buildEnv {
+    name = "${neovim.name}-env";
+    paths = with self; [
+      wrapped.aspell
+      wrapped.ctags
+      neovim
+      tree-sitter   # required to compile tree-sitter parsers
+      stdenv.cc.cc  # required to compile tree-sitter parsers
+      nodejs        # required to compile tree-sitter parsers
+      skim
     ];
   };
 
