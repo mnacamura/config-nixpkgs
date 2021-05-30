@@ -112,16 +112,18 @@ self: super:
   };
 
   consoleEnv = let
-    version = "2021-05-19";
+    version = "2021-05-31";
   in self.buildEnv {
     name = "console-${version}-env";
     paths = with self; [
       configFiles.fish
       lsd
+      bat
       fd
       ripgrep
       skim
       patdiff
+      gnumake
       file
       tree
       p7zip
@@ -129,6 +131,7 @@ self: super:
       wrapped.direnv
       sl
       htop
+      glow
       pubs
     ] ++ lib.optionals stdenv.isLinux [
       trash-cli
