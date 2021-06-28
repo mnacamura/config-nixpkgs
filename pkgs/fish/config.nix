@@ -20,6 +20,7 @@ let
         abbr --add gc  'git commit'
         abbr --add gcl 'git clone'
         abbr --add gco 'git checkout'
+        abbr --add gcp 'git cherry-pick'
         abbr --add gd  'git diff --word-diff=color'
         abbr --add gdc 'git diff --cached --word-diff=color'
         abbr --add gdd 'git diff'
