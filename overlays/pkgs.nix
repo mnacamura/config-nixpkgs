@@ -144,7 +144,8 @@ self: super:
   };
 
   neovimEnv = let
-    neovim = self.wrapped.neovim;
+    # neovim = self.wrapped.neovim;
+    neovim = self.neovim-nightly;
   in
   self.buildEnv {
     name = "${neovim.name}-env";
