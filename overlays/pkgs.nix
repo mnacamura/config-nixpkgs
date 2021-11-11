@@ -86,6 +86,17 @@ self: super:
 
   vimPlugins = super.vimPlugins // (self.callPackage ../pkgs/vim-plugins {});
 
+  # Don't forget to delete cache after bumping revision: $(pubsdir)/.cache
+  pubs = super.pubs.overridePythonAttrs (_: {
+    version = "2021-02-03";
+    src = super.fetchFromGitHub {
+      owner = "pubs";
+      repo = "pubs";
+      rev = "29e8fecfa9c7bdd991ef231a8fb1d250d9ebd8a9";
+      sha256 = "1fdlznn9i8n6xhbiz7zzcf3vgwwi8dzn1pw47afra6r3vmij1s2f";
+    };
+  });
+
   SDL2 = super.SDL2.override {
     fcitxSupport = self.stdenv.isLinux;
   };
