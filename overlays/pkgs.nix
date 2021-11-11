@@ -48,12 +48,12 @@ self: super:
   };
 
   nix-direnv = super.nix-direnv.overrideAttrs (old: {
-    version = "2021-05-14";
+    version = "1.5.0";
     src = self.fetchFromGitHub {
       owner = "nix-community";
       repo = "nix-direnv";
-      rev = "adfca0d26dc687c1d10a4e88ef32cbc11bcaee47";
-      sha256 = "1nq7ymqq4lbz4mixs7zp8wi68s00616bl27dzh5qrcn5cffqqd4h";
+      rev = "083ac16bf52102bb3a4bf25c30bce192b3f7b79a";
+      sha256 = "0c2ksyp3ylpv7pmjvzvj419ykzfjplcj1ig2gzs379pnwvik249g";
     };
   });
 
