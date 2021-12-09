@@ -88,12 +88,12 @@ self: super:
 
   # Don't forget to delete cache after bumping revision: $(pubsdir)/.cache
   pubs = super.pubs.overridePythonAttrs (_: {
-    version = "2021-02-03";
+    version = "2021-11-22";
     src = super.fetchFromGitHub {
       owner = "pubs";
       repo = "pubs";
-      rev = "29e8fecfa9c7bdd991ef231a8fb1d250d9ebd8a9";
-      sha256 = "1fdlznn9i8n6xhbiz7zzcf3vgwwi8dzn1pw47afra6r3vmij1s2f";
+      rev = "4ec4ba0390ef6176687326f2f8b5a2c923dfa47b";
+      sha256 = "sha256-0y6dXgkFZYVsbDlYX+FEhChQRPXhwNHNPCrYQNcWclo=";
     };
   });
 
