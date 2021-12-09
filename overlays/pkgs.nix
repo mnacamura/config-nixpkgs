@@ -59,6 +59,10 @@ self: super:
 
   wrapped.direnv = self.callPackage ../pkgs/direnv/wrapper.nix {};
 
+  fishPlugins = super.fishPlugins // (self.callPackage ../pkgs/fish/plugins {
+    inherit (super.fishPlugins) callPackage;
+  });
+
   configFiles.fish = self.callPackage ../pkgs/fish/config.nix {
     base = self.callPackage ../pkgs/fish/config-base.nix {};
   };
