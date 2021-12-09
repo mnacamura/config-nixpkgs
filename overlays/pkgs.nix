@@ -137,11 +137,12 @@ self: super:
   };
 
   consoleEnv = let
-    version = "2021-05-31";
+    version = "2021-12-09";
   in self.buildEnv {
     name = "console-${version}-env";
     paths = with self; [
       configFiles.fish
+      fishPlugins.skim-fish
       lsd
       bat
       fd
