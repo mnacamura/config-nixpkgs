@@ -1,3 +1,0 @@
-[submodule "overlays/misc"]
-	path = overlays/misc
-	url = https://github.com/mnacamura/nixpkgs-misc.git
