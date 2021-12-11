@@ -90,27 +90,6 @@ self: super:
 
   vimPlugins = super.vimPlugins // (self.callPackage ../pkgs/vim-plugins {});
 
-  # Don't forget to delete cache after bumping revision: $(pubsdir)/.cache
-  pubs = super.pubs.overridePythonAttrs (old: {
-    version = "2021-11-22";
-    src = self.fetchFromGitHub {
-      owner = "pubs";
-      repo = "pubs";
-      rev = "4ec4ba0390ef6176687326f2f8b5a2c923dfa47b";
-      sha256 = "sha256-0y6dXgkFZYVsbDlYX+FEhChQRPXhwNHNPCrYQNcWclo=";
-    };
-    buildInputs = (old.buildInputs or []) ++ [
-      self.installShellFiles
-    ];
-    postInstall = ''
-      register="${self.python3.pkgs.argcomplete}/bin/register-python-argcomplete"
-      "$register" --shell bash pubs > pubs.bash
-      "$register" --shell fish pubs > pubs.fish
-      installShellCompletion --bash --name pubs.bash pubs.bash
-      installShellCompletion --fish --name pubs.fish pubs.fish
-    '';
-  });
-
   SDL2 = super.SDL2.override {
     fcitxSupport = self.stdenv.isLinux;
   };
@@ -158,7 +137,6 @@ self: super:
       sl
       htop
       glow
-      pubs
     ] ++ lib.optionals stdenv.isLinux [
       trash-cli
       xsel
