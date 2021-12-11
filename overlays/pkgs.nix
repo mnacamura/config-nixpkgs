@@ -160,7 +160,6 @@ self: super:
       tree-sitter   # required to compile tree-sitter parsers
       stdenv.cc.cc  # required to compile tree-sitter parsers
       nodejs        # required to compile tree-sitter parsers
-      skim
     ];
   };
 
