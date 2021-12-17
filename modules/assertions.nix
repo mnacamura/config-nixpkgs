@@ -1,4 +1,7 @@
-# See nixpkgs/nixos/modules/system/activation/top-level.nix
+# See nixpkgs/nixos/modules/misc/assertions.nix,
+# nixpkgs/nixos/modules/system/activation/top-level.nix, and
+# nixpkgs/lib/asserts.nix
+
 { config, lib, ... }:
 
 with lib;
@@ -22,14 +25,14 @@ in
 {
   options = {
     assertions = mkOption {
-      internal = true;
       type = with types; listOf unspecified;
+      internal = true;
       default = [];
     };
 
     warnings = mkOption {
-      internal = true;
       type = with types; listOf str;
+      internal = true;
       default = [];
     };
 
