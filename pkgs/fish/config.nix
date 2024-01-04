@@ -34,28 +34,6 @@ let
     end
   '';
 
-  less = writeFishConfig "less" ''
-    if status is-login
-        # Set to fit Srcery color scheme
-        set -Ux LESS_TERMCAP_mb (printf "\e[5m")  # Begin blinking
-        set -Ux LESS_TERMCAP_md (printf "\e[1m")  # Begin bold
-        set -Ux LESS_TERMCAP_me (printf "\e[0m")  # End blinking/bold
-        set -Ux LESS_TERMCAP_so (printf "\e[1;30;48;2;255;135;0m")  # Begin standout
-        set -Ux LESS_TERMCAP_se (printf "\e[0m")  # End standout
-        set -Ux LESS_TERMCAP_us (printf "\e[3;33m")  # Begin underline
-        set -Ux LESS_TERMCAP_ue (printf "\e[0m")  # End underline
-    end
-  '';
-
-  lsd = writeFishConfig "lsd" ''
-    if status is-interactive; and type -q lsd
-        function lsd
-            command lsd --date '+%Y-%m-%d %H:%M' $argv
-        end
-        alias ls lsd
-    end
-  '';
-
   nix = writeFishConfig "nix" (''
     [ -d $HOME/repos/nixpkgs ]
     and set NIX_PATH "nixpkgs-local=$HOME/repos/nixpkgs:$NIX_PATH"
@@ -126,8 +104,6 @@ buildEnv {
   name = "fish-config";
   paths = [
     base
-    less
-    lsd
     nix
     git
     pubs
