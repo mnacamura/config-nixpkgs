@@ -20,23 +20,10 @@ self: super:
     paths = with self; [
       configFiles.fish
       fishPlugins.skim-fish
-      lsd
-      bat
-      fd
-      ripgrep
-      skim
-      patdiff
-      gnumake
-      file
-      tree
-      p7zip
-      unrar
-      sl
-      htop
+      # p7zip
+      # unrar
       glow
     ] ++ lib.optionals stdenv.isLinux [
-      trash-cli
-      xsel
     ] ++ lib.optionals stdenv.isDarwin [
       darwin.trash
       reattach-to-user-namespace
