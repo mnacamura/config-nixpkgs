@@ -20,7 +20,7 @@
   in rec {
     packages = {
       inherit (pkgs)
-      consoleEnv
+      terminalEnv
       ;
     };
     defaultPackage = packages.terminalEnv;
