@@ -13,10 +13,8 @@ self: super:
   writeFishConfig
   writeFishVendorConfig;
 
-  consoleEnv = let
-    version = "2021-12-09";
-  in self.buildEnv {
-    name = "console-${version}-env";
+  terminalEnv = self.buildEnv {
+    name = "terminal-env";
     paths = with self; [
       configFiles.fish
       fishPlugins.skim-fish

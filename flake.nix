@@ -8,7 +8,6 @@
 
   outputs = { self, nixpkgs, flake-utils, ... }: {
     overlay = nixpkgs.lib.composeManyExtensions [
-      (import ./overlays/config.nix)
       (import ./overlays/pkgs.nix)
     ];
   } // (flake-utils.lib.eachDefaultSystem (system:
@@ -18,11 +17,12 @@
       config = import ./config.nix;
       overlays = [ self.overlay ];
     };
-  in {
+  in rec {
     packages = {
       inherit (pkgs)
       consoleEnv
       ;
     };
+    defaultPackage = packages.terminalEnv;
   }));
 }
